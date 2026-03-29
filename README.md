@@ -1,6 +1,6 @@
 ---
 title: LOVE vH AI
-emoji: robot
+emoji: "🤖"
 colorFrom: blue
 colorTo: green
 sdk: docker
