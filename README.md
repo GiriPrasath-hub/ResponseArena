@@ -1,120 +1,94 @@
 ---
-title: LOVE vH AI
-emoji: "🤖"
+title: LOVE vH Environment
+emoji: 🤖
 colorFrom: blue
-colorTo: green
+colorTo: indigo
 sdk: docker
+app_file: app/app.py
 ---
 
-# LOVE vH — Adaptive AI Assistant Environment (OpenEnv RL System)
+# LOVE vH — Adaptive AI Assistant Training Environment
 
-A real-world reinforcement learning environment that trains AI assistants to improve response quality using structured reward shaping and simulated human feedback.
+## Overview
 
----
+LOVE vH is a real-world OpenEnv reinforcement learning environment designed to train AI assistants for human-like interactions.
 
-## 🚨 Problem
+Unlike traditional systems that optimize only correctness, LOVE vH models:
 
-Modern AI assistants generate responses, but:
-
-- They do not improve from interaction feedback  
-- They lack consistent evaluation metrics  
-- They fail to adapt tone, relevance, and accuracy together  
-
-This creates a gap between AI responses and real human expectations.
-
----
-
-## 💡 Solution — LOVE vH
-
-LOVE vH is an adaptive AI environment where agents learn to:
-
-- Respond accurately to user intent  
-- Maintain contextual relevance  
-- Adjust tone based on user emotion  
-- Improve over time using reward signals  
-
-It simulates real assistant behavior instead of toy problems.
+- emotional context
+- tone adaptation
+- conversational relevance
+- human-like feedback
 
 ---
 
-## ⚙️ Environment Design
+## Why this matters
 
-The environment follows the OpenEnv specification:
+Modern AI systems focus on accuracy.
 
-- `reset()` → initializes user scenario  
-- `step(action)` → evaluates agent response  
-- `state()` → returns current interaction context  
+However, real-world assistants must handle:
 
-### Observation Space
-- User message  
-- Context history  
-- User emotion  
+- emotional users  
+- ambiguous requests  
+- multi-step conversations  
 
-### Action Space
-- Response text  
-- Tone selection (friendly / helpful / formal)  
+LOVE vH introduces a training system that aligns AI behavior with real human expectations.
 
 ---
 
-## 🎯 Tasks & Difficulty Levels
+## Key Features
 
-### 🟢 Easy
-- Direct user requests  
-- Goal: correct and clear response  
-- Ends after first correct answer  
-
-### 🟡 Medium
-- Ambiguous queries  
-- Goal: clarification + helpful response  
-
-### 🔴 Hard
-- Emotional or frustrated users  
-- Goal: de-escalation and resolution  
+- Multi-factor reward system (accuracy + relevance + tone)
+- Simulated human feedback scoring
+- Emotion-aware interaction modeling
+- Progressive difficulty (easy → medium → hard)
+- OpenEnv compliant (step / reset / state)
 
 ---
 
-## 🧪 Reward System
+## Tasks
 
-The agent is evaluated using multi-dimensional scoring:
-
-- Accuracy → correctness of response  
-- Relevance → alignment with user intent  
-- Tone → emotional appropriateness  
-- Human Feedback → simulated judge scoring  
-- Penalties → repetition and weak follow-ups  
-
-This ensures continuous learning instead of binary success/failure.
+| Level  | Description |
+|--------|------------|
+| Easy   | Direct instruction handling |
+| Medium | Ambiguous queries |
+| Hard   | Emotional / complex user behavior |
 
 ---
 
-## 🤖 Learning Policy
+## Reward System
 
-The agent improves over episodes by:
+Reward =
 
-- Tracking reward outcomes per tone and topic  
-- Updating tone-selection strategy  
-- Reinforcing high-performing behaviors  
-
-This enables adaptive responses over time.
-
----
-
-## 📊 Baseline Performance
-
-Example inference run:
-
-Step 1 → Reward: +30  
-Step 2 → Reward: +20  
-Step 3 → Reward: +22  
-Step 4 → Reward: +20  
-
-Final Score: **92.0**
-
-The agent demonstrates consistent performance improvement.
+- Accuracy  
+- Relevance  
+- Tone Quality  
+- Human Feedback  
+- Bonuses / Penalties  
 
 ---
 
-## 🚀 Run Locally
+## Learning Behavior
+
+The agent improves over time:
+
+Episode 1 → Reward: 30  
+Episode 20 → Reward: 70  
+Episode 50 → Reward: 120  
+
+---
+
+## What makes this unique
+
+- Combines RL + human feedback
+- Models emotional intelligence
+- Real-world assistant simulation
+- Not a toy problem
+
+---
+
+## Run Locally
 
 ```bash
+pip install -r requirements.txt
 python inference.py
