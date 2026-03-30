@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY . .
 
+ENV PYTHONPATH=/app
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 7860
 
-CMD ["python", "-m", "app.app"]
+CMD ["python", "app/app.py"]

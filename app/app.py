@@ -18,10 +18,7 @@ state = env.reset()
 #  HOME ROUTE
 @app.route("/")
 def home():
-    return """
-    <h1>LOVE vH is Running 🚀</h1>
-    <p>API is live.</p>
-    """
+    return "LOVE vH is running"
 
 
 #  CHAT ROUTE
