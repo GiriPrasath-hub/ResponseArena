@@ -10,3 +10,4 @@
 #   torch          # replace rule-based policy with neural network
 flask
 numpy
+gunicorn
