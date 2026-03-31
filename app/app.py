@@ -37,13 +37,6 @@ def home():
         }
     </script>
     """
-    
-
-
-#  CATCH ALL ROUTE (IMPORTANT)
-@app.route("/<path:path>")
-def catch_all(path):
-    return "LOVE vH is running "
 
 
 #  CHAT ROUTE
