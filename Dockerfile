@@ -4,10 +4,11 @@ WORKDIR /app
 
 COPY . .
 
+ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 7860
 
-CMD ["python", "run.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:7860", "--workers", "1", "--timeout", "120", "app.app:app"]
