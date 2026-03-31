@@ -18,25 +18,27 @@ state = env.reset()
 #  HOME ROUTE
 @app.route("/", methods=["GET"])
 def home():
+    print(" HOME ROUTE HIT ")
     return """
-<h2>LOVE vH Assistant</h2>
-<input id='msg' placeholder='Type message'/>
-<button onclick='send()'>Send</button>
-<pre id='out'></pre>
+    <h2>LOVE vH Assistant</h2>
+    <input id='msg' placeholder='Type message'/>
+    <button onclick='send()'>Send</button>
+    <pre id='out'></pre>
 
-<script>
-async function send(){
-  let msg = document.getElementById('msg').value;
-  let res = await fetch('/chat',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({message:msg})
-  });
-  let data = await res.json();
-  document.getElementById('out').innerText = JSON.stringify(data,null,2);
-}
-</script>
-"""
+    <script>
+    async function send(){
+        let msg = document.getElementById('msg').value;
+        let res = await fetch('/chat',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({message:msg})
+        });
+        let data = await res.json();
+        document.getElementById('out').innerText = JSON.stringify(data,null,2);
+        }
+    </script>
+    """
+    
 
 
 #  CATCH ALL ROUTE (IMPORTANT)
@@ -69,4 +71,3 @@ def chat():
         "reward": reward,
         "done": done
     })
-
