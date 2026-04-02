@@ -4,13 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONPATH=/app
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 7860
 
-CMD ["gunicorn", "-b", "0.0.0.0:7860", "app.main:app"]
-
-# CMD ["gunicorn", "--bind", "0.0.0.0:7860", "--workers", "1", "--timeout", "120", "app.app:app"]
+CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "7860"]

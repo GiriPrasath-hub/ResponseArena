@@ -1,94 +1,113 @@
 ---
+
 title: LOVE vH Environment
 emoji: 🤖
 colorFrom: blue
 colorTo: indigo
 sdk: docker
-app_file: app/app.py
----
 
-# LOVE vH — Adaptive AI Assistant Training Environment
+🤖 LOVE vH — Interactive AI Evaluation Environment
 
-## Overview
-
-LOVE vH is a real-world OpenEnv reinforcement learning environment designed to train AI assistants for human-like interactions.
-
-Unlike traditional systems that optimize only correctness, LOVE vH models:
-
-- emotional context
-- tone adaptation
-- conversational relevance
-- human-like feedback
+A Dockerized OpenEnv-compatible AI evaluation system that simulates real-world human-AI interaction and grades responses using structured reward logic.
 
 ---
 
-## Why this matters
+🚀 Overview
 
-Modern AI systems focus on accuracy.
+LOVE vH is an Interactive AI Evaluation Lab where:
 
-However, real-world assistants must handle:
-
-- emotional users  
-- ambiguous requests  
-- multi-step conversations  
-
-LOVE vH introduces a training system that aligns AI behavior with real human expectations.
+- AI responses are compared against human expectations
+- Outputs are graded using reward shaping (keywords, tone, structure)
+- The system behaves like a real environment (not just a model)
 
 ---
 
-## Key Features
+⚙️ Deployment Details
 
-- Multi-factor reward system (accuracy + relevance + tone)
-- Simulated human feedback scoring
-- Emotion-aware interaction modeling
-- Progressive difficulty (easy → medium → hard)
-- OpenEnv compliant (step / reset / state)
+- Runtime: Docker (HuggingFace Spaces)
+- Server: FastAPI + Uvicorn
+- Port: "7860"
 
----
-
-## Tasks
-
-| Level  | Description |
-|--------|------------|
-| Easy   | Direct instruction handling |
-| Medium | Ambiguous queries |
-| Hard   | Emotional / complex user behavior |
+uvicorn server.app:app --host 0.0.0.0 --port 7860
 
 ---
 
-## Reward System
+🔌 API Endpoints
 
-Reward =
+This Space exposes a REST API (no UI):
 
-- Accuracy  
-- Relevance  
-- Tone Quality  
-- Human Feedback  
-- Bonuses / Penalties  
+Health Check
+
+GET /
+
+{"status": "running"}
+
+Reset Environment
+
+POST /reset
+
+Step Environment
+
+POST /step
+
+Example:
+
+{
+  "type": "respond",
+  "content": "generated response here"
+}
+
+Get Current State
+
+GET /state
 
 ---
 
-## Learning Behavior
+🧠 How It Works
 
-The agent improves over time:
-
-Episode 1 → Reward: 30  
-Episode 20 → Reward: 70  
-Episode 50 → Reward: 120  
-
----
-
-## What makes this unique
-
-- Combines RL + human feedback
-- Models emotional intelligence
-- Real-world assistant simulation
-- Not a toy problem
+1. Environment initializes with a scenario
+2. User/agent sends an action ("/step")
+3. System evaluates response
+4. Returns:
+   - next state
+   - reward score
+   - done flag
+   - metadata
 
 ---
 
-## Run Locally
+💻 Run Locally
 
-```bash
 pip install -r requirements.txt
-python inference.py
+uvicorn server.app:app --host 0.0.0.0 --port 7860
+
+---
+
+🌐 HuggingFace Deployment
+
+1. Create a Docker Space
+2. Upload this project
+3. Ensure "Dockerfile" exposes port "7860"
+4. Deployment will start automatically
+
+---
+
+🏆 Use Cases
+
+- AI vs Human evaluation systems
+- Reinforcement learning environments
+- Prompt evaluation pipelines
+- Hackathon-ready AI testing framework
+
+---
+
+⚡ Status
+
+✅ Dockerized
+✅ OpenEnv Compatible
+✅ API Functional
+✅ Ready for Deployment
+
+---
+
+Built as part of an advanced AI evaluation system (LOVE Project).

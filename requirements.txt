@@ -11,3 +11,8 @@
 flask
 numpy
 gunicorn
+fastapi
+uvicorn
+openenv-core
+pydantic
+openenv
