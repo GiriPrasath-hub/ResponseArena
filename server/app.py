@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from openenv.environment import OpenEnvWrapper
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 env = OpenEnvWrapper()
 
 @app.get("/")
 def health():
-    return {"status": "running"}
+    return JSONResponse(content={"status": "running"})
 
 @app.post("/reset")
 def reset():
