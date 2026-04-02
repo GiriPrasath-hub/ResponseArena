@@ -6,6 +6,7 @@ from core.config import EnvConfig, CFG
 from reward.accuracy_checker import AccuracyChecker
 from reward.relevance_checker import RelevanceChecker
 from reward.tone_analyzer import ToneAnalyzer
+from environment.task_manager import Task, grade_response
 
 
 class RewardSystem:
@@ -16,84 +17,78 @@ class RewardSystem:
         self._tone = ToneAnalyzer()
         self._human = HumanFeedback()
 
-    def compute(self, action: dict[str, Any], user_msg: Any, context: list[dict]) -> dict[str, Any]:
+    def compute(
+        self,
+        action: dict[str, Any],
+        user_msg: Any,
+        context: list[dict],
+        task: Task | None = None,
+    ) -> dict[str, Any]:
 
         response = str(action.get("response", ""))
         tone = str(action.get("tone", "friendly"))
 
-        # Length bonus
-        length_bonus = 1.5 if len(response.split()) > 8 else 0.0
+        # Main task-based deterministic grading (0.0 to 1.0)
+        if task is not None:
+            base_score = grade_response(task, response)
+            expected_tone = task.tone
+            difficulty = task.difficulty
+        else:
+            # Backward-compatible fallback when task context is not provided.
+            fallback_task = Task(
+                id="casual_conversation",
+                input_prompt=getattr(user_msg, "message", ""),
+                expected_behavior="Provide a relevant and helpful response.",
+                difficulty=getattr(user_msg, "difficulty", "medium"),
+                max_turns=4,
+                required_keywords=list(getattr(user_msg, "expected_keywords", [])),
+                tone=tone,
+                structure_required=False,
+            )
+            base_score = grade_response(fallback_task, response)
+            expected_tone = tone
+            difficulty = fallback_task.difficulty
 
-        # Sub checks
+        # Slight difficulty scaling, then clamp to [0.0, 1.0]
+        difficulty_scale = {
+            "easy": 0.98,
+            "medium": 1.00,
+            "hard": 1.04,
+        }.get(difficulty, 1.0)
+        scaled_score = max(0.0, min(1.0, round(base_score * difficulty_scale, 4)))
+
+        # Supplemental diagnostics retained for compatibility/debugging
         acc = self._accuracy.check(
             response=response,
-            expected_keywords=user_msg.expected_keywords,
-            topic=user_msg.topic,
+            expected_keywords=getattr(user_msg, "expected_keywords", []),
+            topic=getattr(user_msg, "topic", ""),
         )
-
         rel = self._relevance.check(
             response=response,
             topic=getattr(user_msg, "topic", "default"),
         )
-
         ton = self._tone.analyze(
             response=response,
-            tone=tone,
+            tone=expected_tone,
             user_mood=getattr(user_msg, "mood", "happy"),
         )
-
         human_score = self._human.evaluate(response, user_msg)
 
-        # Accuracy
-        accuracy_reward = 15 if acc.get("correct") else (6 if acc.get("partial") else -12)
-
-        # Relevance
-        relevance_reward = 10 if rel.get("relevant") else (5 if rel.get("partial") else -5)
-
-        # Tone
-        tone_quality = ton.get("quality", "neutral")
-        user_mood = getattr(user_msg, "mood", "happy")
-
-        if tone_quality == "good":
-            tone_reward = 6 + (2 if user_mood == "angry" else 0)
-        elif tone_quality == "neutral":
-            tone_reward = -2 if user_mood == "angry" else 0
-        else:
-            tone_reward = -8
-
-        # Repetition penalty
-        repetition_penalty = 0
-        if context:
-            last_response = str(context[-1].get("action", {}).get("response", "")).strip()
-            if response.strip() == last_response:
-                repetition_penalty = -5
-
-        # Follow-up penalty
-        followup_penalty = 0
-        if getattr(user_msg, "topic", "") == "follow_up":
-            if "what else" in response.lower():
-                followup_penalty = -3
-
-        total_penalty = repetition_penalty + followup_penalty
-
-        total = (
-            accuracy_reward
-            + relevance_reward
-            + tone_reward
-            + total_penalty
-            + length_bonus
-            + human_score
-        )
+        # Correctness flag for episode termination logic
+        correct = scaled_score >= 0.75
 
         return {
-            "total": round(total, 2),
-            "correct": acc.get("correct", False),
-            "accuracy_score": 1.0 if acc.get("correct") else (0.5 if acc.get("partial") else 0.0),
-            "accuracy_reward": accuracy_reward,
-            "relevance_reward": relevance_reward,
-            "tone_reward": tone_reward,
+            "total": scaled_score,
+            "correct": correct,
+            "accuracy_score": base_score,
+            "task_score": base_score,
+            "difficulty_scale": difficulty_scale,
+            "difficulty": difficulty,
+            "accuracy_reward": acc,
+            "relevance_reward": rel,
+            "tone_reward": ton,
             "human_feedback": human_score,
-            "repetition_penalty": repetition_penalty,
-            "followup_penalty": followup_penalty,
-            "length_bonus": length_bonus,
+            "repetition_penalty": 0.0,
+            "followup_penalty": 0.0,
+            "length_bonus": 0.0,
         }

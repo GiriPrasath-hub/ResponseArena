@@ -17,3 +17,7 @@ dependencies = [
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project.scripts]
+start = "server.app:main"
+server = "server.app:main"

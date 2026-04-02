@@ -1,36 +1,482 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>LOVE AI Assistant</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive AI Evaluation Lab</title>
+    <style>
+        :root {
+            --bg-a: #0f1627;
+            --bg-b: #1a2539;
+            --card: rgba(255, 255, 255, 0.06);
+            --card-hover: rgba(255, 255, 255, 0.10);
+            --text: #ecf2ff;
+            --muted: #a9b8d9;
+            --accent: #7aa2ff;
+            --green: #22c55e;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(900px 700px at 8% -8%, #2b3f67 0%, var(--bg-a) 52%),
+                linear-gradient(130deg, var(--bg-a), var(--bg-b));
+            padding: 22px;
+        }
+
+        .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 14px; }
+
+        .card {
+            background: var(--card);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 16px;
+            transition: transform .24s ease, box-shadow .24s ease, background .24s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+            background: var(--card-hover);
+        }
+
+        .title { margin: 0; font-size: 2rem; font-weight: 700; }
+        .subtitle { margin-top: 6px; color: var(--muted); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        label { display: block; color: var(--muted); margin-bottom: 7px; font-size: .86rem; }
+        .mode-row { display: flex; gap: 8px; }
+
+        button, select, input {
+            border: 0;
+            border-radius: 12px;
+            padding: 11px 12px;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.10);
+            font-size: .95rem;
+            transition: transform .22s ease, background .22s ease, opacity .22s ease;
+        }
+
+        select,
+        select option {
+            background: #0f172a;
+            color: #ffffff;
+        }
+
+        button, select, .scenario-card { cursor: pointer; }
+        input { cursor: text; }
+        button:disabled { cursor: not-allowed; opacity: .6; transform: none !important; }
+
+        button:hover, .mode-btn:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .mode-btn { flex: 1; }
+        .mode-btn.active {
+            background: rgba(122, 162, 255, 0.30);
+            color: #eaf1ff;
+        }
+
+        .section-head { margin: 0 0 10px; color: #dce7ff; font-size: 1.04rem; }
+        .helper { opacity: .6; font-size: .86rem; margin-top: 8px; }
+
+        .scenario-box {
+            margin-top: 8px;
+            background: rgba(15, 23, 42, 0.72);
+            border-radius: 12px;
+            padding: 11px;
+            line-height: 1.45;
+            color: #dbe6ff;
+        }
+
+        .scenario-grid {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px;
+        }
+
+        .scenario-card {
+            background: rgba(15, 23, 42, 0.72);
+            border-radius: 12px;
+            padding: 10px;
+            transition: transform .22s ease, box-shadow .22s ease;
+            animation: fadeIn .25s ease;
+        }
+        .scenario-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+        }
+
+        .response-text {
+            margin-top: 6px;
+            line-height: 1.55;
+            min-height: 64px;
+            white-space: pre-wrap;
+        }
+
+        .meta-row {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        .single-result {
+            background: rgba(15, 23, 42, 0.72);
+            border-radius: 12px;
+            padding: 12px;
+            line-height: 1.55;
+            animation: fadeIn .25s ease;
+        }
+
+        .muted { color: var(--muted); }
+        .list { margin: 0; padding-left: 18px; }
+
+        .history { max-height: 220px; overflow: auto; display: grid; gap: 8px; }
+        .history-item {
+            background: rgba(15, 23, 42, 0.72);
+            border-radius: 10px;
+            padding: 8px;
+            font-size: .92rem;
+            animation: fadeIn .24s ease;
+        }
+
+        .hidden { display: none !important; }
+        .error { color: var(--red); min-height: 20px; }
+
+        .loader { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 1s infinite ease-in-out;
+        }
+        .dot:nth-child(2) { animation-delay: .15s; }
+        .dot:nth-child(3) { animation-delay: .3s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: .25; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-2px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
+    <div class="wrap">
+        <section class="card">
+            <h1 class="title">Interactive AI Evaluation Lab</h1>
+            <div class="subtitle">Run deterministic AI evaluation across tasks and inspect scoring quality.</div>
+        </section>
 
-<h1>LOVE AI Assistant</h1>
+        <section class="card grid-2">
+            <div>
+                <label>Mode</label>
+                <div class="mode-row">
+                    <button id="modeAi" class="mode-btn active" type="button">AI MODE</button>
+                    <button id="modeHuman" class="mode-btn" type="button">HUMAN MODE</button>
+                </div>
+            </div>
+            <div>
+                <label for="taskSelect">Task</label>
+                <select id="taskSelect"></select>
+            </div>
+        </section>
 
-<input type="text" id="message" placeholder="Type message..." />
-<button onclick="sendMessage()">Send</button>
+        <section id="aiView" class="card">
+            <h3 class="section-head">AI Mode</h3>
+            <button id="runAiBtn" type="button">Run AI Evaluation</button>
+            <div id="aiLoading" class="loader hidden" style="margin-top:8px;">
+                <span>Evaluating...</span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div id="aiResults" class="scenario-grid"></div>
+        </section>
 
-<p><b>Response:</b> <span id="response"></span></p>
-<p><b>Reward:</b> <span id="reward"></span></p>
+        <section id="humanView" class="card hidden">
+            <h3 class="section-head">Human Mode</h3>
+            <div id="scenarioBox" class="scenario-box">Task context: —</div>
+            <label for="humanInput" style="margin-top:10px;">Describe your situation</label>
+            <input id="humanInput" type="text" placeholder="Describe your situation..." />
+            <div id="hintText" class="helper">Provide enough detail for a strong AI response.</div>
+            <button id="submitHumanBtn" type="button" style="margin-top:10px;">Generate AI Response</button>
+            <div id="humanLoading" class="loader hidden" style="margin-top:8px;">
+                <span>Evaluating...</span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+        </section>
 
-<script>
-async function sendMessage() {
-    const message = document.getElementById("message").value;
+        <section id="resultPanel" class="card hidden">
+            <h3 class="section-head">AI Result</h3>
+            <div id="aiResponse" class="single-result"></div>
+            <div class="muted" style="margin-top:10px;">Score: <span id="aiScore">0.00</span></div>
+        </section>
 
-    const res = await fetch("/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: message })
-    });
+        <section class="card grid-2">
+            <div>
+                <h3 class="section-head">Breakdown</h3>
+                <div class="muted">Keywords: <span id="kwScore">0.00</span></div>
+                <div class="muted">Tone: <span id="toneScore">0.00</span></div>
+                <div class="muted">Structure: <span id="structureScore">0.00</span></div>
+            </div>
+            <div>
+                <h3 class="section-head">Feedback</h3>
+                <div class="muted">Missing keywords:</div>
+                <ul id="missingKeywords" class="list"></ul>
+                <div class="muted">Tone feedback: <span id="toneFeedback">—</span></div>
+                <div class="muted">Structure feedback: <span id="structureFeedback">—</span></div>
+            </div>
+        </section>
 
-    const data = await res.json();
+        <section class="card">
+            <h3 class="section-head">History</h3>
+            <div id="history" class="history"></div>
+            <div id="errorBox" class="error"></div>
+        </section>
+    </div>
 
-    document.getElementById("response").innerText = data.response;
-    document.getElementById("reward").innerText = data.reward;
-}
-</script>
+    <script>
+        const modeAiBtn = document.getElementById("modeAi");
+        const modeHumanBtn = document.getElementById("modeHuman");
+        const taskSelect = document.getElementById("taskSelect");
 
+        const aiView = document.getElementById("aiView");
+        const humanView = document.getElementById("humanView");
+        const resultPanel = document.getElementById("resultPanel");
+
+        const runAiBtn = document.getElementById("runAiBtn");
+        const aiLoading = document.getElementById("aiLoading");
+        const aiResults = document.getElementById("aiResults");
+
+        const scenarioBox = document.getElementById("scenarioBox");
+        const humanInput = document.getElementById("humanInput");
+        const hintText = document.getElementById("hintText");
+        const submitHumanBtn = document.getElementById("submitHumanBtn");
+        const humanLoading = document.getElementById("humanLoading");
+
+        const aiResponse = document.getElementById("aiResponse");
+        const aiScore = document.getElementById("aiScore");
+
+        const kwScore = document.getElementById("kwScore");
+        const toneScore = document.getElementById("toneScore");
+        const structureScore = document.getElementById("structureScore");
+        const missingKeywords = document.getElementById("missingKeywords");
+        const toneFeedback = document.getElementById("toneFeedback");
+        const structureFeedback = document.getElementById("structureFeedback");
+
+        const history = document.getElementById("history");
+        const errorBox = document.getElementById("errorBox");
+
+        let mode = "ai";
+        let taskMap = {};
+
+        const HINTS = {
+            emotional_support: "Use emotional context and specific feelings.",
+            professional_reply: "Describe the professional scenario clearly.",
+            problem_solving: "Describe the problem symptoms and what you already tried.",
+            casual_conversation: "Write a natural social message for a friendly reply."
+        };
+
+        function clamp(v) {
+            const n = Number(v);
+            if (!Number.isFinite(n)) return 0;
+            return Math.max(0, Math.min(1, n));
+        }
+
+        function clearPanels() {
+            aiResults.innerHTML = "";
+            resultPanel.classList.add("hidden");
+            aiResponse.textContent = "";
+            aiScore.textContent = "0.00";
+            kwScore.textContent = "0.00";
+            toneScore.textContent = "0.00";
+            structureScore.textContent = "0.00";
+            missingKeywords.innerHTML = "";
+            toneFeedback.textContent = "—";
+            structureFeedback.textContent = "—";
+            errorBox.textContent = "";
+        }
+
+        function setMode(nextMode) {
+            mode = nextMode === "human" ? "human" : "ai";
+            modeAiBtn.classList.toggle("active", mode === "ai");
+            modeHumanBtn.classList.toggle("active", mode === "human");
+            aiView.classList.toggle("hidden", mode !== "ai");
+            humanView.classList.toggle("hidden", mode !== "human");
+            clearPanels();
+            refreshScenarioAndHint();
+        }
+
+        function refreshScenarioAndHint() {
+            const taskId = taskSelect.value;
+            const desc = taskMap[taskId] || "";
+            scenarioBox.textContent = `Task context: ${desc || taskId || "—"}`;
+            hintText.textContent = HINTS[taskId] || "Describe your situation clearly.";
+        }
+
+        function updateBreakdown(data) {
+            const b = data?.breakdown || {};
+            kwScore.textContent = clamp(b.keywords).toFixed(2);
+            toneScore.textContent = clamp(b.tone).toFixed(2);
+            structureScore.textContent = clamp(b.structure).toFixed(2);
+
+            const fb = data?.feedback || {};
+            const missing = Array.isArray(fb.missing_keywords)
+                ? fb.missing_keywords
+                : (Array.isArray(fb.missing) ? fb.missing : []);
+
+            missingKeywords.innerHTML = "";
+            if (missing.length === 0) {
+                const li = document.createElement("li");
+                li.textContent = "none";
+                missingKeywords.appendChild(li);
+            } else {
+                missing.forEach(m => {
+                    const li = document.createElement("li");
+                    li.textContent = String(m);
+                    missingKeywords.appendChild(li);
+                });
+            }
+
+            toneFeedback.textContent = String(fb.tone_feedback || fb.tone || "—");
+            structureFeedback.textContent = String(fb.structure_feedback || fb.structure || "—");
+        }
+
+        function addHistory(taskId, score) {
+            const item = document.createElement("div");
+            item.className = "history-item";
+            const prettyTask = String(taskId || "task").replaceAll("_", " ").replace(/\b\w/g, c => c.toUpperCase());
+            item.textContent = `${prettyTask} → Score: ${clamp(score).toFixed(2)}`;
+            history.prepend(item);
+        }
+
+        async function loadTasks() {
+            try {
+                const res = await fetch("/tasks");
+                if (!res.ok) throw new Error();
+                const tasks = await res.json();
+                taskSelect.innerHTML = "";
+                taskMap = {};
+                tasks.forEach(t => {
+                    const id = String(t?.id || "");
+                    if (!id) return;
+                    taskMap[id] = String(t?.description || "");
+                    const opt = document.createElement("option");
+                    opt.value = id;
+                    opt.textContent = id;
+                    taskSelect.appendChild(opt);
+                });
+                refreshScenarioAndHint();
+            } catch {
+                errorBox.textContent = "Server error";
+            }
+        }
+
+        async function runAiMode() {
+            clearPanels();
+            runAiBtn.disabled = true;
+            aiLoading.classList.remove("hidden");
+            try {
+                const res = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: "", task_id: taskSelect.value, mode: "ai" })
+                });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+                const results = Array.isArray(data?.results) ? data.results : [];
+
+                for (const r of results) {
+                    const card = document.createElement("div");
+                    card.className = "scenario-card";
+
+                    const query = document.createElement("div");
+                    query.className = "muted";
+                    query.textContent = `Query: ${String(r?.input || "")}`;
+
+                    const resp = document.createElement("div");
+                    resp.className = "response-text";
+                    resp.textContent = String(r?.response || "");
+
+                    const meta = document.createElement("div");
+                    meta.className = "meta-row";
+                    const score = document.createElement("span");
+                    score.textContent = `Score: ${clamp(r?.score).toFixed(2)}`;
+                    meta.append(score);
+
+                    card.append(query, resp, meta);
+                    aiResults.appendChild(card);
+                }
+            } catch {
+                errorBox.textContent = "Server error";
+            } finally {
+                aiLoading.classList.add("hidden");
+                runAiBtn.disabled = false;
+            }
+        }
+
+        async function runHumanMode() {
+            clearPanels();
+            const message = humanInput.value.trim();
+            if (!message) {
+                errorBox.textContent = "Server error";
+                return;
+            }
+
+            submitHumanBtn.disabled = true;
+            humanLoading.classList.remove("hidden");
+            try {
+                const res = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message, task_id: taskSelect.value, mode: "human" })
+                });
+                if (!res.ok) throw new Error();
+                const data = await res.json();
+
+                resultPanel.classList.remove("hidden");
+                aiResponse.textContent = String(data?.ai_response || "");
+
+                const score = clamp(data?.ai_score ?? data?.reward ?? data?.score);
+                aiScore.textContent = score.toFixed(2);
+
+                updateBreakdown(data);
+                addHistory(taskSelect.value, score);
+            } catch {
+                errorBox.textContent = "Server error";
+            } finally {
+                humanLoading.classList.add("hidden");
+                submitHumanBtn.disabled = false;
+            }
+        }
+
+        modeAiBtn.addEventListener("click", () => setMode("ai"));
+        modeHumanBtn.addEventListener("click", () => setMode("human"));
+        runAiBtn.addEventListener("click", runAiMode);
+        submitHumanBtn.addEventListener("click", runHumanMode);
+        taskSelect.addEventListener("change", refreshScenarioAndHint);
+        humanInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && mode === "human" && !submitHumanBtn.disabled) {
+                runHumanMode();
+            }
+        });
+
+        setMode("ai");
+        loadTasks();
+    </script>
 </body>
 </html>
