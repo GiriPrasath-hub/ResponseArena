@@ -2589,6 +2589,20 @@
     "task": "casual_conversation",
     "query": "How's your day going?",
     "ideal_response": "It's going well, thanks! How about you?"
-  }
-
+  },
+{
+  "task": "crisis_support",
+  "query": "I feel like nothing matters anymore.",
+  "ideal_response": "I'm really sorry you're feeling this way. You're not alone, and there are people who care about you. Talking to someone you trust can really help."
+},
+{
+  "task": "technical_failure",
+  "query": "My entire system crashed during an important task.",
+  "ideal_response": "Let's handle this step by step. First, try restarting your system. Then check logs or backups to recover your work."
+},
+{
+  "task": "workplace_stress",
+  "query": "I'm constantly stressed at work and can't keep up.",
+  "ideal_response": "I understand how overwhelming that can feel. Consider prioritizing tasks and discussing workload with your manager for support."
+}
 ]

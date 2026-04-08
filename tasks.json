@@ -305,6 +305,30 @@
   "difficulty": "medium"
 },
 {
+  "task_id": "crisis_support",
+  "query": "I don't see a reason to keep going anymore.",
+  "expected_keywords": ["not alone", "support", "help", "talk"],
+  "difficulty": "hard"
+},
+{
+  "task_id": "data_loss_panic",
+  "query": "I deleted my entire project accidentally!",
+  "expected_keywords": ["recover", "backup", "restore", "check"],
+  "difficulty": "hard"
+},
+{
+  "task_id": "manager_pressure",
+  "query": "My boss is putting unrealistic deadlines on me.",
+  "expected_keywords": ["communicate", "clarify", "timeline", "support"],
+  "difficulty": "hard"
+},
+{
+  "task_id": "career_confusion",
+  "query": "I don't know what to do with my career anymore.",
+  "expected_keywords": ["consider", "options", "goals", "explore"],
+  "difficulty": "hard"
+},
+{
   "task_id": "casual_chat_2",
   "query": "What do you usually do for fun?",
   "expected_keywords": ["enjoy", "like", "fun"],

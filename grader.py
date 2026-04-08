@@ -143,6 +143,7 @@ def _structure_score(response: str, task_id: str) -> tuple[float, str]:
 
     # Check structure signals
     has_steps = bool(re.search(r"\b(first|step|then|next|finally|1\.|2\.)\b", response.lower()))
+    has_clarity = "?" not in response  # penalize vague questions
     has_explanation = sent_count >= 2
     adequate_length = 20 <= word_count <= 250
     not_repetitive = len(set(words)) / max(word_count, 1) > 0.45
@@ -150,6 +151,7 @@ def _structure_score(response: str, task_id: str) -> tuple[float, str]:
     score = 0.0
     if has_explanation:  score += 0.35
     if has_steps:        score += 0.25
+    if has_clarity:      score += 0.1
     if adequate_length:  score += 0.25
     if not_repetitive:   score += 0.15
 
