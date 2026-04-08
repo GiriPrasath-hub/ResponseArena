@@ -21,9 +21,12 @@ import time
 import requests
 from typing import Optional
 
+from openai import OpenAI
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY", "dummy-key"))
+
 # ── Configuration ─────────────────────────────────────────────────────────────
-ENV_BASE_URL = os.environ.get("ENV_BASE_URL", "http://localhost:7860")
-API_BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:7860")
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:7860")
+ENV_BASE_URL = API_BASE_URL
 MODEL_NAME   = os.environ.get("MODEL_NAME", "meta-llama/Llama-3.1-8B-Instruct")
 HF_TOKEN     = os.environ.get("HF_TOKEN", "")
 
@@ -187,7 +190,7 @@ def run_episode(task_config: dict) -> dict:
     query = obs.get("query", "")
     difficulty = obs.get("difficulty", "medium")
 
-    print(f"[START] task={task_name} difficulty={difficulty} query={repr(query[:60])}")
+    print(f"START task={task_name} difficulty={difficulty} query={repr(query[:60])}")
     sys.stdout.flush()
 
     # Determine tone from task
@@ -217,7 +220,7 @@ def run_episode(task_config: dict) -> dict:
     ) if breakdown else "n/a"
 
     print(
-        f"[STEP] step=1 task={task_name} reward={reward:.4f} "
+        f"STEP step=1 task={task_name} reward={reward:.4f} "
         f"breakdown=[{breakdown_str}] done=true"
     )
     sys.stdout.flush()
@@ -227,7 +230,7 @@ def run_episode(task_config: dict) -> dict:
     struct_fb = feedback.get("structure_feedback", "n/a")
 
     print(
-        f"[END] task={task_name} reward={reward:.4f} "
+        f"END task={task_name} reward={reward:.4f} "
         f"tone={tone_fb} structure={struct_fb} "
         f"missing_keywords={missing}"
     )
