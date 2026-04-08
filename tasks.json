@@ -285,5 +285,28 @@
     "query": "What are you up to?",
     "expected_keywords": ["good", "chat", "you"],
     "difficulty": "easy"
-  }
-]
+  },
+{
+  "task_id": "mental_health_support",
+  "query": "I feel completely lost and overwhelmed.",
+  "expected_keywords": ["understand", "support", "help", "not alone"],
+  "difficulty": "hard"
+},
+{
+  "task_id": "refund_request",
+  "query": "I want my money back immediately!",
+  "expected_keywords": ["apologize", "resolve", "refund", "help"],
+  "difficulty": "hard"
+},
+{
+  "task_id": "tech_issue",
+  "query": "My phone is overheating.",
+  "expected_keywords": ["restart", "check", "apps", "settings"],
+  "difficulty": "medium"
+},
+{
+  "task_id": "casual_chat_2",
+  "query": "What do you usually do for fun?",
+  "expected_keywords": ["enjoy", "like", "fun"],
+  "difficulty": "easy"
+}]

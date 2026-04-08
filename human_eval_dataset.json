@@ -2546,6 +2546,21 @@
     "tone": "professional"
   },
   {
+  "task": "emotional_support",
+  "query": "I feel like giving up.",
+  "ideal_response": "I'm really sorry you're feeling this way. You're not alone, and I'm here to support you. Let's take it one step at a time."
+},
+{
+  "task": "customer_service",
+  "query": "Your product stopped working after 2 days.",
+  "ideal_response": "We sincerely apologize for the inconvenience. We will resolve this issue quickly and ensure you receive a replacement or refund."
+},
+{
+  "task": "problem_solving",
+  "query": "My app keeps crashing.",
+  "ideal_response": "Step 1: Restart the app. Step 2: Clear cache. Step 3: Update the app. Let me know if the issue continues."
+},
+  {
     "task": "emotional_support",
     "query": "I feel like I'm failing at everything I do.",
     "ideal_response": "I understand how difficult that feeling can be. You're not alone, and it's okay to feel this way. I'm here to support you."
