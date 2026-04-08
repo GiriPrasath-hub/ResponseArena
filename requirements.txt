@@ -1,17 +1,5 @@
-# love_vH - requirements
-# Pure Python standard library only.
-# No external dependencies required.
-#
-# Python >= 3.10 (uses match/case-compatible type hints)
-#
-# Optional (for future extensions):
-#   numpy          # vectorised reward computation
-#   gymnasium      # drop-in Gym compatibility layer
-#   torch          # replace rule-based policy with neural network
-flask
-numpy
-fastapi
-uvicorn
-openenv-core
-pydantic
-openenv
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+pydantic>=2.10.0
+aiofiles==23.2.1
+python-multipart==0.0.9

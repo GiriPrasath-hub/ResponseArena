@@ -1,20 +1,12 @@
-# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
-
-# Logs
-*.log
-
-# Env
 .env
-
-# VS Code
-.vscode/
-
-# OS
+.venv
+venv/
 .DS_Store
-Thumbs.db
-
-# Optional test folders
-test_env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+*.log

@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 from pydantic import BaseModel, Field
-
-from agent.response_generator import generate_response
-from environment.task_manager import TaskManager
 from openenv.grader import grade_response
-from reward.reward_system import RewardSystem
+
+from openenv.agent.response_generator import generate_response
+from openenv.environment.task_manager import TaskManager
+from openenv.reward.reward_system import RewardSystem
 
 
 class Observation(BaseModel):

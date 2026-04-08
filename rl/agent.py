@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import Any
 
 from core.config import EnvConfig, CFG
-from agent.policy import Policy, LearningPolicy
-from agent.response_generator import ResponseGenerator
+from openenv.agent.policy import Policy, LearningPolicy
+from openenv.agent.response_generator import ResponseGenerator
 
 
 class LoveAgent:

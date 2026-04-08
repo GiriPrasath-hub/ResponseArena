@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from environment.env import LoveEnv
+from openenv.environment.env import LoveEnv
 from core.config import EnvConfig, CFG
 
 

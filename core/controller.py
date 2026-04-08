@@ -7,8 +7,8 @@
 from __future__ import annotations
 
 from core.config import CFG
-from environment.env import LoveEnv
-from agent.agent import LoveAgent
+from openenv.environment.env import LoveEnv
+from openenv.agent.agent import LoveAgent
 from training.trainer import Trainer
 from logger.logger import EpisodeLogger
 

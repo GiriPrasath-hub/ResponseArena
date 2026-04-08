@@ -22,8 +22,8 @@ from __future__ import annotations
 from typing import Any
 
 from core.config import EnvConfig, CFG
-from environment.env import LoveEnv
-from agent.agent import LoveAgent
+from openenv.environment.env import LoveEnv
+from openenv.agent.agent import LoveAgent
 from memory.memory_store import MemoryStore
 
 

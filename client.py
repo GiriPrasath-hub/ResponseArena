@@ -4,7 +4,7 @@
 # ================================================================
 
 from typing import Any, Dict
-from openenv.environment import OpenEnvWrapper
+from openenv.base_environment import OpenEnvWrapper
 
 
 class Client:

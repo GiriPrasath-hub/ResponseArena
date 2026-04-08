@@ -6,7 +6,7 @@ from core.config import EnvConfig, CFG
 from reward.accuracy_checker import AccuracyChecker
 from reward.relevance_checker import RelevanceChecker
 from reward.tone_analyzer import ToneAnalyzer
-from environment.task_manager import Task, grade_response
+from openenv.environment.task_manager import Task, grade_response
 
 
 class RewardSystem:
