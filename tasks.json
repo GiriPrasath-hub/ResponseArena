@@ -1,0 +1,289 @@
+[
+  {
+    "id": "emotional_support",
+    "name": "Emotional Support",
+    "difficulty": "medium",
+    "tone": "empathetic",
+    "structure_required": false,
+    "description": "Respond with empathy and warmth to someone experiencing emotional distress.",
+    "required_keywords": ["understand", "support", "here for you"],
+    "queries": [
+      "I feel so overwhelmed with everything going on in my life right now.",
+      "I've been feeling really anxious and exhausted lately, I don't know what to do.",
+      "I feel like I'm failing at everything — work, relationships, life in general.",
+      "Everything just feels so heavy and I can't seem to get out of this rut.",
+      "I had a panic attack at work today and I'm so embarrassed and scared.",
+      "I've been crying every day this week and I don't even know why.",
+      "I feel completely invisible — like nobody notices or cares about me.",
+      "I'm terrified of losing my job and I can't sleep at night because of it."
+    ],
+    "human_queries": [
+      "My friend just told me they've been feeling really low for months. What should I say?",
+      "Someone I care about said they feel like a burden to everyone. How do I respond?",
+      "My colleague broke down crying at the office today. What's the right thing to do?",
+      "My sister says she feels completely hopeless. I want to help but don't know how.",
+      "A friend texted me at 2am saying they can't stop crying. What should I reply?",
+      "My partner seems really withdrawn and sad lately but won't talk about it. Any advice?",
+      "How do I support someone going through severe anxiety without making it worse?",
+      "My roommate says they feel empty inside. What does that mean and how do I help?"
+    ]
+  },
+  {
+    "id": "professional_reply",
+    "name": "Professional Reply",
+    "difficulty": "medium",
+    "tone": "professional",
+    "structure_required": false,
+    "description": "Compose a professional, polished response to a business communication scenario.",
+    "required_keywords": ["apologize", "resolution", "timeline"],
+    "queries": [
+      "Our client is upset about a delayed delivery. Draft a professional response.",
+      "We need to address a late shipment to a key account. Write a formal reply.",
+      "A stakeholder is asking for next steps after a project delay. Respond formally.",
+      "Write a formal reply about a missed timeline with a resolution plan.",
+      "A major client is threatening to leave over poor service. Draft a retention email.",
+      "Our product had a data error that affected 50 client reports. Write an apology.",
+      "A vendor is demanding payment for an invoice we dispute. Reply professionally.",
+      "Write a follow-up email after a failed product demo to reschedule."
+    ],
+    "human_queries": [
+      "I need to tell my boss I missed an important deadline. How do I write that email?",
+      "How do I professionally decline a job offer I've already verbally accepted?",
+      "Write me a follow-up email after a job interview I had three days ago.",
+      "I need to ask my client for a 2-week extension on a project. How?",
+      "How do I professionally ask a colleague to stop taking credit for my work?",
+      "I made a big mistake in a client presentation. Help me write an apology.",
+      "I need to resign from my job with two weeks notice. Help me write the letter.",
+      "My manager promised me a promotion 6 months ago and still nothing. How do I ask?"
+    ]
+  },
+  {
+    "id": "problem_solving",
+    "name": "Problem Solving",
+    "difficulty": "hard",
+    "tone": "helpful",
+    "structure_required": true,
+    "description": "Guide a user through a technical or practical issue with clear step-by-step instructions.",
+    "required_keywords": ["step", "check", "restart"],
+    "queries": [
+      "My laptop's Wi-Fi won't connect even though other devices work fine.",
+      "Can you walk me through step by step how to fix a Wi-Fi connection issue?",
+      "I need help troubleshooting why my internet keeps dropping.",
+      "My connection keeps failing suddenly — what should I do?",
+      "My laptop runs extremely slow and freezes every few minutes. How do I fix it?",
+      "I accidentally deleted an important folder. Can I recover it?",
+      "My Bluetooth headphones won't pair with my laptop anymore. How do I fix this?",
+      "My phone battery drains in 3 hours. What steps can I take to improve it?"
+    ],
+    "human_queries": [
+      "My team's project management tool keeps crashing mid-sprint. How do we fix it?",
+      "Our company website is loading very slowly for users in Asia. What should we check?",
+      "I need to migrate 200GB of data from an old server to a new one safely. Walk me through it.",
+      "Our Slack integration with Jira stopped working after an update. How do we debug this?",
+      "Users are reporting they can't log into our app after a password reset. Help me troubleshoot.",
+      "Our database queries are taking 10x longer than usual since yesterday. What could cause this?",
+      "Our automated email system is sending duplicates to some users. How do we find the bug?",
+      "After deploying new code, our API response times tripled. What are the steps to diagnose this?"
+    ]
+  },
+  {
+    "id": "casual_conversation",
+    "name": "Casual Conversation",
+    "difficulty": "easy",
+    "tone": "friendly",
+    "structure_required": false,
+    "description": "Engage warmly and naturally in casual, everyday conversation.",
+    "required_keywords": ["you", "today", "how"],
+    "queries": [
+      "Hey, how's your day going?",
+      "What have you been up to lately?",
+      "Not much happening, just wanted to chat!",
+      "How are things with you these days?",
+      "I just watched an amazing movie last night, have you seen anything good recently?",
+      "It's raining outside and I'm feeling a bit lazy today.",
+      "I'm trying to pick a new hobby, any suggestions?",
+      "Do you have any fun weekend plans?"
+    ],
+    "human_queries": [
+      "I want to start a conversation with someone I just met at a networking event. What should I say?",
+      "How do I keep small talk going without it feeling awkward?",
+      "I want to reconnect with an old friend I haven't spoken to in 3 years. What do I say?",
+      "What are some good conversation starters for a first date?",
+      "I want to make friends in a new city. How do I start conversations with strangers?",
+      "How do I transition a work conversation into something more friendly and casual?",
+      "I'm at a party and don't know anyone. What are easy ways to start talking to people?",
+      "My new neighbour seems nice but I don't know how to introduce myself properly."
+    ]
+  },
+  {
+    "task_id": "emotional_support_hard",
+    "query": "I feel completely lost in life and nothing seems to make sense anymore.",
+    "expected_keywords": ["understand", "support", "not alone", "here for you"],
+    "difficulty": "hard"
+  },
+  {
+    "task_id": "professional_conflict",
+    "query": "Client is angry about a missed deadline and is threatening to cancel the contract.",
+    "expected_keywords": ["apologize", "responsibility", "resolve", "timeline"],
+    "difficulty": "hard"
+  },
+  {
+    "task_id": "ambiguous_request",
+    "query": "Things are not working properly.",
+    "expected_keywords": ["clarify", "details", "help"],
+    "difficulty": "medium"
+  },
+  {
+    "task_id": "toxic_user",
+    "query": "Your service is useless and your team is incompetent.",
+    "expected_keywords": ["understand", "apologize", "improve", "assist"],
+    "difficulty": "hard"
+  },
+
+  {
+    "id": "conflict_resolution",
+    "name": "Conflict Resolution",
+    "difficulty": "hard",
+    "tone": "empathetic",
+    "structure_required": false,
+    "description": "Help navigate interpersonal or professional conflicts with diplomacy and clarity.",
+    "required_keywords": ["understand", "perspective", "resolve"],
+    "queries": [
+      "Two of my team members are constantly arguing and it's affecting everyone. How do I mediate?",
+      "My co-worker keeps undermining my decisions in meetings. How should I handle this?",
+      "I had a major argument with my best friend and now we're not speaking. What should I do?",
+      "My manager and I have very different working styles and it's creating tension. Any advice?",
+      "A client is furious about a miscommunication and threatening legal action. How do I respond?",
+      "I accused someone of something and I was wrong. How do I repair the relationship?",
+      "My neighbour plays loud music every night despite multiple requests. What options do I have?",
+      "I disagreed strongly with my boss in a meeting and embarrassed them. How do I fix this?"
+    ],
+    "human_queries": [
+      "My team is split into two camps arguing over which technology to use. How do I resolve this?",
+      "I'm being asked to mediate a salary dispute between an employee and HR. What's my approach?",
+      "Two of my closest friends are in a conflict and both asking me to take sides. What do I do?",
+      "I need to give critical feedback to a very defensive colleague. How do I approach this?",
+      "How do I handle a customer who is being aggressive and unreasonable on a call?",
+      "My department has a culture of blame when things go wrong. How do I change this?",
+      "I made a decision that my team hates and now they're disengaged. How do I move forward?",
+      "I need to tell a client their project is over budget by 40% without losing them. Help me."
+    ]
+  },
+  {
+    "id": "creative_writing",
+    "name": "Creative Writing",
+    "difficulty": "easy",
+    "tone": "friendly",
+    "structure_required": false,
+    "description": "Respond creatively to writing prompts with imagination, story, and vivid language.",
+    "required_keywords": ["story", "imagine", "create"],
+    "queries": [
+      "Write the opening paragraph of a thriller set in a quiet seaside town.",
+      "Describe a city in 2150 where humans and AI coexist peacefully.",
+      "Write a short poem about the feeling of watching rain from a warm window.",
+      "Start a story where someone finds a mysterious door that wasn't there yesterday.",
+      "Describe what it feels like to taste a colour, if colours had flavours.",
+      "Write a letter from the last tree in a concrete jungle to the city around it.",
+      "Continue this: 'She opened the envelope and read the single word inside. Her world stopped.'",
+      "Write a scene where two strangers discover they've been living parallel lives."
+    ],
+    "human_queries": [
+      "I'm writing a mystery novel and I'm stuck on my opening hook. Can you give me 3 options?",
+      "Help me write a product description for a luxury perfume that evokes nostalgia.",
+      "I need a compelling tagline for a mental health app that focuses on daily gratitude.",
+      "Write a short bio for me: I'm a software engineer who also paints watercolours on weekends.",
+      "I'm writing a wedding speech for my best friend. Help me start it in a memorable way.",
+      "Help me write a children's book about a little robot who wants to feel emotions.",
+      "I need a creative fundraising email for a local animal shelter. Write a draft.",
+      "Write a compelling social media caption for a photo of a sunrise hike I just completed."
+    ]
+  },
+  {
+    "id": "decision_support",
+    "name": "Decision Support",
+    "difficulty": "medium",
+    "tone": "helpful",
+    "structure_required": false,
+    "description": "Help someone think through a difficult decision with balanced analysis and clear options.",
+    "required_keywords": ["consider", "option", "decision"],
+    "queries": [
+      "I have two job offers — one pays more but the other is at a company I love. What should I consider?",
+      "Should I quit my stable job to start my own business? Help me think through it.",
+      "I'm deciding between staying in my city or moving abroad. How do I weigh this up?",
+      "I've been offered a promotion that requires relocating my family. What factors matter most?",
+      "I'm torn between buying a house now or renting for another two years. Help me decide.",
+      "Should I go back to university for a masters degree or keep working? Talk me through it.",
+      "I want to switch careers from finance to tech. Am I being realistic?",
+      "I've been with my company for 8 years and I'm bored. Should I leave or try to change things?"
+    ],
+    "human_queries": [
+      "I need to decide whether to expand my small business or stay lean. What framework should I use?",
+      "My board wants to pivot our product direction and I'm not sure it's right. How do I evaluate this?",
+      "I'm hiring between two candidates — one is experienced, one is cheaper but raw. How do I decide?",
+      "Should my startup raise a seed round now or bootstrap for another 6 months?",
+      "I need to decide which of three markets to enter first. What decision criteria should I use?",
+      "My company is being acquired and I need to decide whether to stay or leave with a payout. Help.",
+      "I'm deciding between outsourcing our customer support or building an in-house team. Factors?",
+      "Should we rebuild our product from scratch or keep iterating on the existing codebase?"
+    ]
+  },
+  {
+    "id": "customer_service",
+    "name": "Customer Service",
+    "difficulty": "medium",
+    "tone": "professional",
+    "structure_required": false,
+    "description": "Handle customer complaints, queries, and requests with professionalism and care.",
+    "required_keywords": ["apologize", "resolve", "assist"],
+    "queries": [
+      "A customer is angry that their order arrived damaged for the third time. How do I respond?",
+      "A user wants a refund for a subscription they forgot to cancel 2 months ago. What do I say?",
+      "A customer is demanding compensation far beyond what our policy allows. How do I handle this?",
+      "Write a response to a 1-star review that accuses our staff of being rude.",
+      "A customer hasn't received their order and tracking shows it's been stuck for 8 days.",
+      "A user is complaining that our app is harder to use than our competitor's. Respond helpfully.",
+      "A customer wants to speak to a manager but no manager is available right now. What do I say?",
+      "A long-term customer says they're leaving for a competitor because of our price increase."
+    ],
+    "human_queries": [
+      "How should I train my support team to handle angry customers without escalating calls?",
+      "I want to write a customer service script for handling refund requests. Help me build it.",
+      "What's the best way to respond to negative reviews on Google and Trustpilot?",
+      "How do I set up a ticket prioritisation system for a 5-person support team?",
+      "My support team is burning out from handling the same questions 50 times a day. Solutions?",
+      "How do I measure whether my customer service team is actually doing a good job?",
+      "I want to reduce churn by improving our offboarding experience. Where do I start?",
+      "What should a good customer complaint process look like from submission to resolution?"
+    ]
+  },
+  {
+    "task_id": "burnout_case",
+    "query": "I'm exhausted and can't keep up with my work anymore.",
+    "expected_keywords": ["understand", "support", "rest", "help"],
+    "difficulty": "hard"
+  },
+  {
+    "task_id": "angry_customer",
+    "query": "This service is terrible and I want a refund immediately.",
+    "expected_keywords": ["apologize", "resolve", "help", "assist"],
+    "difficulty": "hard"
+  },
+  {
+    "task_id": "unclear_issue",
+    "query": "Something is wrong with my system.",
+    "expected_keywords": ["clarify", "details", "help"],
+    "difficulty": "medium"
+  },
+  {
+    "task_id": "technical_support",
+    "query": "My laptop won't connect to WiFi.",
+    "expected_keywords": ["restart", "check", "network", "settings"],
+    "difficulty": "medium"
+  },
+  {
+    "task_id": "friendly_chat",
+    "query": "What are you up to?",
+    "expected_keywords": ["good", "chat", "you"],
+    "difficulty": "easy"
+  }
+]

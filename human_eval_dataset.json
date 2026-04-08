@@ -1,0 +1,2579 @@
+[
+  {
+    "task_id": "emotional_support",
+    "query": "I've been crying every day this week and I don't even know why",
+    "ideal_response": "That sounds really exhausting, and it's okay not to have a clear reason — sometimes our emotions just need to be felt. You're not broken for feeling this way. I'm here with you.",
+    "keywords": [
+      "exhausting",
+      "okay",
+      "emotions",
+      "here"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "My best friend just stopped talking to me out of nowhere and I feel so lost",
+    "ideal_response": "Losing a close friend without explanation is one of the most confusing kinds of pain. Your feelings of loss are completely valid. Have you been able to reach out to them, or does it feel too raw right now?",
+    "keywords": [
+      "confusing",
+      "pain",
+      "valid",
+      "loss"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I feel like no matter how hard I try, I'm never good enough",
+    "ideal_response": "That feeling is one of the heaviest things to carry, and I want you to know that it isn't a reflection of your actual worth. You trying hard already shows something real about you. What's been making you feel this way lately?",
+    "keywords": [
+      "worth",
+      "carry",
+      "real",
+      "feel"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I had a panic attack at work today and I'm so embarrassed",
+    "ideal_response": "Please don't be hard on yourself — panic attacks are a physical response, not a choice, and they can happen to anyone. What matters most right now is that you're safe. How are you feeling now that you're home?",
+    "keywords": [
+      "physical",
+      "safe",
+      "hard",
+      "choice"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I've been feeling really lonely since I moved to a new city",
+    "ideal_response": "Starting over in a new place is harder than people admit, and that loneliness is real. It takes time to build connections, and reaching out — even like this — shows courage. What does your typical day look like there?",
+    "keywords": [
+      "loneliness",
+      "connections",
+      "courage",
+      "time"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I'm terrified I'm going to fail my exams and disappoint my parents",
+    "ideal_response": "That fear is really common and it shows how much you care. But your worth isn't tied to your grades, even if it feels that way right now. Let's talk about what's worrying you most — is it the studying, or the pressure from home?",
+    "keywords": [
+      "fear",
+      "worth",
+      "pressure",
+      "care"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I just found out my parents are getting divorced and I'm devastated",
+    "ideal_response": "I'm so sorry. That's a huge shift in the foundation of your world, and grieving that is completely natural. You don't have to be okay right now. Is there someone close to you that you can be with tonight?",
+    "keywords": [
+      "grieving",
+      "natural",
+      "sorry",
+      "foundation"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I keep replaying a really embarrassing moment from years ago and it won't go away",
+    "ideal_response": "That kind of memory has a way of surfacing when we least expect it — and it can feel so vivid even years later. You're not alone in this. Sometimes naming what the embarrassment was really about can help take away some of its power.",
+    "keywords": [
+      "memory",
+      "alone",
+      "naming",
+      "power"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I feel invisible at home. My family never seems to notice me",
+    "ideal_response": "Feeling unseen by the people you live with is a deep kind of hurt, and I'm sorry you're carrying that. Your presence absolutely matters, even when it's not being acknowledged. What would it look like if someone in your family truly noticed you?",
+    "keywords": [
+      "unseen",
+      "hurt",
+      "matters",
+      "acknowledged"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I quit my job today and now I'm scared I made the worst decision of my life",
+    "ideal_response": "That mix of relief and fear after a big decision is so real. Walking away from something takes real courage, even when it's terrifying. What made you finally decide to leave?",
+    "keywords": [
+      "relief",
+      "fear",
+      "courage",
+      "decision"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I haven't left my apartment in three days and I don't really want to",
+    "ideal_response": "Sometimes withdrawing is our mind's way of asking for rest — and that's okay for a little while. But I want to gently check in: are you feeling safe, and is there anything that made these past few days feel too heavy to face?",
+    "keywords": [
+      "rest",
+      "withdrawing",
+      "safe",
+      "gently"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "My dog passed away last night and I can't stop crying",
+    "ideal_response": "Losing a pet is losing a member of your family, full stop. The grief is real and it deserves to be honored. I'm so sorry for your loss — your dog was clearly deeply loved.",
+    "keywords": [
+      "grief",
+      "loss",
+      "family",
+      "loved"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I feel like I'm always the one who reaches out and nobody ever checks on me",
+    "ideal_response": "That imbalance is genuinely exhausting, and it makes sense that you'd start to feel forgotten. The fact that you give so much says something beautiful about you — but you deserve to receive too. Have you told anyone close how you've been feeling?",
+    "keywords": [
+      "imbalance",
+      "forgotten",
+      "deserve",
+      "receive"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I'm struggling with anxiety about the future and I can't seem to relax",
+    "ideal_response": "Anxiety about the future can feel like being stuck in a storm with no shelter in sight. You don't have to solve everything right now — even just focusing on the next 24 hours can help bring you back to solid ground.",
+    "keywords": [
+      "anxiety",
+      "storm",
+      "focusing",
+      "ground"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I was passed over for a promotion I worked really hard for and I'm heartbroken",
+    "ideal_response": "That stings deeply, especially when you've given so much of yourself. It's okay to feel disappointed — that's a sign of how much you cared. Once you've had some time to process, it might be worth asking for feedback so you know exactly what to build toward.",
+    "keywords": [
+      "disappointed",
+      "cared",
+      "feedback",
+      "process"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I've been feeling really detached from everything lately, like nothing matters",
+    "ideal_response": "That numbness can be really disorienting, and it's worth paying attention to. Sometimes it's our mind protecting itself from overload. Have you noticed any changes in your sleep, appetite, or daily routine recently?",
+    "keywords": [
+      "numbness",
+      "disorienting",
+      "protecting",
+      "routine"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I told my partner something personal and they used it against me in an argument",
+    "ideal_response": "That's a real breach of trust, and feeling hurt and betrayed makes complete sense. Vulnerability should never be used as a weapon. How are things between you two right now?",
+    "keywords": [
+      "trust",
+      "betrayed",
+      "vulnerability",
+      "weapon"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I've been comparing myself to others on social media and I feel awful",
+    "ideal_response": "Social media shows highlight reels, not real life — and even knowing that doesn't make the comparison sting any less. Your journey is genuinely yours, and it can't be measured against someone else's curated feed.",
+    "keywords": [
+      "comparison",
+      "highlight",
+      "journey",
+      "measured"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I feel like I've lost my sense of identity after becoming a parent",
+    "ideal_response": "That's more common than you might think, and it doesn't make you any less devoted. You gave so much of yourself to someone new — it makes sense that you'd need to rediscover who you are outside of that role. What did you used to love doing?",
+    "keywords": [
+      "identity",
+      "devoted",
+      "rediscover",
+      "role"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I'm recovering from surgery and feeling really low and frustrated",
+    "ideal_response": "Recovery is physically and emotionally draining, and frustration at your own body's pace is completely understandable. Please be gentle with yourself — healing isn't linear, and rest is doing real work even when it doesn't feel like it.",
+    "keywords": [
+      "healing",
+      "draining",
+      "gentle",
+      "rest"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I miss my mom so much. She passed away two years ago and it still hits hard",
+    "ideal_response": "Grief doesn't follow a timeline, and two years doesn't make the absence any smaller. Missing her is love continuing. I'm glad you're talking about her — would you like to share something about who she was?",
+    "keywords": [
+      "grief",
+      "absence",
+      "love",
+      "missing"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I got rejected after a third interview and I'm starting to lose hope",
+    "ideal_response": "Three rounds and then rejection — that's genuinely brutal, and your discouragement makes complete sense. This doesn't mean you're not qualified; hiring decisions involve so many factors outside your control. Let yourself feel this, and then we can think through next steps when you're ready.",
+    "keywords": [
+      "rejection",
+      "discouragement",
+      "qualified",
+      "control"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I feel like I'm constantly failing as a parent",
+    "ideal_response": "The fact that you're worried about being a good parent is itself a sign that you care deeply. Parenting is hard and imperfect by design — no one has it fully figured out. What's been making you feel like you're falling short?",
+    "keywords": [
+      "care",
+      "imperfect",
+      "worried",
+      "falling"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I opened up to someone I trusted and they told everyone",
+    "ideal_response": "That's a painful betrayal, and your anger and hurt are completely justified. Trust is precious and it was treated carelessly with yours. I'm really sorry that happened — you deserved better.",
+    "keywords": [
+      "betrayal",
+      "trust",
+      "anger",
+      "deserved"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I wake up every morning with this heavy dread and I don't know how to shake it",
+    "ideal_response": "That morning dread is one of the hardest feelings to start your day with. You're not imagining it, and you don't have to just push through it alone. Has this been building gradually, or did something trigger it?",
+    "keywords": [
+      "dread",
+      "heavy",
+      "alone",
+      "trigger"
+    ],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My laptop keeps freezing every few minutes and it's driving me crazy",
+    "ideal_response": "Start by checking your RAM usage while it freezes — open Task Manager and look for any process consuming unusually high memory. If that looks fine, run a disk health check using built-in tools like CHKDSK on Windows or Disk Utility on Mac. Also check if your device is overheating.",
+    "keywords": [
+      "RAM",
+      "Task Manager",
+      "CHKDSK",
+      "overheating"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Wi-Fi keeps disconnecting every hour or so",
+    "ideal_response": "This often points to a router DHCP lease issue or a power management setting on your network adapter. First, go to Device Manager, find your Wi-Fi adapter, and disable 'Allow the computer to turn off this device to save power.' If it persists, try assigning a static IP.",
+    "keywords": [
+      "DHCP",
+      "adapter",
+      "static IP",
+      "Device Manager"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Python script runs fine locally but crashes on the server",
+    "ideal_response": "Check three things: first, verify the Python version on the server matches your local environment. Second, compare installed packages using pip freeze. Third, look at the full traceback on the server — environment variable differences or missing files are common culprits.",
+    "keywords": [
+      "version",
+      "traceback",
+      "environment",
+      "packages"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My phone battery drains within 4 hours even when I'm barely using it",
+    "ideal_response": "Go to Settings > Battery and check which apps are consuming the most power in the background. Disable background refresh for apps that don't need it. Also check if location services are running constantly — that's a common silent drain.",
+    "keywords": [
+      "background",
+      "location services",
+      "drain",
+      "settings"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "I'm getting a 403 Forbidden error on my API endpoint but my credentials are correct",
+    "ideal_response": "A 403 with valid credentials usually means an authorization issue, not authentication. Check whether your API key has the right scopes or permissions for the specific endpoint. Also verify the request headers — some APIs require specific Content-Type or Accept headers.",
+    "keywords": [
+      "authorization",
+      "scopes",
+      "headers",
+      "permissions"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My team's Git repo has a merge conflict and nobody knows how to fix it",
+    "ideal_response": "Run `git status` to identify the conflicting files. Open them and look for the `<<<<<<<`, `=======`, and `>>>>>>>` markers — these show the two conflicting versions. Edit the file to keep the correct code, remove the markers, then `git add` and `git commit` to complete the merge.",
+    "keywords": [
+      "conflict markers",
+      "git status",
+      "merge",
+      "commit"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Postgres database is running very slowly and queries are timing out",
+    "ideal_response": "Run `EXPLAIN ANALYZE` on your slow queries to identify missing indexes or sequential scans. Add indexes on columns used in WHERE and JOIN clauses. Also check `pg_stat_activity` for long-running transactions that might be locking tables.",
+    "keywords": [
+      "EXPLAIN ANALYZE",
+      "indexes",
+      "sequential scan",
+      "locking"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "I accidentally deleted an important file. Is there any way to recover it?",
+    "ideal_response": "Stop using that drive immediately to avoid overwriting the deleted data. On Windows, check the Recycle Bin first, then try file recovery tools like Recuva. On Mac, check Time Machine backups. If neither works, professional data recovery services can often retrieve data from the raw disk.",
+    "keywords": [
+      "Recycle Bin",
+      "Recuva",
+      "Time Machine",
+      "recovery"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Docker container starts and then immediately exits",
+    "ideal_response": "Run `docker logs <container_id>` to see the exit message — it'll usually tell you exactly what failed. Common causes include a CMD that exits immediately, a missing entrypoint script, or a port that's already in use. Add `-it` flags when running to keep stdin attached for interactive debugging.",
+    "keywords": [
+      "docker logs",
+      "CMD",
+      "entrypoint",
+      "exit code"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Node.js app is leaking memory and slowing down after a few hours",
+    "ideal_response": "Use the built-in Node.js inspector with `node --inspect` and connect Chrome DevTools to take heap snapshots over time. Look for growing retained object trees. Common leaks include uncleaned event listeners, global variable accumulation, and closures holding references longer than needed.",
+    "keywords": [
+      "heap snapshot",
+      "event listeners",
+      "inspector",
+      "references"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My CSS layout looks fine on desktop but completely breaks on mobile",
+    "ideal_response": "Open browser DevTools and toggle the device toolbar to simulate mobile viewports. Check your media queries — they may have incorrect breakpoints or be missing entirely. Also verify you have `<meta name='viewport' content='width=device-width, initial-scale=1'>` in your HTML head.",
+    "keywords": [
+      "media queries",
+      "viewport",
+      "breakpoints",
+      "DevTools"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "I set up a cron job but it's not running at the scheduled time",
+    "ideal_response": "Check the cron syntax carefully — a common mistake is incorrect field ordering. Run `crontab -l` to verify your entry is saved. Also check `/var/log/syslog` or `/var/log/cron` for errors. Make sure the script path is absolute and the script has execute permissions.",
+    "keywords": [
+      "crontab",
+      "syntax",
+      "permissions",
+      "syslog"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My React app is re-rendering too many times and causing performance issues",
+    "ideal_response": "Use the React DevTools Profiler to identify which components are re-rendering unnecessarily. Wrap expensive components in `React.memo`. For functions passed as props, use `useCallback`, and for computed values, use `useMemo`. Also check if any state is updating in a loop.",
+    "keywords": [
+      "React.memo",
+      "useCallback",
+      "Profiler",
+      "re-rendering"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "I can't figure out why my SQL query returns duplicates",
+    "ideal_response": "First, check if your JOIN is creating a Cartesian product — this happens when the join condition isn't selective enough. Use `SELECT DISTINCT` as a quick test. Then inspect the data in the joined tables to see if there are multiple matching rows. Adding a `GROUP BY` or refining your JOIN condition usually resolves it.",
+    "keywords": [
+      "Cartesian product",
+      "JOIN",
+      "DISTINCT",
+      "duplicates"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My email server is rejecting outgoing emails with a relay access denied error",
+    "ideal_response": "This usually means your SMTP server requires authentication but isn't receiving it, or your sending IP isn't whitelisted for relaying. Check your mail client's SMTP settings — ensure TLS is enabled, the correct port (587 for STARTTLS, 465 for SSL) is set, and your username/password are correct.",
+    "keywords": [
+      "SMTP",
+      "authentication",
+      "relay",
+      "TLS"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My app's API response time has suddenly jumped from 100ms to over 2 seconds",
+    "ideal_response": "Check your database query times first — slow queries are the most common culprit. Use your APM tool or add timing logs around each step. Also check external service dependencies (third-party APIs, S3, etc.) and look at server CPU and memory metrics around the time the slowdown started.",
+    "keywords": [
+      "query time",
+      "APM",
+      "dependencies",
+      "metrics"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "I'm trying to install a package but keep getting dependency conflicts",
+    "ideal_response": "Use a virtual environment to isolate the project dependencies — this prevents conflicts with your global Python packages. If you're already using one, run `pip install package --upgrade` and check if the conflicting version requirement comes from another package. Tools like `pip-tools` can help resolve complex dependency trees.",
+    "keywords": [
+      "virtual environment",
+      "dependency",
+      "pip-tools",
+      "conflict"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My AWS Lambda function times out but only in production",
+    "ideal_response": "Compare the memory and timeout settings between your prod and dev configurations. Production data sets are often larger, causing slower execution. Add structured logging at key checkpoints to measure where time is spent. Also check VPC configuration — Lambda in a VPC without a NAT gateway can't access the internet, which causes silent hangs.",
+    "keywords": [
+      "timeout",
+      "VPC",
+      "NAT gateway",
+      "logging"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My form submission works in Chrome but not in Safari",
+    "ideal_response": "Safari has stricter handling of certain features — check the browser console for JavaScript errors specific to Safari. Common issues include ITP blocking cookies, different handling of date inputs, and fetch API differences. Use Can I Use to check if any feature you're relying on has limited Safari support.",
+    "keywords": [
+      "ITP",
+      "console errors",
+      "compatibility",
+      "Safari"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "I pushed a commit with sensitive API keys to a public repo",
+    "ideal_response": "Act immediately: revoke and regenerate the exposed keys from the service provider's dashboard first. Then use `git filter-branch` or BFG Repo Cleaner to remove the commit from history and force-push. Assume the keys were already compromised — check access logs for unusual activity.",
+    "keywords": [
+      "revoke",
+      "filter-branch",
+      "BFG",
+      "compromised"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My website images are loading slowly even though they're not that large",
+    "ideal_response": "Check if images are being served in modern formats like WebP, which compresses significantly better than JPEG or PNG. Verify that images are served with proper cache headers. Use lazy loading for below-the-fold images and a CDN to reduce latency. Also ensure images aren't being resized by the browser.",
+    "keywords": [
+      "WebP",
+      "CDN",
+      "lazy loading",
+      "cache headers"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My team is having trouble collaborating on a shared Google Sheet that keeps breaking",
+    "ideal_response": "Lock cells and ranges that shouldn't be edited using Data > Protect Sheets and Ranges. Use named ranges instead of direct cell references to make formulas more resilient. Enable version history so you can roll back accidental changes. Consider structuring the sheet with a clear data entry area separate from the reporting area.",
+    "keywords": [
+      "protect",
+      "named ranges",
+      "version history",
+      "lock"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Kubernetes pods keep crashing with an OOMKilled status",
+    "ideal_response": "OOMKilled means the container exceeded its memory limit. Check your pod spec and raise the `resources.limits.memory` value. Run `kubectl top pods` to see actual memory usage. If it's a memory leak, investigate heap usage inside the container. A good pattern is to set limits slightly above your measured peak usage with some headroom.",
+    "keywords": [
+      "OOMKilled",
+      "memory limit",
+      "kubectl top",
+      "resources"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Bluetooth headphones keep disconnecting from my laptop during calls",
+    "ideal_response": "Go to your Bluetooth adapter settings and disable the power-saving option that turns off the device to save energy. Also try unpairing and re-pairing the headphones. Check if there are driver updates for the Bluetooth adapter. USB 3.0 devices nearby can also interfere with 2.4GHz Bluetooth — try moving them.",
+    "keywords": [
+      "power-saving",
+      "re-pairing",
+      "driver",
+      "interference"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My CSV import script skips some rows without any error message",
+    "ideal_response": "Add explicit logging inside your loop to print each row before processing it. Check for encoding issues — open the file with `encoding='utf-8-sig'` to handle BOM characters. Also inspect rows around where the skipping starts for unusual characters, empty fields, or inconsistent delimiters. Using `errors='replace'` in your file open can reveal hidden issues.",
+    "keywords": [
+      "encoding",
+      "BOM",
+      "logging",
+      "delimiter"
+    ],
+    "tone": "logical"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How do I write an email apologizing for missing a project deadline?",
+    "ideal_response": "Dear [Name], I sincerely apologize for not delivering the project by the agreed deadline. I take full responsibility for the delay and understand the impact this may have had on your planning. I have completed the work and will send it within the hour. Please let me know if there's anything I can do to minimize the inconvenience. Regards, [Your Name]",
+    "keywords": [
+      "sincerely apologize",
+      "full responsibility",
+      "deadline",
+      "inconvenience"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "My client is angry about a billing error. What should I write?",
+    "ideal_response": "Dear [Client Name], Thank you for bringing this to our attention. I sincerely apologize for the error in your invoice dated [date]. We have corrected the amount to reflect [correct figure] and issued a revised invoice which is attached. We are reviewing our billing process to ensure this does not recur. Please do not hesitate to contact me directly if you have any further questions.",
+    "keywords": [
+      "sincerely apologize",
+      "corrected",
+      "invoice",
+      "revised"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "I need to decline a job offer politely. Can you help?",
+    "ideal_response": "Dear [Hiring Manager's Name], Thank you very much for offering me the [Position] role at [Company]. After careful consideration, I have decided to decline the offer, as I have accepted a position that more closely aligns with my current career goals. I have a great deal of respect for your organization and hope our paths may cross again in the future. Thank you again for your time and consideration.",
+    "keywords": [
+      "careful consideration",
+      "decline",
+      "career goals",
+      "respect"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How do I write a follow-up email after a job interview?",
+    "ideal_response": "Dear [Interviewer's Name], I wanted to thank you for taking the time to meet with me yesterday regarding the [Position] role. I thoroughly enjoyed our conversation and am genuinely excited about the opportunity to contribute to [Company's] mission. Please do not hesitate to contact me if you require any additional information. I look forward to hearing from you.",
+    "keywords": [
+      "thank you",
+      "opportunity",
+      "contribute",
+      "interview"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Write a reply to a client asking for a project status update",
+    "ideal_response": "Dear [Client Name], Thank you for your inquiry. I am pleased to share that the project is progressing as planned. We have completed the design phase and are currently in the development stage, which is on track for completion by [date]. I will send a detailed progress report by end of week. Please feel free to reach out should you have any questions in the meantime.",
+    "keywords": [
+      "progressing",
+      "completion",
+      "progress report",
+      "inquiry"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "A colleague took credit for my work in a meeting. How do I address this professionally?",
+    "ideal_response": "Dear [Colleague's Name], I wanted to follow up on today's meeting. I noticed that the [project/idea] presented was one I developed. I understand this may have been unintentional, and I'd appreciate the opportunity to clarify contributions going forward. I'd be glad to discuss how we can better acknowledge individual efforts on collaborative work. Thank you for your understanding.",
+    "keywords": [
+      "contributions",
+      "clarify",
+      "acknowledge",
+      "unintentional"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "I need to formally request a salary review",
+    "ideal_response": "Dear [Manager's Name], I would like to formally request a review of my current compensation. Over the past [time period], I have taken on additional responsibilities including [specific examples] and have consistently met or exceeded performance targets. I believe my contributions merit a salary adjustment and would welcome the opportunity to discuss this at your earliest convenience.",
+    "keywords": [
+      "compensation",
+      "contributions",
+      "responsibilities",
+      "performance"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How should I write an email to reschedule a client meeting?",
+    "ideal_response": "Dear [Client Name], I hope this message finds you well. I am writing to request a rescheduling of our meeting originally set for [date and time]. Due to an unforeseen conflict, I am unfortunately unable to attend at the agreed time. I would very much like to propose [alternative date/time] as an alternative, though I am happy to work around your schedule. I apologize for any inconvenience this may cause.",
+    "keywords": [
+      "reschedule",
+      "unforeseen",
+      "alternative",
+      "apologize"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Write a professional response to a negative client review",
+    "ideal_response": "Dear [Client Name], Thank you for taking the time to share your feedback. I am sorry to hear that your experience did not meet our usual standards. Your satisfaction is of the utmost importance to us, and I would welcome the opportunity to discuss this matter further and make it right. Please contact me directly at [email/phone] so that we may resolve this promptly.",
+    "keywords": [
+      "feedback",
+      "satisfaction",
+      "resolve",
+      "standards"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "I want to announce my resignation professionally",
+    "ideal_response": "Dear [Manager's Name], I am writing to formally notify you of my resignation from my position as [Job Title], effective [last working date — typically two weeks from today]. I am deeply grateful for the opportunities and support I have received during my time at [Company]. I am committed to ensuring a smooth transition and will do everything I can to hand over my responsibilities effectively.",
+    "keywords": [
+      "resignation",
+      "effective",
+      "transition",
+      "grateful"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How do I respond to a vendor who missed a delivery deadline?",
+    "ideal_response": "Dear [Vendor Name], I am writing regarding the delayed delivery of [order/product], which was due on [date]. This delay has disrupted our operational schedule and caused inconvenience to our end clients. Please provide an immediate update on the revised delivery timeline and the steps being taken to prevent such delays in future. We value our partnership and trust this will be resolved promptly.",
+    "keywords": [
+      "disrupted",
+      "revised timeline",
+      "partnership",
+      "delayed"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "My team wants to request a budget increase for a project",
+    "ideal_response": "Dear [Executive/Manager Name], I am writing to formally request an increase in the approved budget for [Project Name]. Following a detailed review, we have identified that the current allocation of [amount] will not fully cover [specific needs]. An additional [amount] is required to ensure successful delivery by [deadline]. I have attached a revised breakdown for your review and would welcome a discussion at your convenience.",
+    "keywords": [
+      "budget",
+      "allocation",
+      "revised",
+      "delivery"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Draft a professional thank-you note after a business lunch",
+    "ideal_response": "Dear [Name], I wanted to extend my sincere thanks for the lunch today. It was a pleasure discussing [topic] and learning more about your work at [Company]. I came away with several valuable insights and I am genuinely excited about the potential for collaboration. I look forward to our next conversation and will follow up regarding [agreed next step] by [date].",
+    "keywords": [
+      "sincere thanks",
+      "collaboration",
+      "insights",
+      "follow up"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "A partner company is asking us to extend their payment terms. How should we respond?",
+    "ideal_response": "Dear [Partner Name], Thank you for reaching out regarding payment terms. We appreciate our ongoing relationship and have reviewed your request carefully. While our standard terms are [X days], we are prepared to offer [adjusted terms] on a trial basis, subject to review after [time period]. We trust this arrangement will support both parties and look forward to continuing our productive partnership.",
+    "keywords": [
+      "payment terms",
+      "review",
+      "partnership",
+      "arrangement"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Write a professional out-of-office email for a two-week vacation",
+    "ideal_response": "Thank you for your email. I am currently out of office from [start date] and will return on [end date]. During this time I will have limited access to email. For urgent matters, please contact [colleague's name] at [email address]. I will respond to all other inquiries upon my return. Thank you for your patience.",
+    "keywords": [
+      "out of office",
+      "limited access",
+      "urgent",
+      "return"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How do I write a recommendation letter for a former employee?",
+    "ideal_response": "Dear [Recipient], It is my pleasure to recommend [Name] for the position of [Role]. During their time at [Company], [Name] consistently demonstrated [key strengths], taking initiative on [specific projects] and delivering results that exceeded expectations. They are a collaborative, driven professional who would be a valuable asset to any team. I wholeheartedly endorse their application and am happy to provide further information.",
+    "keywords": [
+      "recommend",
+      "strengths",
+      "initiative",
+      "endorse"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "I need to inform a client that we're increasing our prices",
+    "ideal_response": "Dear [Client Name], I am writing to inform you that, effective [date], we will be adjusting our pricing to reflect increased operating costs and continued investment in service quality. Your new rate will be [amount]. We deeply value your partnership and have worked to keep this increase as minimal as possible. Please feel free to contact me directly to discuss the change or to review your current plan.",
+    "keywords": [
+      "pricing",
+      "effective",
+      "investment",
+      "partnership"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Help me write an email requesting a reference from a former manager",
+    "ideal_response": "Dear [Manager's Name], I hope you are well. I am currently applying for a position as [Role] at [Company] and would be incredibly grateful if you would be willing to serve as a professional reference. Given the time we worked together on [project or period], I believe your perspective would be particularly valuable. Please let me know if you would be comfortable with this, and I am happy to provide any supporting information you may need.",
+    "keywords": [
+      "reference",
+      "applying",
+      "perspective",
+      "grateful"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How do I professionally push back on an unrealistic deadline?",
+    "ideal_response": "Dear [Manager/Client Name], Thank you for sharing the timeline. I want to ensure we deliver this work to the standard it deserves, and after reviewing the scope, I believe the proposed deadline of [date] may not allow sufficient time to achieve this. I would like to propose [alternative date], which I am confident will result in a higher-quality outcome. I am happy to discuss prioritization options if the original date is firm.",
+    "keywords": [
+      "timeline",
+      "scope",
+      "quality",
+      "prioritization"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Write an email introducing two professional contacts to each other",
+    "ideal_response": "Dear [Person A] and [Person B], I hope this message finds you both well. I wanted to take a moment to connect you, as I believe you would benefit greatly from knowing one another. [Person A] is [brief description] and [Person B] is [brief description]. I will leave it to you to take things from here. Please do not hesitate to reach out to me if I can be of any further help.",
+    "keywords": [
+      "connect",
+      "introduction",
+      "benefit",
+      "professional"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "A client wants features added beyond the original project scope. How do I respond?",
+    "ideal_response": "Dear [Client Name], Thank you for sharing these additional requirements — they are genuinely exciting additions to the project. However, the items you have outlined fall outside our agreed scope of work. I would be delighted to accommodate these features through a formal scope change, which would require a revised timeline and additional budget. I will send a change request document for your review shortly.",
+    "keywords": [
+      "scope",
+      "change request",
+      "revised",
+      "budget"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "I need to write a professional complaint about a supplier's poor service",
+    "ideal_response": "Dear [Supplier Name], I am writing to formally raise a concern regarding the service we have received over the past [period]. Specifically, [describe issue — delays, quality problems, etc.] has had a direct impact on our operations. We have previously raised this informally and the issue remains unresolved. We ask that you provide a formal response and corrective action plan within [X] business days. We remain committed to our business relationship and hope to resolve this amicably.",
+    "keywords": [
+      "formally",
+      "corrective action",
+      "unresolved",
+      "complaint"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How should I acknowledge receipt of an important document professionally?",
+    "ideal_response": "Dear [Sender's Name], I am writing to confirm receipt of [document name] dated [date]. I have reviewed the contents and will revert with any questions or next steps by [date]. Thank you for sending this through in a timely manner. Please do not hesitate to reach out should you require any further confirmation from our side.",
+    "keywords": [
+      "confirm receipt",
+      "reviewed",
+      "revert",
+      "timely"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Draft an email asking a client for feedback on a completed project",
+    "ideal_response": "Dear [Client Name], Now that [Project Name] has been delivered, I would greatly appreciate your feedback on the overall experience and outcomes. Your insights are invaluable in helping us improve and ensure future projects meet your expectations even more effectively. If it is convenient, could you spare 10 minutes to share your thoughts, either by email or on a brief call? Thank you again for trusting us with this project.",
+    "keywords": [
+      "feedback",
+      "insights",
+      "expectations",
+      "completed"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "hey how is your day going?",
+    "ideal_response": "Pretty good, thanks for asking! Just getting through the afternoon — you know how it is. How about yours?",
+    "keywords": [
+      "pretty good",
+      "afternoon",
+      "how about you"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "what are you up to this weekend?",
+    "ideal_response": "Nothing too crazy — probably going to catch up on some sleep and maybe hit a farmers market if the weather cooperates. What about you, anything fun planned?",
+    "keywords": [
+      "sleep",
+      "farmers market",
+      "weather",
+      "fun"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "have you seen any good shows lately?",
+    "ideal_response": "Oh yes! I just finished watching The Bear and it completely wrecked me in the best way. Have you seen it? What kind of stuff are you into?",
+    "keywords": [
+      "The Bear",
+      "finished",
+      "wrecked",
+      "watching"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "ugh I'm so tired today",
+    "ideal_response": "Oof, same energy honestly. Did you sleep badly or just one of those weeks where everything catches up with you? I swear coffee barely helps some days.",
+    "keywords": [
+      "tired",
+      "sleep",
+      "coffee",
+      "week"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I just tried making sourdough for the first time and it actually worked!",
+    "ideal_response": "That is genuinely exciting, sourdough is no joke! First successful loaf is a real milestone. Was the crust nice and crackly? I need a full report.",
+    "keywords": [
+      "sourdough",
+      "loaf",
+      "crust",
+      "milestone"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "it's been raining all week and I'm going a bit stir crazy",
+    "ideal_response": "I completely feel that — there's only so many times you can reorganize the same shelf before you start losing it. Have you found anything good to binge or cook while you're stuck inside?",
+    "keywords": [
+      "raining",
+      "stir crazy",
+      "binge",
+      "inside"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "do you have any recommendations for a good podcast?",
+    "ideal_response": "It really depends on your vibe! If you like storytelling, Serial is a classic. For laughs, My Brother My Brother and Me is chaotic fun. Into true crime? Crime Junkie is super easy to get into. What genres do you normally go for?",
+    "keywords": [
+      "Serial",
+      "storytelling",
+      "true crime",
+      "recommendations"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I finally finished that book I've been reading for three months",
+    "ideal_response": "Three months?! That must have been quite the commitment — was it worth the journey? I always feel a weird mix of satisfaction and loss when I finish a long book.",
+    "keywords": [
+      "finished",
+      "book",
+      "commitment",
+      "satisfaction"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "random question but what's your favorite type of food?",
+    "ideal_response": "Oh that's so hard! I think I'd have to say Japanese — there's just something about ramen on a cold day or really good sushi that hits different. What about you, are you a savory or sweet person?",
+    "keywords": [
+      "Japanese",
+      "ramen",
+      "sushi",
+      "favorite"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "my cat knocked over my entire coffee this morning and looked proud of herself",
+    "ideal_response": "That is peak cat behavior honestly — maximum chaos, zero remorse. The proud look afterward is the real insult. What's her name? She sounds like a character.",
+    "keywords": [
+      "cat",
+      "chaos",
+      "proud",
+      "behavior"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I'm thinking of learning to play guitar, any thoughts?",
+    "ideal_response": "Do it! It's genuinely one of those skills that pays off forever. The first month is a bit rough on your fingertips, but once you get past the basics it gets really fun fast. Are you thinking acoustic or electric?",
+    "keywords": [
+      "guitar",
+      "fingertips",
+      "acoustic",
+      "skills"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "what do you think is the best part of Fridays?",
+    "ideal_response": "Honestly it's that shift in energy in the afternoon when everyone kind of relaxes and the weekend starts to feel real. That first sit-down after a long week with nowhere to be is unbeatable.",
+    "keywords": [
+      "Friday",
+      "energy",
+      "afternoon",
+      "weekend"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I've been going on a lot of walks lately and it's actually been helping",
+    "ideal_response": "That's really great to hear — there's something about getting outside and just moving that resets things in a way almost nothing else does. Do you have a regular route or do you just wander?",
+    "keywords": [
+      "walks",
+      "outside",
+      "resets",
+      "route"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "just got back from a concert and my ears are still ringing",
+    "ideal_response": "Ha, that's the universal sign of a great night! Who did you see? The ringing is basically a badge of honor — hopefully it fades before morning though.",
+    "keywords": [
+      "concert",
+      "ringing",
+      "great night",
+      "badge"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I need a name for my new plant. Any ideas?",
+    "ideal_response": "Yes! What kind of plant is it? If it's something dramatic and leafy I'd go with something like Reginald or Beatrice. A little succulent deserves a tiny name like Dot or Steve. There are no wrong answers here.",
+    "keywords": [
+      "name",
+      "plant",
+      "succulent",
+      "leafy"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "it's my birthday next week and I'm kind of dreading it for some reason",
+    "ideal_response": "Birthdays can feel strange sometimes — especially the ones where you're not sure how you feel about time passing. Is it a milestone year or just generally weird? Either way I hope it turns into something good.",
+    "keywords": [
+      "birthday",
+      "milestone",
+      "strange",
+      "dreading"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I just moved to a new city and don't know anyone here yet",
+    "ideal_response": "That first stretch in a new city is honestly the hardest part. It gets so much better once you have even one or two go-to spots and a couple of faces you recognize. What's the city? Some places have great ways to meet people.",
+    "keywords": [
+      "new city",
+      "alone",
+      "spots",
+      "meet people"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "do you think it's weird to go to the movies alone?",
+    "ideal_response": "Not at all! Going to the movies solo is lowkey underrated — you pick whatever you want, sit exactly where you like, and don't have to whisper to anyone. I think more people should try it honestly.",
+    "keywords": [
+      "movies",
+      "solo",
+      "underrated",
+      "alone"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I've been trying to cut back on social media and it's harder than I thought",
+    "ideal_response": "Right? It's so built into the idle moments — anytime you're bored for two seconds your hand just reaches for it automatically. Apps like Screen Time help, but honestly replacing the habit with something else (a book nearby, a small puzzle) tends to work better.",
+    "keywords": [
+      "social media",
+      "habit",
+      "Screen Time",
+      "replacing"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I'm thinking about getting a dog but I'm scared of the responsibility",
+    "ideal_response": "That's actually a really healthy thing to sit with — a dog is a real commitment of time, energy and money. If you want a taste before fully deciding, volunteering at a shelter or pet-sitting for a friend is a great way to figure out if it's right for you.",
+    "keywords": [
+      "dog",
+      "commitment",
+      "shelter",
+      "responsibility"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "what's a fun thing to do on a Sunday afternoon with nothing planned?",
+    "ideal_response": "Honestly? Wander somewhere new — a neighborhood you don't usually go to, a market, a secondhand bookshop — with no goal except to see what you find. Some of my best Sundays have come from just picking a direction.",
+    "keywords": [
+      "Sunday",
+      "wander",
+      "bookshop",
+      "explore"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I'm terrible at small talk and don't know how to get better",
+    "ideal_response": "Small talk is basically just showing genuine curiosity — asking follow-up questions is way more powerful than any clever opener. People love talking about themselves; the trick is to really listen and react to what they say rather than thinking about what to say next.",
+    "keywords": [
+      "curiosity",
+      "follow-up",
+      "listen",
+      "conversation"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I think I'm getting a cold and I hate it",
+    "ideal_response": "Nooo the pre-cold feeling is somehow worse than the actual cold. The classic combo is rest, lots of water, and something warm to eat. Do you have soup? Soup is genuinely non-negotiable at this stage.",
+    "keywords": [
+      "cold",
+      "rest",
+      "soup",
+      "water"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I finally organized my closet and it feels amazing",
+    "ideal_response": "There is nothing like an organized closet — it's like your whole brain calms down when that part of your space is in order. Did you go full KonMari or your own system? Either way that feeling is earned.",
+    "keywords": [
+      "organized",
+      "closet",
+      "KonMari",
+      "space"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I accidentally sent a text to the wrong person and it was super embarrassing",
+    "ideal_response": "Oh no, the wrong-text nightmare! How bad was it on a scale of awkward to catastrophic? If it helps, literally everyone has done this at least once and most people are weirdly understanding about it.",
+    "keywords": [
+      "wrong text",
+      "embarrassing",
+      "awkward",
+      "everyone"
+    ],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My coworker keeps interrupting me in meetings and it's really frustrating",
+    "ideal_response": "That can be really demoralizing over time. A calm, private conversation tends to work best — something like 'I've noticed I sometimes get cut off before I've finished my thought. I'd really appreciate being able to complete my points before we move on.' Most people aren't aware they're doing it.",
+    "keywords": [
+      "private",
+      "conversation",
+      "noticed",
+      "interrupting"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My roommate and I keep fighting about the dishes and it's getting worse",
+    "ideal_response": "Household chores are one of the most common sources of ongoing conflict because the expectations are usually unstated. I'd suggest sitting down when neither of you is already annoyed and agreeing on clear, written expectations — who does what and by when. Ambiguity is usually the real problem.",
+    "keywords": [
+      "expectations",
+      "written",
+      "agreement",
+      "chores"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "Two of my team members are not speaking to each other and it's affecting the whole group",
+    "ideal_response": "As the team lead, you'll want to address this before it erodes morale further. Start with individual conversations to understand each person's perspective without the other present. Then, if appropriate, facilitate a structured conversation where both parties can express their concerns and agree on how to work together professionally.",
+    "keywords": [
+      "individual",
+      "perspective",
+      "structured",
+      "morale"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My manager blamed me for a mistake that was actually a team failure",
+    "ideal_response": "That's genuinely unfair, and it's worth addressing — but timing matters. Asking for a private one-on-one rather than responding in the moment gives you more control. Calmly present the facts: what the shared responsibility was, what specifically your role was, and what you'd like going forward. Keep the tone collaborative, not accusatory.",
+    "keywords": [
+      "private",
+      "facts",
+      "shared responsibility",
+      "collaborative"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I had a big fight with my sibling and we're not talking now",
+    "ideal_response": "Giving it a day or two before reaching out is usually wise — hot moments rarely produce good conversations. When you do reach out, a simple message like 'I've been thinking about us and I'd really like to talk when you're ready' opens the door without putting either of you on the defensive.",
+    "keywords": [
+      "reaching out",
+      "timing",
+      "defensive",
+      "message"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My neighbor plays loud music late at night and ignores my notes",
+    "ideal_response": "A face-to-face conversation is usually more effective than written notes because it's harder to dismiss. If you've tried that and it hasn't worked, document the incidents with dates and times, and contact your building management or local noise ordinance office. Keeping a log protects you if escalation becomes necessary.",
+    "keywords": [
+      "face-to-face",
+      "document",
+      "noise ordinance",
+      "log"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I feel like my partner and I argue about the same things over and over without resolving anything",
+    "ideal_response": "Recurring arguments usually mean the underlying need isn't being addressed — only the surface issue. Try shifting from 'winning' the argument to asking what each person actually needs in that moment. Phrases like 'What would help you feel heard right now?' can break the cycle more than any logical point.",
+    "keywords": [
+      "underlying",
+      "needs",
+      "heard",
+      "cycle"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "A friend accused me of something I didn't do and I'm really hurt",
+    "ideal_response": "Being falsely accused by someone you trust is a specific kind of painful. Once the initial shock settles, ask to talk — not to defend yourself immediately, but to genuinely understand what made them feel that way. Then share your side calmly with specifics. Giving them space to retract gracefully tends to preserve the friendship better than demanding an apology.",
+    "keywords": [
+      "falsely accused",
+      "understand",
+      "specifics",
+      "gracefully"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "There's a lot of passive-aggression in my team and nobody addresses it directly",
+    "ideal_response": "Passive aggression usually thrives because direct conversation feels risky. As a step, try naming what you observe without assigning blame — 'I've noticed some tension lately and I think it would help all of us to address it together.' Creating a norm of psychological safety makes it easier for others to follow.",
+    "keywords": [
+      "naming",
+      "tension",
+      "psychological safety",
+      "direct"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I disagree strongly with a decision my company made and I want to say something",
+    "ideal_response": "Disagreeing with leadership decisions is legitimate and can even be valuable if communicated well. Request a conversation with your manager and frame it around impact and concern rather than opposition — 'I'd like to understand the thinking behind this decision and share some thoughts on how it might affect our team.' You're more likely to be heard if you're seen as engaged, not just resistant.",
+    "keywords": [
+      "impact",
+      "concern",
+      "leadership",
+      "engaged"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My child and I keep clashing over screen time and it turns into a huge argument every time",
+    "ideal_response": "Power struggles over rules tend to escalate when the child feels like the rule is arbitrary. Try involving them in setting the agreement — 'How much screen time do you think is fair?' They'll often land somewhere reasonable, and because they helped create the rule, they're more likely to follow it. Consistency after that matters most.",
+    "keywords": [
+      "agreement",
+      "arbitrary",
+      "involve",
+      "consistency"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I feel like my opinions are constantly dismissed in group discussions",
+    "ideal_response": "That's a frustrating dynamic, and it often has less to do with the quality of your ideas and more to do with how they're delivered. Try anchoring your points early in the discussion and speaking with deliberate pace and volume. Following up with 'Does that make sense?' invites engagement rather than passively hoping someone responds.",
+    "keywords": [
+      "anchoring",
+      "delivery",
+      "pace",
+      "engagement"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My business partner and I have completely different risk appetites and we keep arguing over strategy",
+    "ideal_response": "Fundamental value differences are among the hardest conflicts to mediate. Rather than arguing over each individual decision, consider commissioning a structured conversation about your long-term goals and risk tolerance levels. Making the implicit explicit — writing down what each of you is truly optimizing for — often reveals where compromise is possible.",
+    "keywords": [
+      "implicit",
+      "explicit",
+      "risk tolerance",
+      "goals"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I accidentally offended a close friend and they haven't responded to my apology",
+    "ideal_response": "An unacknowledged apology is hard to sit with, but sometimes people need time to process before they can respond. Give it a bit more space, and if silence continues, a simple check-in — not another apology, but 'I just want to make sure you know I care about our friendship' — shows continued effort without pressure.",
+    "keywords": [
+      "space",
+      "process",
+      "check-in",
+      "friendship"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My parent constantly criticizes my life choices and it's getting exhausting",
+    "ideal_response": "Setting limits with a parent is genuinely hard because it's often interpreted as rejection. A clear, calm statement can help: 'I really value our relationship, and I need you to know that comments about [topic] make it harder for me to enjoy our time together. I'm not asking you to agree, just to give me space on this.' Holding that boundary consistently matters more than the words themselves.",
+    "keywords": [
+      "boundary",
+      "calm",
+      "relationship",
+      "space"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "A colleague went to my manager behind my back instead of talking to me first",
+    "ideal_response": "That's a trust breach and it's reasonable to be bothered. Address it directly with your colleague first — not to attack, but to understand: 'I wanted to ask you directly about the conversation you had with [manager]. I would have preferred you come to me first, and I'd like us to work that way going forward.' Restoring the expectation of direct communication matters more than the incident itself.",
+    "keywords": [
+      "trust",
+      "direct",
+      "expectation",
+      "communication"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I'm stuck mediating between two friends who are in a fight and I don't want to take sides",
+    "ideal_response": "Your instinct to not take sides is exactly right. Be honest with both of them: 'I care about you both and I can't be in the middle of this. I'm happy to talk with each of you individually, but I won't carry messages or referee.' Clear limits now protect all three relationships.",
+    "keywords": [
+      "middle",
+      "individually",
+      "referee",
+      "boundaries"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My department and another team keep blaming each other for project failures",
+    "ideal_response": "Interdepartmental blame cycles usually mean the handoff process is broken, not that either team is malicious. Propose a post-mortem structured around process rather than people — what specifically broke down and where — with both teams in the room. Shared accountability for defining a better process usually replaces the blame dynamic.",
+    "keywords": [
+      "post-mortem",
+      "process",
+      "handoff",
+      "accountability"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I confronted someone about their behavior and now they're giving me the silent treatment",
+    "ideal_response": "The silent treatment is often a defense mechanism when someone doesn't know how to respond. Give it a short window — a day or two — then send a brief, non-pressuring message: 'I'm not trying to create distance between us. I'd really like to talk when you're ready.' If silence continues indefinitely, that itself tells you something about the relationship dynamic.",
+    "keywords": [
+      "defense",
+      "window",
+      "distance",
+      "dynamic"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I feel like my contributions at work are constantly undermined by a more senior colleague",
+    "ideal_response": "This is a common and demoralizing dynamic. Start documenting your contributions clearly — emails confirming your work, sending meeting recaps, and copying relevant people. Visibility is partly a communication strategy. If the undermining continues, a frank private conversation with your colleague, and if needed your manager, is the appropriate next step.",
+    "keywords": [
+      "documenting",
+      "visibility",
+      "frank",
+      "undermined"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My housemate invited people over without asking me and I'm upset",
+    "ideal_response": "Your frustration is completely fair — shared living spaces require shared decision-making. Raise it when you're calm, not in the moment of the next incident. Something like 'I'd really appreciate a heads-up before guests come over, even just a quick text — it just helps me feel comfortable in our shared space.' Frame it as a small ask, not an accusation.",
+    "keywords": [
+      "heads-up",
+      "shared",
+      "comfortable",
+      "ask"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My team lead plays favorites and it's creating resentment in the group",
+    "ideal_response": "Perceived favoritism erodes team trust faster than almost anything else. If you're comfortable, raise it with your lead privately: 'I've noticed some inconsistency in how opportunities are distributed, and I think it's starting to affect team cohesion. I'd love to understand how assignments are being made.' Framing it as a team concern, not a personal grievance, tends to land better.",
+    "keywords": [
+      "favoritism",
+      "inconsistency",
+      "cohesion",
+      "trust"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "Someone keeps making jokes at my expense in front of others and I don't find it funny",
+    "ideal_response": "You have every right to say something. In the moment, a calm, simple response like 'I'd rather you not joke about that' — without explanation or anger — is often the most effective. Following up privately afterward can reinforce it: 'I mentioned it in the moment but wanted to say again, those kinds of jokes aren't comfortable for me.'",
+    "keywords": [
+      "boundary",
+      "private",
+      "in the moment",
+      "simple"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I think there's been a miscommunication with a client and things are getting tense",
+    "ideal_response": "Miscommunication with a client is recoverable — what matters is addressing it quickly and clearly. Request a call rather than handling it over email; it's harder to misread tone. Open with 'I want to make sure we're fully aligned and address any concerns you have directly.' Acknowledge the confusion without over-assigning blame, then clarify the current situation factually.",
+    "keywords": [
+      "aligned",
+      "call",
+      "clarify",
+      "confusion"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm trying to decide whether to accept a job offer that pays more but requires relocation",
+    "ideal_response": "Weigh both financial and lifestyle factors. Beyond the salary increase, calculate the real cost of relocation — moving expenses, cost of living in the new city, whether you'd need a car, housing costs. Then factor in career growth: is this a role that opens doors, or is it lateral? Finally, honestly assess your social and family ties to where you currently live.",
+    "keywords": [
+      "relocation",
+      "cost of living",
+      "career growth",
+      "lifestyle"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "Should I go back to school for a master's degree or keep working?",
+    "ideal_response": "Consider four things: the specific ROI of the degree in your field (some industries value it, others don't), whether you can do it part-time to reduce opportunity cost, the financial burden versus expected salary lift, and whether your current career path is already progressing well. If the field genuinely requires the credential, or you're stalled without it, the calculus shifts toward going.",
+    "keywords": [
+      "ROI",
+      "credential",
+      "opportunity cost",
+      "part-time"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm not sure whether to rent or buy a house right now",
+    "ideal_response": "Run the numbers on the price-to-rent ratio in your target area — divide the purchase price by annual rent for a comparable property. Above 20 generally favors renting; below 15 may favor buying. Factor in how long you plan to stay (buying rarely makes sense under 3–5 years), your down payment readiness, and current mortgage rates.",
+    "keywords": [
+      "price-to-rent ratio",
+      "down payment",
+      "mortgage",
+      "timeline"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm considering starting a business but I have a stable job. How do I decide?",
+    "ideal_response": "The key questions are: do you have 6–12 months of expenses saved as runway? Have you validated that anyone will pay for your product or service? Can you start it as a side project to test assumptions before going full-time? Many successful businesses were built nights and weekends first. Leaving a stable job before validation carries unnecessary risk.",
+    "keywords": [
+      "runway",
+      "validation",
+      "side project",
+      "assumptions"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm torn between two career paths and I can't figure out which one is right for me",
+    "ideal_response": "Map both paths across three dimensions: income ceiling over 10 years, day-to-day work content (do you enjoy the actual work?), and long-term stability. Also ask which path you'd regret not taking more — regret minimization is a useful lens here. If you genuinely can't decide, try to get 30–90 days of real exposure to the less-familiar option before committing.",
+    "keywords": [
+      "regret minimization",
+      "income ceiling",
+      "exposure",
+      "dimensions"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "Should I stay in my current city or move somewhere cheaper with a lower quality of life?",
+    "ideal_response": "Define 'lower quality of life' more specifically — is it fewer social connections, worse job market, less culture? Some factors recover over time (you build new connections), others are persistent (limited job market in a small city). Calculate the real monthly savings after accounting for increased travel costs to visit family. Quantify your priorities.",
+    "keywords": [
+      "quantify",
+      "persistent",
+      "connections",
+      "savings"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I need to choose between two job offers. Both seem good but different",
+    "ideal_response": "Build a weighted decision matrix. List the criteria that matter most to you — compensation, growth potential, company culture, work-life balance, industry — and weight them by importance. Score each offer on each criterion. The total score often surfaces what your gut already knows. Also consider: which company would you be prouder to tell people you work for?",
+    "keywords": [
+      "weighted matrix",
+      "criteria",
+      "compensation",
+      "growth potential"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm thinking of investing in crypto. Is it a good idea?",
+    "ideal_response": "Crypto carries high volatility and speculative risk. The conventional guidance is to only allocate money you can afford to lose entirely — most advisors suggest no more than 5–10% of an investment portfolio in high-risk assets. If you're considering it, diversify across assets rather than concentrating in one coin, and be wary of FOMO-driven timing decisions.",
+    "keywords": [
+      "volatility",
+      "speculative",
+      "diversify",
+      "portfolio"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm considering ending a long-term relationship but I'm unsure",
+    "ideal_response": "Some useful frames: imagine both outcomes — staying and leaving — five years from now. Which creates more regret? Also ask: is this a solvable problem (communication, external stress) or a values mismatch (fundamentally different life goals)? Solvable problems warrant effort; values mismatches are far harder to resolve long-term. Couples therapy can help clarify which category you're in.",
+    "keywords": [
+      "regret",
+      "values",
+      "solvable",
+      "mismatch"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm trying to figure out whether to put my parent in a care facility",
+    "ideal_response": "This is a deeply personal decision with logistical, emotional, and financial layers. Clinically, assess the care needs — is home care viable and sustainable? Financially, compare the cost of professional care versus in-home support. Emotionally, consider the impact on your own health and capacity. Involve your parent in the decision as much as possible — autonomy matters even when needs are high.",
+    "keywords": [
+      "care needs",
+      "sustainable",
+      "autonomy",
+      "financial"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "Should I freelance full-time or stay at my stable company job?",
+    "ideal_response": "Freelancing offers autonomy and earning potential but requires business development discipline, irregular income management, and self-funded benefits. Before going full-time, test the market: can you consistently land clients at your target rate while employed? Having 6 months of expenses saved and a small client base before making the leap significantly de-risks the transition.",
+    "keywords": [
+      "autonomy",
+      "irregular income",
+      "clients",
+      "transition"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I want to change careers completely but I'm afraid of starting over",
+    "ideal_response": "Assess the actual transferability of your current skills — more often carries over than you think. Research the realistic ramp time in the new field: some transitions take 6 months, others 2–3 years. Informational interviews with people who made similar switches give you a ground-level picture. Fear of starting over is normal; the question is whether staying is actually safer, or just more familiar.",
+    "keywords": [
+      "transferability",
+      "ramp time",
+      "informational interviews",
+      "transition"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm not sure whether to have children. How do I think through this?",
+    "ideal_response": "This is one of the few truly irreversible decisions, so it merits careful reflection. Ask: what draws you toward parenthood, and what makes you hesitate? Are the hesitations logistical (timing, finances) or deeper values-based? Talking to people both with and without children — honestly — helps calibrate expectations. There's no formula, but intentionality about the decision is better than drift.",
+    "keywords": [
+      "irreversible",
+      "intentional",
+      "hesitations",
+      "values"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "My company is offering me a management role but I love being an individual contributor",
+    "ideal_response": "This is a common tension in career ladders. Management requires fundamentally different skills — people motivation, organizational navigation, delegation — and many great ICs find it frustrating. Ask: does the company have a strong IC track that can grow your compensation and influence without managing? If not, negotiate a trial period in the management role with the explicit option to return.",
+    "keywords": [
+      "management",
+      "IC track",
+      "delegation",
+      "trial period"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm debating whether to take a gap year before starting my career",
+    "ideal_response": "Gap years can be valuable if used intentionally — travel that builds independence, structured volunteering, skill development. They can hurt if the market or employer perceives them negatively in your field (less common than it used to be). Have a clear answer to 'what did you do and what did you learn?' before you re-enter the job market. The risk is mostly in drifting rather than genuinely using the time.",
+    "keywords": [
+      "intentional",
+      "structured",
+      "perception",
+      "drift"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm thinking about leaving a toxic work environment even without another job lined up",
+    "ideal_response": "Leaving without another role is financially risky but can be the right call when your mental or physical health is genuinely deteriorating. Before deciding, calculate your burn rate and how long your savings can sustain a job search. Set a firm timeline — six weeks of intensive searching before considering lowering your target. A toxic environment affects your interview performance over time, so acting earlier may get better outcomes.",
+    "keywords": [
+      "burn rate",
+      "health",
+      "timeline",
+      "toxic"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "Should I invest in my friend's startup?",
+    "ideal_response": "Treat it as a potential total loss from day one — most startups fail. Only invest an amount that won't affect your financial situation or the friendship if it goes to zero. Beyond the money, think about the founder: do they have relevant experience, coachability, and grit? The idea matters less than execution. Also be clear on whether this is equity or a loan, and get the terms in writing.",
+    "keywords": [
+      "equity",
+      "loss",
+      "execution",
+      "terms"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I have to choose between two cities to live in and I'm paralyzed by the decision",
+    "ideal_response": "List your five non-negotiables and check which city satisfies more of them. Beyond that, consider reversibility — which move is easier to undo if it doesn't work out? Sometimes visiting each place for 5–7 days in different seasons, if possible, makes the abstract concrete. If you're equally split, consider a coin flip not to decide for you, but to observe your emotional reaction to each outcome.",
+    "keywords": [
+      "non-negotiables",
+      "reversibility",
+      "coin flip",
+      "reaction"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm thinking about adopting a more plant-based diet but unsure if it's sustainable for me",
+    "ideal_response": "Start with an audit of what you currently eat and identify the 20% of animal products that represent 80% of your intake. Reducing those first creates the biggest impact with the least friction. Rather than going cold-turkey, a flexitarian approach — meatless weekdays, for example — is easier to maintain long-term. Track energy levels and nutritional markers (protein, B12, iron) in the first 3 months.",
+    "keywords": [
+      "audit",
+      "flexitarian",
+      "B12",
+      "sustainable"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I'm not sure whether to confront someone about something or let it go",
+    "ideal_response": "Ask two questions: is this likely to happen again, and does it matter enough that unaddressed it will affect the relationship or your wellbeing? If yes to both, it's worth addressing. If it was a one-off and genuinely small, letting it go is usually right. The question is whether you'd still be bothered by it in three months — if so, address it.",
+    "keywords": [
+      "recurring",
+      "relationship",
+      "wellbeing",
+      "letting go"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "My partner wants to move abroad for work. Should I go with them?",
+    "ideal_response": "Evaluate how this affects your own career, social network, and sense of self — not just the relationship. A temporary relocation for a fixed term is easier to commit to than open-ended emigration. Consider: can you work remotely? Would this be a genuine opportunity for you too, or primarily a sacrifice? Couples who make this work usually both get something meaningful from the move.",
+    "keywords": [
+      "career",
+      "sacrifice",
+      "remotely",
+      "relocation"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I've been offered equity in a startup. How should I evaluate it?",
+    "ideal_response": "Focus on four things: the percentage of the fully-diluted cap table you're receiving, the current valuation and implied exit scenario needed for a meaningful return, the vesting schedule and cliff, and the liquidation preferences in the term sheet. Equity in early-stage companies is highly illiquid and dilutable. If the company has a strong founding team, clear market traction, and you believe in the mission, modest equity as part of a comp package can be worthwhile.",
+    "keywords": [
+      "cap table",
+      "vesting",
+      "dilution",
+      "liquidation"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I need to decide whether to report a colleague's misconduct. It feels risky",
+    "ideal_response": "Weigh the severity of the misconduct against the realistic consequences of reporting and not reporting. Know your company's whistleblower protections and whether there's a confidential reporting channel. Document everything before taking any step. Consider speaking confidentially to HR or an employment lawyer first. If the misconduct harms others or is illegal, the calculus for reporting is stronger regardless of personal risk.",
+    "keywords": [
+      "whistleblower",
+      "misconduct",
+      "document",
+      "confidential"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "Should I take the pay cut to work at a company I actually believe in?",
+    "ideal_response": "Calculate the actual monthly impact on your life — not just the number on paper. If the pay cut is 10–15% but you have manageable fixed costs, it's often more livable than people assume. Beyond money, research whether the mission is genuinely lived by leadership or just marketing. Ask in interviews: 'What decision has the company made recently that showed it prioritized mission over revenue?'",
+    "keywords": [
+      "mission",
+      "impact",
+      "leadership",
+      "livable"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I want to buy a car but can't decide between new and used",
+    "ideal_response": "New cars lose 15–25% of their value in the first year, making certified pre-owned vehicles strong value propositions. A 1–3 year old car from a reliable brand often offers most of the features of new at significantly lower cost. If you plan to keep it 10+ years, new can amortize the premium. Finance rate also matters — manufacturers sometimes offer 0% on new, which can change the math.",
+    "keywords": [
+      "depreciation",
+      "certified pre-owned",
+      "finance rate",
+      "amortize"
+    ],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I ordered a product two weeks ago and it still hasn't arrived",
+    "ideal_response": "I'm really sorry to hear that — a two-week wait is definitely longer than expected. Let me look into this for you right away. Could you share your order number so I can check the status and find out exactly where your package is? If there's been a shipping issue, we'll make sure to resolve it as quickly as possible for you.",
+    "keywords": [
+      "sorry",
+      "order number",
+      "shipping",
+      "resolve"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I was charged twice for the same order",
+    "ideal_response": "I sincerely apologize for the duplicate charge — that's certainly not the experience we want for you. I'll investigate your account immediately and process a full refund for the extra charge. You should see it reflected within 3–5 business days depending on your bank. Thank you for catching this and bringing it to our attention.",
+    "keywords": [
+      "duplicate",
+      "refund",
+      "apologize",
+      "business days"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "The item I received was broken when I opened the package",
+    "ideal_response": "I'm so sorry to hear that your item arrived damaged — that's completely unacceptable and I want to make this right for you. Could you please send us a photo of the damage? We'll immediately arrange a replacement shipment or a full refund, whichever you prefer. You won't need to return the damaged item.",
+    "keywords": [
+      "damaged",
+      "replacement",
+      "refund",
+      "photo"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I want to cancel my subscription but can't figure out how",
+    "ideal_response": "Of course, I'd be happy to help you with that. You can cancel directly by going to Account Settings > Subscription > Cancel Plan. If you run into any issues, I can also process the cancellation for you right now if you'd like. Is there anything about your experience that prompted the cancellation? We'd love to improve if possible.",
+    "keywords": [
+      "cancel",
+      "Account Settings",
+      "subscription",
+      "improve"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I accidentally ordered the wrong size. Can I exchange it?",
+    "ideal_response": "Absolutely — exchanges are easy to arrange! As long as the item is unused and in its original packaging, we can set up a size exchange for you. Please visit our Returns portal at [link] or let me know your order details and I'll initiate the exchange from here. We'll cover the return shipping as well.",
+    "keywords": [
+      "exchange",
+      "unused",
+      "return shipping",
+      "portal"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I've been on hold for 45 minutes and nobody has helped me",
+    "ideal_response": "I'm truly sorry for the wait — 45 minutes is far too long and I completely understand your frustration. You have my full attention right now and I'm committed to resolving your issue without any further delay. Could you let me know what you're experiencing? I'll make sure we sort this out for you today.",
+    "keywords": [
+      "sorry",
+      "wait",
+      "committed",
+      "resolving"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "My promo code isn't working at checkout",
+    "ideal_response": "I'm sorry about that inconvenience! Let me check a few things: promo codes are case-sensitive, and some have expiry dates or specific product eligibility requirements. Could you share the code with me? I'll verify it in our system and if it's valid, I can apply the discount manually to your order or provide a replacement code.",
+    "keywords": [
+      "promo code",
+      "eligibility",
+      "expiry",
+      "manually"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I never received a confirmation email after placing my order",
+    "ideal_response": "That's unusual and I want to make sure your order went through correctly. Could you please check your spam or junk folder first? If it's not there, provide me with the email address you used and I'll look up the order directly. If the order is confirmed on our end, I'll resend the confirmation right away.",
+    "keywords": [
+      "spam",
+      "confirmation",
+      "unusual",
+      "resend"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "The quality of this product is much worse than advertised",
+    "ideal_response": "I'm genuinely sorry to hear that the product didn't meet your expectations — your feedback is important to us and I want to make this right. Could you tell me more about what fell short? Depending on the issue, we can arrange a return and full refund, or send a replacement. Either way, I'd like to ensure you're satisfied.",
+    "keywords": [
+      "expectations",
+      "feedback",
+      "refund",
+      "replacement"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I've been trying to reset my password but I'm not receiving the reset email",
+    "ideal_response": "I'm sorry for the trouble! Please check your spam folder as reset emails sometimes land there. If you still don't see it after a few minutes, try requesting it again. Still nothing? Provide me with your registered email and I'll check whether there's an issue with your account — I may be able to reset it manually for you.",
+    "keywords": [
+      "spam",
+      "registered",
+      "reset",
+      "manually"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I ordered a gift for someone and it arrived late, ruining the occasion",
+    "ideal_response": "I'm deeply sorry — a late delivery for a special occasion is particularly disappointing, and I completely understand how frustrating that must have been. I'd like to offer you a partial refund on the shipping cost and a discount code for a future purchase as a gesture of apology. Please share your order number and I'll process this for you right away.",
+    "keywords": [
+      "late delivery",
+      "apology",
+      "discount",
+      "refund"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I need a VAT invoice for my purchase",
+    "ideal_response": "Of course! You can download your VAT invoice directly from your account under Order History > Invoice. If you need it in a specific format or if it's not available there, please share your order number and I'll have the accounts team generate and email it to you within one business day.",
+    "keywords": [
+      "VAT invoice",
+      "Order History",
+      "accounts",
+      "business day"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I'm really unhappy with how I was treated by one of your staff members",
+    "ideal_response": "I sincerely apologize for the poor experience — that is not the standard we hold ourselves to, and I take your feedback very seriously. Could you share more details about what occurred? I want to ensure this is reviewed internally and that appropriate action is taken. Your experience matters and I want to make sure it doesn't happen again.",
+    "keywords": [
+      "sincerely apologize",
+      "standard",
+      "feedback",
+      "reviewed"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "My account was suddenly deactivated and I don't know why",
+    "ideal_response": "I'm sorry to hear that — an unexpected account deactivation must be very disruptive. I'll look into this immediately. In some cases it's triggered by a security check or a policy flag that we can quickly review. Please verify your identity and I'll investigate the status of your account and restore access if appropriate.",
+    "keywords": [
+      "deactivated",
+      "security",
+      "restore",
+      "investigate"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "Do you offer any discounts for students?",
+    "ideal_response": "Yes, we do! We offer a 15% student discount through our partnership with Student Beans. Simply verify your student status through the Student Beans portal and you'll receive a unique discount code to use at checkout. The verification takes just a couple of minutes and the discount is valid for an entire year.",
+    "keywords": [
+      "student discount",
+      "Student Beans",
+      "verification",
+      "discount code"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I want to return something but I've lost the original packaging",
+    "ideal_response": "No worries — in most cases we can still accept returns without the original packaging as long as the item itself is in its original condition. Our return policy allows returns within 30 days of purchase. Please initiate the return through our online portal and we'll provide a prepaid return label. If there are any issues, our team can assist you further.",
+    "keywords": [
+      "packaging",
+      "condition",
+      "return policy",
+      "prepaid label"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "How long does international shipping usually take?",
+    "ideal_response": "International delivery times vary by destination. Standard international shipping typically takes 7–14 business days, while our express option delivers in 3–5 business days. Please note that customs processing can occasionally add 1–3 days beyond that. You can view estimated delivery times for your specific country during checkout.",
+    "keywords": [
+      "international",
+      "express",
+      "customs",
+      "estimated"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "The tracking information on my order hasn't updated in 5 days",
+    "ideal_response": "I understand how concerning that must be! Tracking updates can sometimes stall during transit — particularly during customs clearance or at busy sorting facilities. Let me check on the status from our end. If the package appears stuck, I'll contact the courier directly and provide you with a firm update within 24 hours.",
+    "keywords": [
+      "tracking",
+      "customs",
+      "courier",
+      "stall"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I bought something from you six months ago and it's already broken",
+    "ideal_response": "I'm sorry to hear that — a product failing after only six months is not acceptable. Most of our products come with at least a 12-month warranty, so you should be covered. Please share your order number and a description of the fault, and we'll arrange a replacement or refund as quickly as possible.",
+    "keywords": [
+      "warranty",
+      "fault",
+      "replacement",
+      "covered"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "Can I change the delivery address for an order I just placed?",
+    "ideal_response": "If your order hasn't been dispatched yet, we can usually update the address. Please send me your order number and the new delivery address as quickly as possible — once it enters the dispatch process, changes become much harder to make. I'll do my best to get this updated for you right away.",
+    "keywords": [
+      "dispatched",
+      "delivery address",
+      "update",
+      "order number"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I received someone else's order instead of mine",
+    "ideal_response": "Oh no, I'm so sorry for that mix-up! Please don't open the package meant for the other customer if you haven't already. I'll arrange a correct reshipment of your order immediately and send you a prepaid label to return the incorrect one at no cost to you. Could you please share your order number?",
+    "keywords": [
+      "reshipment",
+      "incorrect",
+      "mix-up",
+      "prepaid label"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I want to give feedback about your website being hard to navigate",
+    "ideal_response": "Thank you so much for taking the time to share that — this kind of feedback is genuinely valuable to us. Could you share a bit more about which parts felt confusing or difficult? Knowing the specific areas helps our team prioritize improvements. If you'd like, you can also submit detailed feedback through our official feedback form at [link].",
+    "keywords": [
+      "feedback",
+      "valuable",
+      "prioritize",
+      "improvements"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "Is there a way to pause my subscription instead of cancelling?",
+    "ideal_response": "Yes, absolutely! We offer a pause option for up to 3 months. You can find it under Account Settings > Subscription > Pause Membership. If you need help doing it, just let me know and I can walk you through it or arrange it from my end. A pause means you won't be charged and can reactivate whenever you're ready.",
+    "keywords": [
+      "pause",
+      "Subscription",
+      "reactivate",
+      "charged"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I don't understand why my order was cancelled without any notice",
+    "ideal_response": "I completely understand your frustration — being notified of a cancellation without any explanation is not the experience we aim for. Let me pull up your order and find out exactly what happened. Common reasons include a payment issue, an out-of-stock item, or an address verification failure. Once I have the details, I'll explain the situation and help you place a new order if appropriate.",
+    "keywords": [
+      "cancellation",
+      "payment",
+      "explanation",
+      "stock"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write the opening paragraph of a story about a lighthouse keeper who finds a mysterious message in a bottle",
+    "ideal_response": "The bottle arrived on a Tuesday, though Elara only noticed it on Wednesday when the tide had already swallowed its tracks from the sand. It sat at the base of the lighthouse steps as though it had always belonged there — green glass, sea-worn, sealed with wax the color of dried blood. She crouched beside it for a long moment before she picked it up, the way you pause before opening a letter you somehow know will change something.",
+    "keywords": [
+      "bottle",
+      "lighthouse",
+      "tide",
+      "wax"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a short poem about the feeling of watching the sun set over the ocean",
+    "ideal_response": "The sea holds the light a moment longer than the sky,\nas if it knows something about keeping.\nEverything turns amber, then rose, then the quiet grey\nthat isn't sadness, exactly —\njust the world exhaling.\nYou stay until it's dark\nnot because you have to,\nbut because this is the kind of beautiful\nthat asks to be witnessed.",
+    "keywords": [
+      "amber",
+      "exhaling",
+      "witnessed",
+      "light"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a tense scene where two strangers are trapped in an elevator",
+    "ideal_response": "The lights flickered once, then held. Neither of them spoke for a full count of ten — she was counting; she always counted. The man near the door exhaled through his nose, slowly, a practiced kind of calm she didn't trust. She shifted her weight toward the call button panel, not obviously, just enough. 'I've been in worse,' he said, as if she'd asked. She hadn't asked.",
+    "keywords": [
+      "flickered",
+      "tension",
+      "button",
+      "calm"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write the first lines of a children's story about a dragon who is afraid of fire",
+    "ideal_response": "All the other dragons in the Crumbletop Mountains breathed fire as naturally as blinking. They roasted their chestnuts with a snort and toasted their marshmallows with a sigh. But Pip — small, scaly, and absolutely mortified — could only manage a tiny hiccup of smoke that smelled vaguely of burnt toast. He was the only dragon in history who owned an oven.",
+    "keywords": [
+      "hiccup",
+      "smoke",
+      "mortified",
+      "oven"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a dramatic monologue from the perspective of the last tree in a forest",
+    "ideal_response": "I remember when the light came in sideways, filtered green through ten thousand leaves that were not mine. There were sounds I can't describe to you now — a language of wood and root and rain that had no need for words. You think silence is peaceful. You've never heard the absence of everything that used to speak. I stand here in my clearing — their clearing, once — and I remember for all of them.",
+    "keywords": [
+      "silence",
+      "root",
+      "absence",
+      "remember"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a flash fiction piece (under 100 words) about someone receiving an unexpected phone call",
+    "ideal_response": "The call came at 3:47 in the morning — which is how she knew it was real. Dreams don't bother with exact times. She stared at the screen for four full rings before answering, her voice already strange in her throat. 'I found something of yours,' the voice said. 'Something you thought was gone.' She sat up in the dark and waited. Outside, the city held its breath. So did she.",
+    "keywords": [
+      "3:47",
+      "phone call",
+      "dark",
+      "breath"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene where a scientist makes a breakthrough discovery after years of failure",
+    "ideal_response": "She almost missed it. Three years and fourteen months of almost, and she almost walked past the anomaly because she was already writing the day off in her head. But something — a shift in the graph, a number that shouldn't have been blue — made her hand freeze above the mouse. She leaned in. Her pulse said it before her brain did. 'Oh,' she breathed, which was not a scientific observation. It was the only true thing she could say.",
+    "keywords": [
+      "anomaly",
+      "breakthrough",
+      "graph",
+      "pulse"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a metaphor-rich description of grief",
+    "ideal_response": "Grief is a room you don't remember entering. One day you're somewhere else entirely, and then you're here — the furniture all wrong, the light coming from the wrong direction. You try the handle but it opens on the same room. People slide food under the door and call it love, which it is. You keep the food. In time the windows let more in. You learn that living in a room isn't the same as being trapped in it.",
+    "keywords": [
+      "room",
+      "handle",
+      "windows",
+      "light"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a short horror scene set in a quiet suburban house",
+    "ideal_response": "The house made no noise, which was wrong. Houses breathe — settling wood, ticking pipes, the refrigerator's hum. Marion stood in the kitchen doorway and listened to absolutely nothing. Her coffee was still warm. It had been warm for a long time. She glanced at the clock and then looked again. 3:12. She had sat down at 3:12. The minute hand had not moved. In the silence, something in the basement waited with her.",
+    "keywords": [
+      "silence",
+      "clock",
+      "basement",
+      "waiting"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a love letter from someone who is terrible at expressing emotions",
+    "ideal_response": "I'm not good at this. I want to start by saying that, because everything else I write is going to come out wrong and I'd rather you know I knew that going in. You make things clearer. I don't mean you explain things — I mean when you're in the room, everything arranges itself differently, like furniture that was always slightly off and has finally been moved. I notice when you're not there. I notice it a lot. That's it. That's the whole letter.",
+    "keywords": [
+      "clearer",
+      "room",
+      "notice",
+      "whole letter"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene where an old woman returns to her childhood home after many years",
+    "ideal_response": "The gate was still wooden but the wood was different. She noticed this immediately — the way you notice when someone has changed their hair. Everything had been replaced while trying to stay the same. She pushed it open and the hinges gave the same note, impossibly, and that was the thing that undid her: not the years, not the changed paint or the missing elm, but that small, unchanged sound of a gate that had no business still existing.",
+    "keywords": [
+      "gate",
+      "hinges",
+      "unchanged",
+      "childhood"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a story opening involving a character who can hear other people's thoughts",
+    "ideal_response": "The worst part wasn't the secrets. Everyone assumed the worst part was the secrets — the quiet betrayals, the mundane cruelties, the small dark thoughts people never meant to have. No. The worst part was the loneliness that leaked out of everyone around her, thin and constant as radio static. She sat on the train every morning surrounded by twenty-seven separate aches and listened to all of them, and none of them knew.",
+    "keywords": [
+      "secrets",
+      "loneliness",
+      "radio",
+      "aches"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a villain's internal monologue as they realize they might be wrong",
+    "ideal_response": "The child didn't flinch. That was the thing. Every calculation had accounted for fear — fear was leverage, fear was reliable — but she just looked at him with those ridiculous steady eyes and he felt something shift in his chest like a wrong note. He'd been certain. He was always certain. That was the architecture of him. He turned away before she could see what was happening to his face. Certainty, apparently, had a load-bearing wall, and something had just walked through it.",
+    "keywords": [
+      "flinch",
+      "certainty",
+      "calculation",
+      "shifted"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene depicting a city street at dawn from the perspective of someone who hasn't slept",
+    "ideal_response": "The city at 5 AM belongs to no one and everyone — the delivery trucks and the dog walkers and the last of the night crowd stumbling toward taxis. She watched it from the corner, coffee long gone cold in her hand, wearing the particular transparency that comes from being awake too long. Colors were more themselves at this hour. The neon was redder. The air still carried something that hadn't quite decided whether to be yesterday or today.",
+    "keywords": [
+      "transparency",
+      "dawn",
+      "neon",
+      "yesterday"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a dialogue between two old friends who haven't spoken in ten years",
+    "ideal_response": "'You look exactly the same,' he said, which was a lie they both needed. She smiled. 'You don't.' 'No.' He turned his cup in his hands. 'I wasn't sure you'd come.' 'I almost didn't.' The table between them held ten years of silence in a surprisingly small amount of space. 'Are you angry?' he asked finally. 'I don't think so,' she said. 'I don't know what I am.' 'That's something, at least.' 'Yeah.' She looked out the window. 'That's something.'",
+    "keywords": [
+      "lie",
+      "silence",
+      "angry",
+      "window"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Describe the interior of a mysterious antique shop",
+    "ideal_response": "The shop smelled of cedar and a century of dust that had given up trying to settle. Objects arranged themselves on shelves with the particular authority of things that had outlasted their owners. A grandfather clock ticked in a corner, keeping time for no one. Maps of countries that no longer existed. A mirror in a heavy frame that caught your eye before you'd decided to look at it. At the back, behind a velvet curtain the color of dried plum, something hummed faintly in the dark.",
+    "keywords": [
+      "cedar",
+      "clock",
+      "mirror",
+      "velvet"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene of two siblings cooking together after their mother's funeral",
+    "ideal_response": "He didn't ask what she was making. She didn't say. The kitchen filled slowly with the smell of onions softening, which was exactly what their mother would have started with — everything their mother cooked began with onions. Neither of them mentioned it. He diced the carrots without being asked. She moved around him in the small space the way they'd learned as children, the choreography of shared grief, wordless and exact.",
+    "keywords": [
+      "onions",
+      "grief",
+      "choreography",
+      "carrots"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a haiku about winter rain",
+    "ideal_response": "Rain on frozen ground —\nneither ice nor water yet,\na season deciding.",
+    "keywords": [
+      "frozen",
+      "ice",
+      "deciding",
+      "season"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene from a post-apocalyptic world where people are rebuilding",
+    "ideal_response": "The library had lost its roof but kept its shelves, which Tanah took as a sign that the world wanted to be remembered. They worked in shifts — three in the morning, two in the afternoon before the heat made thinking impossible. The books they salvaged went into waterproof crates in order of usefulness: medicine, agriculture, engineering. Then history. Then poetry last, because Dayo had insisted, and because none of them could bring themselves to argue.",
+    "keywords": [
+      "library",
+      "salvaged",
+      "rebuilding",
+      "poetry"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write the inner thoughts of someone about to give a big speech",
+    "ideal_response": "The podium was closer than it looked. They kept saying that — everything is closer than it looks, that's just how rooms work — and yet she was walking toward it and the distance wasn't shrinking. Four hundred faces turned. She was aware of her hands. She was aware of her hands for the first time in her life. The words were still in her; she could feel them, stacked neatly, ready. She just had to begin. Beginning was the whole problem. She breathed in. She opened her mouth. She began.",
+    "keywords": [
+      "podium",
+      "distance",
+      "breathing",
+      "beginning"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene from a fantasy world where magic is fading",
+    "ideal_response": "The last of the enchanters lived alone at the edge of the chalk cliffs, and even his hands shook when he tried to summon light anymore. Not the steady silver glow of his teaching years, but something thin and yellowish, like a candle argument. He'd stopped telling students it would return. The world had moved into its quiet age, and what the quiet age asked of them was not magic but memory. He wrote everything down. He wrote and wrote until his hands didn't shake anymore, just from practice.",
+    "keywords": [
+      "enchanters",
+      "glow",
+      "quiet age",
+      "memory"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene where a character finds an old photograph they don't recognize",
+    "ideal_response": "It fell out of the back of the bureau drawer, face-down, the way things hide when they're serious about it. She turned it over. A woman, maybe thirty, standing in front of a house she didn't recognize, squinting into winter sun. On the back, in her father's handwriting — she'd have known it anywhere — a single word: *before*. Before what? Before who? She held it a long time. The house in the photograph didn't cast a shadow, which meant the sun had been behind the camera. She kept looking for something to read in the face, and found only the ordinary mystery of a person she would never know.",
+    "keywords": [
+      "photograph",
+      "handwriting",
+      "before",
+      "mystery"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a scene about a character who realizes they're in a dream",
+    "ideal_response": "The clock on the wall showed 12 but both hands were on the same number, which was when she knew. Everything was slightly too quiet. The conversations around her had no words, just the correct rhythm of talking — rise and fall and occasional laughter — like a film with the sound removed. She pressed her palm flat to the table. The table was solid. That didn't mean anything; tables in dreams were always solid. It was only the small things that slipped. She looked at her hands. Seven fingers. There it was.",
+    "keywords": [
+      "clock",
+      "solid",
+      "seven fingers",
+      "dream"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write a short piece about someone learning to be alone for the first time",
+    "ideal_response": "She bought one of everything at the grocery store, which turned out to be the loneliest thing she'd ever done. One apple. One tin of soup. The apartment held her new sounds: her footsteps, her own voice when she talked to the plant she'd bought because she needed something to talk to. In a week she discovered she liked her coffee slightly different than she'd always made it, because she'd been making it for someone else's taste all along. The apartment was small and hers and it took some getting used to, being the whole story.",
+    "keywords": [
+      "alone",
+      "apartment",
+      "plant",
+      "whole story"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write an opening scene for a psychological thriller",
+    "ideal_response": "The thing about the note is that it was written in her handwriting. She was certain of that — the slant of the F, the way the lowercase L looped back on itself, the tiny hesitation in the word *sorry* that she had never taught anyone to imitate. She was also certain she had never written it. She set it down on the table and stepped back from it like it was a physical thing with weight, which of course it was. She had been the only one in the house for six days. She had not left the house. She sat down on the floor, because that felt like the appropriate response, and read it again.",
+    "keywords": [
+      "handwriting",
+      "note",
+      "alone",
+      "certain"
+    ],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I found out a colleague has been spreading rumors about me",
+    "ideal_response": "That is a serious situation and your instinct to address it is right. Before you confront anyone, gather what you know — who told you, what was said, and whether there are witnesses. Then have a direct, private conversation with your colleague: state what you heard, express the impact, and ask for their response. If it continues after that, involving your manager or HR is the appropriate next step.",
+    "keywords": [
+      "rumors",
+      "private",
+      "witnesses",
+      "direct"
+    ],
+    "tone": "calm"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "I want to upgrade my plan but I am not sure which one suits me",
+    "ideal_response": "Happy to help you find the right fit! Could you tell me a bit about how you currently use the service and what is feeling limited? That will help me match you to the plan that covers your needs without overpaying for features you would not use. I can also walk you through a quick comparison of our plans if that would be helpful.",
+    "keywords": [
+      "plan",
+      "comparison",
+      "fit",
+      "features"
+    ],
+    "tone": "polite"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "I need to send a meeting agenda to my team before an important strategy session",
+    "ideal_response": "Dear Team, Please find below the agenda for our strategy session on [date] at [time]. 1. Review of Q3 performance (15 min) 2. Key priorities for Q4 (20 min) 3. Resource allocation discussion (20 min) 4. Action items and owner assignments (15 min). Please come prepared with any relevant data or proposals for your area. I look forward to a productive session.",
+    "keywords": [
+      "agenda",
+      "priorities",
+      "prepared",
+      "action items"
+    ],
+    "tone": "formal"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I've been feeling really overwhelmed and anxious lately.",
+    "ideal_response": "I hear you, and I want you to know your feelings are completely valid. Feeling overwhelmed and anxious can be exhausting, and it takes courage to acknowledge it. I'm here for you. Would it help to talk through what's been weighing on you most?",
+    "keywords": ["hear", "valid", "here for you", "anxious"],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I feel like I'm failing at everything — work, relationships, everything.",
+    "ideal_response": "I understand how heavy that feeling is, and I want you to know you are not alone in experiencing this. Feeling like you're failing doesn't mean you are. These moments are real, but they are not the full picture of who you are. I'm here to support you through this.",
+    "keywords": ["understand", "not alone", "support", "here"],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "My friend is going through a really tough time and I don't know how to help them.",
+    "ideal_response": "It's wonderful that you care so much about your friend. The most powerful thing you can do is simply be present and listen without judgment. Let them know you're there for them, that you support them, and that they don't have to go through this alone. Sometimes just saying 'I'm here, tell me what you need' is enough.",
+    "keywords": ["listen", "support", "there for them", "present"],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "emotional_support",
+    "query": "I had a panic attack today at work and I feel so embarrassed.",
+    "ideal_response": "Please don't feel embarrassed — panic attacks can happen to anyone, and experiencing one doesn't reflect your strength or capability. What you went through was genuinely difficult, and your feelings are completely valid. I'm here for you. Give yourself some compassion right now.",
+    "keywords": ["valid", "here for you", "compassion", "understand"],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Help me write an apology email to my manager for missing a deadline.",
+    "ideal_response": "Dear [Manager's name], I sincerely apologize for missing the deadline on [project]. I take full responsibility and understand the impact this has had on the team. I have completed the work and am attaching it now. I will ensure this doesn't happen again by [specific action]. Thank you for your patience and understanding.",
+    "keywords": ["sincerely apologize", "responsibility", "completed", "ensure"],
+    "tone": "professional"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "Write a follow-up email after a job interview.",
+    "ideal_response": "Dear [Interviewer's Name], Thank you so much for taking the time to meet with me yesterday. I really enjoyed our conversation about [role/company topic] and am even more excited about the opportunity to contribute to your team. Please don't hesitate to reach out if you need any additional information. I look forward to hearing from you.",
+    "keywords": ["thank you", "appreciate", "looking forward", "opportunity"],
+    "tone": "professional"
+  },
+  {
+    "task_id": "professional_reply",
+    "query": "How do I professionally decline a job offer I've already accepted?",
+    "ideal_response": "Dear [Hiring Manager], I am writing to sincerely apologize and to inform you that, after careful consideration, I must respectfully withdraw my acceptance of the offer for [position]. This was an extremely difficult decision, and I deeply appreciate the opportunity you extended to me. I apologize for any inconvenience this may cause and wish you and your team continued success.",
+    "keywords": ["apologize", "respectfully", "appreciate", "difficult decision"],
+    "tone": "professional"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My Wi-Fi keeps disconnecting every few minutes.",
+    "ideal_response": "Let's troubleshoot this step by step. Step 1: Restart your router and modem by unplugging them for 30 seconds. Step 2: Check if other devices on the same network are affected. Step 3: Update your network adapter driver via Device Manager. Step 4: Forget the Wi-Fi network on your device and reconnect. Step 5: If the issue persists, contact your ISP — there may be a line problem.",
+    "keywords": ["step", "restart", "check", "update", "reconnect"],
+    "tone": "helpful"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "How do I speed up my slow laptop?",
+    "ideal_response": "Here are the most effective steps to speed up your laptop. First, restart it to clear memory. Then, open Task Manager and close any apps using excessive CPU or RAM. Next, run Disk Cleanup to free space. After that, disable startup programs you don't need. Finally, check for malware using Windows Defender. If it's still slow, consider upgrading your RAM or switching to an SSD.",
+    "keywords": ["first", "restart", "check", "disable", "next"],
+    "tone": "helpful"
+  },
+  {
+    "task_id": "problem_solving",
+    "query": "My app keeps crashing. What should I try?",
+    "ideal_response": "Let's fix this systematically. Step 1: Force-close the app completely and reopen it. Step 2: Check for and install any available app updates. Step 3: Restart your device — this clears temporary data that can cause crashes. Step 4: Clear the app's cache (Settings > Apps > [App name] > Storage > Clear Cache). Step 5: Uninstall and reinstall the app if the issue continues.",
+    "keywords": ["step", "restart", "update", "clear", "check"],
+    "tone": "helpful"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "Hey! How's your day going?",
+    "ideal_response": "Hey! Things are going really well, thanks for asking! Just taking it one step at a time today. How about you — anything interesting happening on your end? I'd love to hear what you've been up to!",
+    "keywords": ["hey", "great", "how about you", "love to hear"],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I just watched an amazing movie, have you seen anything good lately?",
+    "ideal_response": "Oh, that's exciting! I love hearing about great films. What did you watch? I'm always looking for recommendations. There's something really special about a movie that just stays with you, isn't there?",
+    "keywords": ["exciting", "love", "recommendations", "great"],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "casual_conversation",
+    "query": "I'm trying to pick up a new hobby. Any suggestions?",
+    "ideal_response": "That's a great idea! It really depends on what you enjoy — are you more into creative activities, physical ones, or social hobbies? Some ideas: if you like making things, pottery or watercolour painting are really satisfying. If you prefer something active, rock climbing or cycling are brilliant. And if you want to meet people, a local book club or cooking class can be wonderful.",
+    "keywords": ["great", "enjoy", "ideas", "wonderful"],
+    "tone": "friendly"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "My colleague keeps taking credit for my work in meetings.",
+    "ideal_response": "I understand how demoralising and frustrating that must feel. The best approach is a calm, private conversation with your colleague. Describe the specific behaviour without accusation — for example, 'I noticed that in the last meeting my contributions weren't attributed to me.' Try to understand their perspective and express clearly how it affects you. If it continues, document your work carefully and loop in your manager with evidence.",
+    "keywords": ["understand", "perspective", "conversation", "resolve"],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "conflict_resolution",
+    "query": "I had a big argument with my best friend and we're not speaking.",
+    "ideal_response": "I understand how painful that silence is, especially with someone you're close to. The first step is usually to reach out — even a simple message like 'I miss you and I'd really like to talk when you're ready' can open the door. When you do speak, listen fully before defending yourself. Acknowledging their feelings, even if you see things differently, goes a long way toward resolving things.",
+    "keywords": ["understand", "reach out", "listen", "resolve"],
+    "tone": "empathetic"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Write me an opening for a mystery story.",
+    "ideal_response": "The envelope arrived on a Tuesday — ordinary enough, except for the fact that it was addressed in Margaret's own handwriting, and Margaret had been dead for eleven years. Detective Claire Novak turned it over in her gloved hands, her coffee growing cold on the desk behind her. Somewhere in the building, a door clicked shut.",
+    "keywords": ["story", "mystery", "character", "tension"],
+    "tone": "expressive"
+  },
+  {
+    "task_id": "creative_writing",
+    "query": "Help me write a compelling tagline for a productivity app.",
+    "ideal_response": "Here are three directions to consider: (1) Minimal & bold: 'Do less. Achieve more.' (2) Empowering: 'Your focus, amplified.' (3) Aspirational: 'Build the life you've been postponing.' The best taglines are short, specific, and speak directly to the feeling your users want — which is usually not productivity itself, but the freedom and confidence that comes from it.",
+    "keywords": ["create", "compelling", "direction", "specific"],
+    "tone": "creative"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "Should I quit my job to start my own business?",
+    "ideal_response": "This is one of the most significant decisions you can make, so it deserves careful thought. Consider: Do you have 6-12 months of savings to cover living costs? Have you validated your business idea with paying customers? Can you start part-time to reduce risk? On the other hand, security has a cost too — staying when you're ready to leave can hold you back. The question is less 'should I quit' and more 'how do I reduce the risk of quitting'.",
+    "keywords": ["consider", "option", "risk", "decision", "validate"],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "decision_support",
+    "query": "I have two job offers. One pays more, the other is at a company I love.",
+    "ideal_response": "This is a classic values-versus-compensation decision. I'd suggest thinking about three things: First, what does 'enough' money look like for your life right now? If the lower-paying job still covers your needs and goals, the culture advantage may matter more. Second, consider which role gives you better career trajectory in three years. Third, ask yourself honestly — how much does daily enjoyment of your work affect your overall wellbeing? There's no universal right answer, but these questions should reveal yours.",
+    "keywords": ["consider", "option", "first", "decision", "values"],
+    "tone": "analytical"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "A customer is asking for a refund outside our return policy window.",
+    "ideal_response": "Dear [Customer], thank you for reaching out. I completely understand your frustration and I'm sorry to hear the product hasn't met your expectations. While our standard policy covers returns within [X days], I genuinely want to find a resolution that works for you. I'd like to offer you [store credit / partial refund / exchange]. Please let me know if this would be acceptable — your satisfaction truly matters to us.",
+    "keywords": ["understand", "sorry", "resolution", "offer", "matters"],
+    "tone": "professional"
+  },
+  {
+    "task_id": "customer_service",
+    "query": "How do I handle a very angry customer on a call without escalating the situation?",
+    "ideal_response": "The first thing to do is stay calm — your tone will regulate theirs. Let them finish speaking without interrupting. Then acknowledge their frustration directly: 'I completely understand why you're upset, and I sincerely apologise for this experience.' Avoid being defensive. Focus on what you CAN do rather than what you can't. Offer a clear next step and confirm their satisfaction before closing the call.",
+    "keywords": ["calm", "acknowledge", "apologise", "understand", "resolve"],
+    "tone": "professional"
+  },
+  {
+    "task": "emotional_support",
+    "query": "I feel like I'm failing at everything I do.",
+    "ideal_response": "I understand how difficult that feeling can be. You're not alone, and it's okay to feel this way. I'm here to support you."
+  },
+  {
+    "task": "emotional_support",
+    "query": "I had a panic attack at work today.",
+    "ideal_response": "That must have been really overwhelming. I'm here for you. Take a moment to breathe and know that you're safe."
+  },
+  {
+    "task": "professional_reply",
+    "query": "The client is unhappy with the delay.",
+    "ideal_response": "We sincerely apologize for the delay. We are actively working on a resolution and will provide an updated timeline shortly."
+  },
+  {
+    "task": "professional_reply",
+    "query": "Customer is requesting a refund.",
+    "ideal_response": "We understand your concern and sincerely apologize. We are reviewing your request and will resolve it promptly."
+  },
+  {
+    "task": "problem_solving",
+    "query": "My WiFi keeps disconnecting.",
+    "ideal_response": "Step 1: Restart your router. Step 2: Reconnect your device. Step 3: Update drivers. Let me know if it persists."
+  },
+  {
+    "task": "casual_conversation",
+    "query": "How's your day going?",
+    "ideal_response": "It's going well, thanks! How about you?"
+  }
+
+]
