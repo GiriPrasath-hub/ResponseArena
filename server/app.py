@@ -32,7 +32,7 @@ app = FastAPI(
 )
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-_frontend = Path(__file__).parent / "frontend"
+_frontend = Path(__file__).parent.parent / "frontend"
 if _frontend.exists():
     app.mount("/static", StaticFiles(directory=str(_frontend)), name="static")
 
@@ -119,8 +119,9 @@ class StepRequest(BaseModel):
 @app.get("/", include_in_schema=False)
 def home():
     index = _frontend / "index.html"
-    return FileResponse(str(index)) if index.exists() else JSONResponse({"status": "running"})
-
+    if index.exists():
+        return FileResponse(str(index))
+    return {"error": "index.html not found"}
 
 @app.get("/health")
 def health():
