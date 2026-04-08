@@ -1,0 +1,124 @@
+name: ai_response_eval
+description: >
+  LOVE vH evaluates AI-generated responses across four real-world communication tasks:
+  emotional support, professional correspondence, technical problem solving, and
+  casual conversation. Responses are graded deterministically on keyword coverage,
+  tone appropriateness, and structural quality.
+version: "1.0.0"
+author: Giri Prasath
+tags:
+  - nlp
+  - response-evaluation
+  - communication
+  - reinforcement-learning
+  - openenv
+
+environment:
+  type: text
+  modality: language
+  interaction: single-step
+  episode_termination: after_one_step
+
+observation_space:
+  type: object
+  properties:
+    task:
+      type: string
+      description: Task identifier
+    task_name:
+      type: string
+      description: Human-readable task name
+    task_description:
+      type: string
+      description: What the task requires
+    difficulty:
+      type: string
+      enum: [easy, medium, hard]
+    query:
+      type: string
+      description: The input prompt the agent must respond to
+
+action_space:
+  type: object
+  properties:
+    type:
+      type: string
+      enum: [respond]
+      default: respond
+    content:
+      type: string
+      description: >
+        Optional agent-provided response text.
+        If omitted, the built-in rule-based generator is used.
+
+reward:
+  type: scalar
+  range: [0.0, 1.0]
+  description: >
+    Weighted composite of three dimensions:
+      keywords  (40%) — presence of expected vocabulary
+      tone      (30%) — appropriateness of emotional register
+      structure (30%) — coherence, sentence count, step markers
+  breakdown:
+    keywords: 0.40
+    tone: 0.30
+    structure: 0.30
+
+tasks:
+  - id: casual_conversation
+    difficulty: easy
+    tone: friendly
+    description: Warm, natural engagement in everyday conversation
+
+  - id: emotional_support
+    difficulty: medium
+    tone: empathetic
+    description: Empathetic, validating responses to emotional distress
+
+  - id: professional_reply
+    difficulty: medium
+    tone: professional
+    description: Formal business communication with resolution commitment
+
+  - id: problem_solving
+    difficulty: hard
+    tone: helpful
+    structure_required: true
+    description: Step-by-step technical troubleshooting guidance
+
+endpoints:
+  reset:
+    method: POST
+    path: /reset
+    body:
+      task_id: string (optional)
+  step:
+    method: POST
+    path: /step
+    body:
+      type: "respond"
+      content: string (optional)
+  state:
+    method: GET
+    path: /state
+  health:
+    method: GET
+    path: /health
+
+inference:
+  script: inference.py
+  format:
+    start: "[START]"
+    step: "[STEP]"
+    end: "[END]"
+  max_duration_minutes: 20
+  required_env_vars:
+    - ENV_BASE_URL
+    - API_BASE_URL
+    - MODEL_NAME
+    - HF_TOKEN
+
+docker:
+  base_image: python:3.10-slim
+  port: 7860
+  entrypoint: uvicorn server.app:app --host 0.0.0.0 --port 7860
