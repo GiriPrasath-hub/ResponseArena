@@ -1,12 +1,12 @@
 """
 LOVE vH Inference Script
 Runs the AI response evaluation environment with an LLM agent.
-
+ 
 Output format:
   [START] — marks beginning of episode
   [STEP]  — marks each environment step
   [END]   — marks end of episode with final score
-
+ 
 Required env vars:
   ENV_BASE_URL  — URL of the running environment (default: http://localhost:7860)
   API_BASE_URL  — OpenAI-compatible LLM API base URL
@@ -14,32 +14,32 @@ Required env vars:
   HF_TOKEN      — Hugging Face token (used as Bearer key)
 """
 from __future__ import annotations
-
+ 
 import os
 import sys
 import time
 import requests
 from typing import Optional
-
+ 
 from openai import OpenAI
-
+ 
 # ── Configuration ─────────────────────────────────────────────────────────────
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 ENV_BASE_URL = os.getenv("ENV_BASE_URL", "http://localhost:7860")
 MODEL_NAME   = os.environ.get("MODEL_NAME", "meta-llama/Llama-3.1-8B-Instruct")
 HF_TOKEN     = os.environ.get("HF_TOKEN", "")
-
+ 
 LLM_URL = (
     f"{API_BASE_URL}/v1"
     if not API_BASE_URL.rstrip("/").endswith("/v1")
     else API_BASE_URL
 )
-
+ 
 client = OpenAI(
     api_key=HF_TOKEN if HF_TOKEN else "dummy-key",
     base_url=LLM_URL,
 )
-
+ 
 # Tasks to run during inference (one episode per task)
 INFERENCE_TASKS = [
     {"task_id": "casual_conversation"},
@@ -47,10 +47,10 @@ INFERENCE_TASKS = [
     {"task_id": "professional_reply"},
     {"task_id": "problem_solving"},
 ]
-
-
+ 
+ 
 # ── Network helper ─────────────────────────────────────────────────────────────
-
+ 
 def safe_post(url: str, payload: dict) -> dict:
     """POST with full error handling. Always returns a dict."""
     try:
@@ -66,28 +66,28 @@ def safe_post(url: str, payload: dict) -> dict:
             "done": True,
             "info": {"error": str(e)},
         }
-
-
+ 
+ 
 # ── Environment client ─────────────────────────────────────────────────────────
-
+ 
 def env_reset(task_id: Optional[str] = None) -> dict:
     """Call POST /reset to start a new episode. Returns reset response dict."""
     payload: dict = {}
     if task_id:
         payload["task_id"] = task_id
     return safe_post(f"{ENV_BASE_URL}/reset", payload)
-
-
+ 
+ 
 def env_step(response_text: str) -> dict:
     """Call POST /step with the agent's response. Returns step result dict."""
     return safe_post(
         f"{ENV_BASE_URL}/step",
         {"action": response_text, "actor": "ai"},
     )
-
-
+ 
+ 
 # ── LLM agent ─────────────────────────────────────────────────────────────────
-
+ 
 def call_llm(system_prompt: str, user_prompt: str) -> str:
     """
     Call LLM via OpenAI-compatible client.
@@ -108,12 +108,12 @@ def call_llm(system_prompt: str, user_prompt: str) -> str:
     except Exception as e:
         print(f"[WARN] LLM call failed ({e}), using fallback.", file=sys.stderr)
         return _fallback(user_prompt)
-
-
+ 
+ 
 def _fallback(prompt: str) -> str:
     """Rule-based fallback responses when LLM is unavailable."""
     p = prompt.lower()
-
+ 
     if "overwhelmed" in p:
         return (
             "I hear you, and I want you to know that feeling overwhelmed is completely valid. "
@@ -179,8 +179,8 @@ def _fallback(prompt: str) -> str:
         "Thank you for reaching out. I am here to support and assist you. "
         "Please let me know how I can help you further today."
     )
-
-
+ 
+ 
 def build_system_prompt(task_name: str, tone: str) -> str:
     tone_instructions = {
         "empathetic": (
@@ -206,27 +206,27 @@ def build_system_prompt(task_name: str, tone: str) -> str:
         f"{tone_instructions.get(tone, 'Respond helpfully and clearly.')} "
         f"Keep your response focused, genuine, and between 50–150 words."
     )
-
-
+ 
+ 
 # ── Episode runner ─────────────────────────────────────────────────────────────
-
+ 
 def run_episode(task_config: dict) -> dict:
     task_id = task_config.get("task_id")
-
+ 
     # ── Reset environment ─────────────────────────────────────────────────────
     reset_data = env_reset(task_id)
-
+ 
     # Support both /reset response shapes: {state: {...}} and {observation: {...}}
     obs = reset_data.get("state") or reset_data.get("observation") or {}
-
+ 
     task_name    = obs.get("task_id") or obs.get("task") or task_id or "unknown"
     task_display = obs.get("task_name", task_name)
     query        = obs.get("query", "")
     difficulty   = obs.get("difficulty", "medium")
-
-    print(f"START task={task_name} difficulty={difficulty} query={repr(query[:60])}")
+ 
+    print(f"[START] task={task_name} env=responsearena model={MODEL_NAME}")
     sys.stdout.flush()
-
+ 
     # ── Determine tone ────────────────────────────────────────────────────────
     tone_map = {
         "emotional_support":  "empathetic",
@@ -235,13 +235,13 @@ def run_episode(task_config: dict) -> dict:
         "casual_conversation":"friendly",
     }
     tone = tone_map.get(task_name, "helpful")
-
+ 
     system_prompt = build_system_prompt(task_display, tone)
     user_prompt   = query if query else f"Please help me with a {task_display} scenario."
-
+ 
     # ── Generate response ─────────────────────────────────────────────────────
     response = call_llm(system_prompt, user_prompt).strip()
-
+ 
     # ── Step environment ──────────────────────────────────────────────────────
     result     = env_step(response)
     reward     = float(result.get("reward", 0.0))
@@ -249,29 +249,26 @@ def run_episode(task_config: dict) -> dict:
     evaluation = info.get("evaluation") or result.get("evaluation") or {}
     breakdown  = evaluation.get("breakdown", {})
     feedback   = evaluation.get("feedback", {})
-
+ 
     breakdown_str = (
         " | ".join(f"{k}={v:.2f}" for k, v in breakdown.items())
         if breakdown else "n/a"
     )
-
+ 
     print(
-        f"STEP step=1 task={task_name} reward={reward:.4f} "
-        f"breakdown=[{breakdown_str}] done=true"
+        f"[STEP] step=1 action={response} reward={reward:.2f} done=true error={info.get('error') if info.get('error') else 'null'}"
     )
     sys.stdout.flush()
-
+ 
     missing   = feedback.get("missing_keywords", [])
     tone_fb   = feedback.get("tone_feedback", "n/a")
     struct_fb = feedback.get("structure_feedback", "n/a")
-
+ 
     print(
-        f"END task={task_name} reward={reward:.4f} "
-        f"tone={tone_fb} structure={struct_fb} "
-        f"missing_keywords={missing}"
+        f"[END] success={'true' if reward > 0 else 'false'} steps=1 rewards={reward:.2f}"
     )
     sys.stdout.flush()
-
+ 
     return {
         "task_id":   task_name,
         "task_name": task_display,
@@ -279,10 +276,10 @@ def run_episode(task_config: dict) -> dict:
         "reward":    reward,
         "breakdown": breakdown,
     }
-
-
+ 
+ 
 # ── Main ───────────────────────────────────────────────────────────────────────
-
+ 
 def main() -> float:
     print("=" * 60)
     print("LOVE vH Inference Runner")
@@ -291,7 +288,7 @@ def main() -> float:
     print(f"  Model   : {MODEL_NAME}")
     print("=" * 60)
     sys.stdout.flush()
-
+ 
     # Wait for environment to be ready
     for i in range(30):
         try:
@@ -305,7 +302,7 @@ def main() -> float:
     else:
         print("ERROR: Environment not reachable.", file=sys.stderr)
         sys.exit(1)
-
+ 
     results = []
     for task_config in INFERENCE_TASKS:
         print(f"\n{'─' * 60}")
@@ -315,7 +312,7 @@ def main() -> float:
         except Exception as e:
             print(f"[ERROR] Episode failed for {task_config}: {e}", file=sys.stderr)
             results.append({"task_id": task_config.get("task_id", "unknown"), "reward": 0.0})
-
+ 
     # Summary
     print(f"\n{'=' * 60}")
     print("INFERENCE SUMMARY")
@@ -327,15 +324,16 @@ def main() -> float:
         bd     = r.get("breakdown", {})
         bd_str = " | ".join(f"{k}={v:.2f}" for k, v in bd.items()) if bd else ""
         print(f"  [{r.get('task_id', 'unknown'):22}]  score={score:.4f}  {bd_str}")
-
+ 
     avg = total / max(len(results), 1)
     print(f"{'─' * 60}")
     print(f"  Average Score : {avg:.4f}")
     print(f"{'=' * 60}")
     sys.stdout.flush()
-
+ 
     return avg
-
-
+ 
+ 
 if __name__ == "__main__":
     main()
+ 
