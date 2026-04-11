@@ -90,7 +90,14 @@ class OpenEnvWrapper:
 
         # Grade using the task's own id — no override needed
         evaluation  = grade_response(task, generated)
-        base_reward = float(max(0.0, min(1.0, evaluation.get("reward", 0.0))))
+        r = float(evaluation.get("reward", 0.0))
+        EPS = 1e-6
+        if r <= 0.0:
+            base_reward = EPS
+        elif r >= 1.0:
+            base_reward = 1.0 - EPS
+        else:
+            base_reward = r
 
         # Apply RL policy shaping
         try:
