@@ -45,6 +45,7 @@ _TONE_MAP = {
     "customer_service":   "professional",
 }
 
+print("🔥 VERSION CHECK: GITHUB SYNC WORKING")
 
 def reset_rl_system() -> dict:
     global memory, policy, _env
