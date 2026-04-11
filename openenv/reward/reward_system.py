@@ -57,12 +57,15 @@ class RewardSystem:
         # 4. Length — adequate but not excessive
         length = min(1.0, len(words) / 30.0) if len(words) < 200 else 0.8
 
-        total = round(0.35 * relevance + 0.30 * tone + 0.25 * coherence + 0.10 * length, 4)
+        total = 0.35 * relevance + 0.30 * tone + 0.25 * coherence + 0.10 * length
+
+        EPS = 1e-6
+        total = max(EPS, min(1.0 - EPS, total))
 
         return {
-            "relevance": round(relevance, 4),
-            "tone": round(tone, 4),
-            "coherence": round(coherence, 4),
-            "length": round(length, 4),
-            "total": min(1.0, max(0.0, total)),
+            "relevance": float(relevance),
+            "tone": float(tone),
+            "coherence": float(coherence),
+            "length": float(length),
+            "total": total,
         }

@@ -18,6 +18,7 @@ from __future__ import annotations
 import os
 import sys
 import time
+from unittest import result
 import requests
 from typing import Optional
  
@@ -256,7 +257,9 @@ def run_episode(task_config: dict) -> dict:
  
     # ── Step environment ──────────────────────────────────────────────────────
     result     = env_step(response)
-    reward     = float(result.get("reward", 0.0))
+    EPS = 1e-6
+    reward = float(result.get("reward", 0.0))
+    reward = max(EPS, min(1.0 - EPS, reward))
     info       = result.get("info", {})
     evaluation = info.get("evaluation") or result.get("evaluation") or {}
     breakdown  = evaluation.get("breakdown", {})

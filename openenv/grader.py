@@ -99,10 +99,14 @@ def set_query_context(task_name: str, query: str) -> None:
     if key:
         _LAST_QUERY_BY_TASK[key] = str(query or "")
 
-
 def _clamp(v: float) -> float:
-    return max(0.0, min(1.0, float(v)))
-
+    EPS = 1e-6
+    v = float(v)
+    if v <= 0.0:
+        return EPS
+    if v >= 1.0:
+        return 1.0 - EPS
+    return v
 
 def _semantic_score(response: str, task_id: str, query: str) -> float:
     """Lightweight semantic similarity using fragment matching + sequence ratio."""
@@ -215,11 +219,11 @@ def grade_response(task: Any, response: str) -> Dict[str, Any]:
     reward = _clamp(0.45 * sem + 0.30 * tone + 0.25 * struct + bonus - penalty)
 
     return {
-        "reward": round(reward, 4),
+        "reward": float(reward),
         "breakdown": {
-            "semantic":   round(sem, 4),
-            "tone":       round(tone, 4),
-            "structure":  round(struct, 4),
+            "semantic":   float(sem),
+            "tone":       float(tone),
+            "structure":  float(struct),
         },
         "feedback": {
         "tone_feedback": tone_fb,

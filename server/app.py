@@ -45,8 +45,6 @@ _TONE_MAP = {
     "customer_service":   "professional",
 }
 
-print("🔥 VERSION CHECK: GITHUB SYNC WORKING")
-
 def reset_rl_system() -> dict:
     global memory, policy, _env
 
@@ -257,7 +255,14 @@ def _do_evaluate(
         f"Tone: {ai_evaluation['breakdown'].get('tone', 0)} | "
         f"Structure: {ai_evaluation['breakdown'].get('structure', 0)}"
     )
-    ai_base = float(max(0.0, min(1.0, ai_evaluation.get("reward", 0.0))))
+    r = float(ai_evaluation.get("reward", 0.0))
+    EPS = 1e-6
+    if r <= 0.0:
+        ai_base = EPS
+    elif r >= 1.0:
+        ai_base = 1.0 - EPS
+    else:
+        ai_base = r
     ai_reward = memory.record_eval(
         task_id=effective_task,
         query=query,
@@ -278,7 +283,14 @@ def _do_evaluate(
         human_system_prompt = build_system_prompt(effective_task, tone)
         human_text = call_llm(human_system_prompt, query)
         human_evaluation = grade_response(task, human_text)
-        human_base = float(max(0.0, min(1.0, human_evaluation.get("reward", 0.0))))
+        r = float(ai_evaluation.get("reward", 0.0))
+        EPS = 1e-6
+        if r <= 0.0:
+            human_base = EPS
+        elif r >= 1.0:
+            human_base = 1.0 - EPS
+        else:
+            human_base = r
         human_reward = memory.record_eval(
             task_id=effective_task,
             query=query,
@@ -292,7 +304,14 @@ def _do_evaluate(
         if provided:
             human_text = provided
             human_evaluation = grade_response(task, human_text)
-            human_base = float(max(0.0, min(1.0, human_evaluation.get("reward", 0.0))))
+            r = float(human_evaluation.get("reward", 0.0))
+            EPS = 1e-6
+            if r <= 0.0:
+                human_base = EPS
+            elif r >= 1.0:
+                human_base = 1.0 - EPS
+            else:
+                human_base = r
             human_reward = memory.record_eval(
                 task_id=effective_task,
                 query=query,
@@ -310,7 +329,14 @@ def _do_evaluate(
             ideal_text = str(match.get("ideal_response", "")).strip()
             if ideal_text:
                 ideal_eval = grade_response(task, ideal_text)
-                ideal_base = float(max(0.0, min(1.0, ideal_eval.get("reward", 0.0))))
+                r = float(ai_evaluation.get("reward", 0.0))
+                EPS = 1e-6
+                if r <= 0.0:
+                    ai_base = EPS
+                elif r >= 1.0:
+                    ai_base = 1.0 - EPS
+                else:
+                    ai_base = r
                 dataset_match = {
                     "query":          match.get("query", ""),
                     "ideal_response": ideal_text,
