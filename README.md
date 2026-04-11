@@ -1,6 +1,18 @@
+---
+title: ResponseArena
+emoji: 🤖
+colorFrom: green
+colorTo: blue
+sdk: docker
+app_file: server/app.py
+pinned: false
+---
+
 # ⚔️ ResponseArena — Interactive AI Evaluation Lab
 
-> **An OpenEnv-compliant hybrid AI evaluation environment** with RL-based reward shaping + LLM-powered response generation.
+> **ResponseArena** is a real-world AI evaluation environment with deterministic grading and RL-based reward shaping.
+> 
+> It enables continuous learning by comparing and scoring AI and human responses.
 
 ---
 
@@ -109,16 +121,15 @@ python inference.py
 
 ---
 
-## 🔑 Environment Variables
+## 🔐 Environment Variables
 
-Create `.env` file:
+Set these in Hugging Face Secrets:
 
-```
-API_BASE_URL=https://router.huggingface.co/v1
-HF_TOKEN=your_token_here
-MODEL_NAME=meta-llama/Llama-3.1-8B-Instruct
-ENV_BASE_URL=http://localhost:7860
-```
+| Variable        | Description |
+|----------------|------------|
+| `HF_TOKEN`      | Hugging Face API token |
+| `API_BASE_URL`  | LLM endpoint (e.g., https://router.huggingface.co/v1) |
+| `MODEL_NAME`    | Model name (e.g., meta-llama/Llama-3.1-8B-Instruct) |
 
 ---
 
