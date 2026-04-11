@@ -36,6 +36,14 @@
           <svg viewBox="0 0 18 18" fill="none"><path d="M3 14V8M7 14V5M11 14V9M15 14V3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           Stats
         </button>
+        <button class="nav-btn" id="reset-btn" title="Reset Learning">
+          <svg viewBox="0 0 16 16" fill="none">
+            <path d="M2 8a6 6 0 1 0 1.4-3.7M2 4.5V8h3.5"
+            stroke="currentColor" stroke-width="1.4"
+            stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Reset
+        </button>
       </nav>
     </div>
   </header>
@@ -141,7 +149,7 @@
               </div>
               <span class="panel-badge">Optional</span>
             </div>
-            <textarea id="human-textarea" class="response-input" placeholder="Write your response here…&#10;&#10;Leave blank to evaluate AI only.&#10;Tip: match the task's tone.&#10;&#10;⌘↵ to evaluate" rows="7"></textarea>
+            <textarea id="human-textarea" class="response-input" placeholder="Write your response here…&#10;&#10;Leave blank to evaluate AI only.&#10;Tip: match the task's tone.&#10;&#10;Press Enter to evaluate (Shift+Enter for new line)" rows="7"></textarea>
             <div class="input-footer">
               <span id="char-count" class="char-count">0 chars</span>
             </div>
@@ -199,7 +207,7 @@
 
         <div class="human-query-block">
           <label class="hq-label">Your Question or Request</label>
-          <textarea id="human-query-input" class="response-input hq-input" placeholder="Type your question here…&#10;&#10;Examples:&#10;  "How do I deal with a difficult colleague?"&#10;  "Write a professional apology email."&#10;  "Give me step-by-step advice on learning Python."&#10;&#10;⌘↵ to evaluate" rows="5"></textarea>
+          <textarea id="human-query-input" class="response-input hq-input" placeholder="Type your question here…&#10;&#10;Examples:&#10;  "How do I deal with a difficult colleague?"&#10;  "Write a professional apology email."&#10;  "Give me step-by-step advice on learning Python."&#10;&#10;Press Enter to evaluate (Shift+Enter for new line)" rows="5"></textarea>
           <div class="input-footer">
             <span id="hq-char-count" class="char-count">0 chars</span>
           </div>

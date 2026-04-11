@@ -110,14 +110,6 @@ _HARDCODED_TASKS = [
         "human_queries": ["How should I handle a colleague who keeps undermining me?"],
     },
     {
-        "id": "creative_writing", "name": "Creative Writing",
-        "difficulty": "easy", "tone": "friendly", "structure_required": False,
-        "description": "Respond to creative writing prompts with imagination.",
-        "required_keywords": ["story", "imagine", "create"],
-        "queries": ["Write the opening paragraph of a thriller set in a seaside town."],
-        "human_queries": ["Help me write a compelling tagline for my new app."],
-    },
-    {
         "id": "decision_support", "name": "Decision Support",
         "difficulty": "medium", "tone": "helpful", "structure_required": False,
         "description": "Help someone think through a difficult decision.",

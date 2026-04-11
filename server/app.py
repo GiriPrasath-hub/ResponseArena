@@ -1,58 +1,108 @@
 """
-ResponseArena v3.3 — Fixed task selection, random mode, human dataset integration.
+ResponseArena v3.4 — Production-ready, OpenEnv Phase 2.
 """
+import json
+import os
+import random
 from pathlib import Path
+from typing import List, Optional
+
+import uvicorn
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
-from typing import Optional, List
-import json
-import random
 
+from inference import build_system_prompt, call_llm
 from openenv.environment.task_manager import (
-    get_all_tasks, get_task, _TASKS, _MAP, _normalize_task_id
+    _MAP,
+    _TASKS,
+    _normalize_task_id,
+    get_all_tasks,
 )
-from openenv.grader import set_query_context, grade_response
-from openenv.agent.response_generator import generate_response
-from rl.policy import get_memory
-
-
 from openenv.environment.wrapper import OpenEnvWrapper
+from openenv.grader import grade_response, set_query_context
+from rl.policy import _MEMORY_PATH, get_memory
+
+if not os.getenv("HF_TOKEN"):
+    print("WARNING: HF_TOKEN not set — LLM calls will use fallback")
+
+if not os.getenv("API_BASE_URL"):
+    print("WARNING: API_BASE_URL not set — LLM disabled, using fallback")
 
 memory = get_memory()
 policy = memory.policy
 
+_TONE_MAP = {
+    "emotional_support":  "empathetic",
+    "professional_reply": "professional",
+    "problem_solving":    "helpful",
+    "casual_conversation": "friendly",
+    "conflict_resolution": "empathetic",
+    "creative_writing":   "expressive",
+    "decision_support":   "analytical",
+    "customer_service":   "professional",
+}
+
+print("🔥 VERSION CHECK: GITHUB SYNC WORKING")
+
+def reset_rl_system() -> dict:
+    global memory, policy, _env
+
+    from rl.policy import _memory
+
+    _memory.buffer._buf.clear()
+    _memory._task_history.clear()
+
+    for p in _memory.task_policies.values():
+        p.weights = {"semantic": 0.40, "tone": 0.30, "structure": 0.30}
+        p.update_count = 0
+        p._dim_rewards.clear()
+
+    try:
+        _MEMORY_PATH.unlink(missing_ok=True)
+    except Exception:
+        pass
+
+    _memory._save()
+
+    memory = _memory
+    policy = memory.policy
+    _env = OpenEnvWrapper()
+
+    return {
+        "status": "reset",
+        "message": "RL system fully reset (memory + weights + env)",
+    }
+
+
 app = FastAPI(
     title="ResponseArena — Human vs AI Evaluation",
-    version="3.3.0",
+    version="3.4.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-_frontend = Path(__file__).parent / "frontend"
+_frontend = Path(__file__).parent.parent / "frontend"
 if _frontend.exists():
     app.mount("/static", StaticFiles(directory=str(_frontend)), name="static")
 
-# ── Single shared env instance (used by /reset + /step) ──────────────────────
 _env = OpenEnvWrapper()
 
-# ── Human evaluation dataset (loaded once at startup) ─────────────────────────
-_HUMAN_DATASET_PATH = Path(__file__).parent / "data" / "human_eval_dataset.json"
 
 def _load_human_dataset() -> dict:
-    """
-    Load human_eval_dataset.json keyed by task_id → list of entries.
-    Each entry: {query, ideal_response, keywords, tone}
-    Returns empty dict if file not found — human mode still works via AI generation.
-    """
-    if not _HUMAN_DATASET_PATH.exists():
+    path = Path(__file__).parent.parent / "data" / "human_eval_dataset.json"
+    if not path.exists():
         return {}
     try:
-        raw = json.loads(_HUMAN_DATASET_PATH.read_text(encoding="utf-8"))
-        # Support both list format and dict format
+        raw = json.loads(path.read_text(encoding="utf-8"))
         if isinstance(raw, list):
             dataset: dict = {}
             for entry in raw:
@@ -66,39 +116,31 @@ def _load_human_dataset() -> dict:
         pass
     return {}
 
+
 _HUMAN_DATASET: dict = _load_human_dataset()
 
 
 def _find_best_human_match(task_id: str, query: str) -> Optional[dict]:
-    """
-    Find the closest matching entry in the human dataset for a given query.
-    Uses simple word-overlap scoring. Returns None if dataset has no entries for task.
-    """
     entries = _HUMAN_DATASET.get(task_id, [])
     if not entries:
         return None
-
     q_words = set(query.lower().split())
     best_score = -1
     best_entry = None
-
     for entry in entries:
-        entry_q = str(entry.get("query", "")).lower()
-        entry_words = set(entry_q.split())
+        entry_words = set(str(entry.get("query", "")).lower().split())
         overlap = len(q_words & entry_words) / max(len(q_words | entry_words), 1)
         if overlap > best_score:
             best_score = overlap
             best_entry = entry
-
     return best_entry
 
 
-# ── Request models ────────────────────────────────────────────────────────────
 class EvaluateRequest(BaseModel):
-    task_id:        str
-    query:          str
+    task_id: str
+    query: str
     human_response: Optional[str] = None
-    mode:           str = "ai"   # "ai" | "human"
+    mode: str = "ai"
 
 
 class BatchEvaluateRequest(BaseModel):
@@ -110,16 +152,16 @@ class ResetRequest(BaseModel):
 
 
 class StepRequest(BaseModel):
-    type:          str = "respond"
+    type: str = "respond"
     human_content: Optional[str] = None
 
-
-# ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.get("/", include_in_schema=False)
 def home():
     index = _frontend / "index.html"
-    return FileResponse(str(index)) if index.exists() else JSONResponse({"status": "running"})
+    if index.exists():
+        return FileResponse(str(index))
+    return {"error": "index.html not found"}
 
 
 @app.get("/health")
@@ -143,29 +185,19 @@ def get_task_detail(task_id: str):
 
 @app.get("/query")
 def get_random_query(task_id: Optional[str] = None, mode: str = "ai"):
-    """
-    Return a random query for a task.
-    task_id: accepts IDs, display names, empty/"random" for true random.
-    mode: "ai" → task.queries, "human" → task.human_queries
-    """
-    # Normalise task_id — handles display names, empty, "random"
     norm = _normalize_task_id(str(task_id or ""))
-
     if norm and norm in _MAP:
         task = _MAP[norm]
     else:
-        # True random selection from all tasks
         if not _TASKS:
             raise HTTPException(500, "No tasks loaded")
         task = random.choice(_TASKS)
 
-    # Select query pool based on mode
     if mode == "human":
         pool = [q for q in task.human_queries if q and q.strip()]
     else:
         pool = [q for q in task.queries if q and q.strip()]
 
-    # Fallback to other pool if selected pool is empty
     if not pool:
         pool = [q for q in task.queries if q and q.strip()]
     if not pool:
@@ -181,36 +213,26 @@ def get_random_query(task_id: Optional[str] = None, mode: str = "ai"):
         "mode":             mode,
     }
 
+
 @app.get("/policy")
 def policy_simple():
     return memory.policy.to_dict()
+
 
 @app.get("/policy/stats")
 def policy_stats():
     return memory.get_stats()
 
+
 def _do_evaluate(
     task_id: str,
-    query:   str,
+    query: str,
     human_response: Optional[str],
     mode: str = "ai",
 ) -> dict:
-    """
-    Core evaluation logic.
-
-    AI mode:
-      - Uses task_id directly (no silent fallback to casual_conversation)
-      - Generates AI response and grades it
-      - Optionally grades human response too
-
-    Human mode:
-      - AI response generated as usual
-      - Additionally looks up ideal response in human dataset for reference grading
-    """
-    # ── Task resolution — normalize and raise if not found ────────────────────
     norm = _normalize_task_id(str(task_id or ""))
     if not norm:
-        raise HTTPException(400, f"No task selected. Please choose a task from the dropdown.")
+        raise HTTPException(400, "No task selected. Please choose a task from the dropdown.")
 
     task = _MAP.get(norm)
     if not task:
@@ -221,71 +243,93 @@ def _do_evaluate(
     if not query:
         raise HTTPException(400, "query must not be empty")
 
-    # Use the normalised task id for everything — no detection override in AI mode
     effective_task = norm
-
     set_query_context(effective_task, query)
 
-    # ── AI response ───────────────────────────────────────────────────────────
-    ai_response   = generate_response(effective_task, query)
+    tone = _TONE_MAP.get(effective_task, "helpful")
+    system_prompt = build_system_prompt(effective_task, tone)
+
+    # ── AI response: always LLM ───────────────────────────────────────────────
+    ai_response = call_llm(system_prompt, query)
     ai_evaluation = grade_response(task, ai_response)
-    ai_base       = float(max(0.0, min(1.0, ai_evaluation.get("reward", 0.0))))
-    ai_reward     = memory.record_eval(
+    ai_evaluation["explanation"] = (
+        f"Semantic: {ai_evaluation['breakdown'].get('semantic', 0)} | "
+        f"Tone: {ai_evaluation['breakdown'].get('tone', 0)} | "
+        f"Structure: {ai_evaluation['breakdown'].get('structure', 0)}"
+    )
+    ai_base = float(max(0.0, min(1.0, ai_evaluation.get("reward", 0.0))))
+    ai_reward = memory.record_eval(
         task_id=effective_task,
         query=query,
         response=ai_response,
         actor="ai",
         breakdown=ai_evaluation.get("breakdown", {}),
-        raw_reward=ai_base
+        raw_reward=ai_base,
     )
 
-    # ── Human response (AI mode: optional user text) ──────────────────────────
-    human_text = str(human_response or "").strip()
-    if human_text:
-        human_evaluation = grade_response(task, human_text)
-        human_base       = float(max(0.0, min(1.0, human_evaluation.get("reward", 0.0))))
-        human_reward = memory.record_eval(
-    task_id=effective_task,
-    query=query,
-    response=human_text,
-    actor="human",
-    breakdown=human_evaluation.get("breakdown", {}),
-    raw_reward=human_base
-)
-    
-    else:
-        human_evaluation = None
-        human_reward     = None
+    # ── Human response ────────────────────────────────────────────────────────
+    # AI mode: human_response is optional user-provided text.
+    # Human mode: LLM generates the "human" response; user text is ignored.
+    human_text: str = ""
+    human_evaluation: Optional[dict] = None
+    human_reward: Optional[float] = None
 
-    # ── Human mode: look up dataset ideal response ────────────────────────────
-    # In human mode the user typed their own query; we use the dataset to provide
-    # a reference ideal_response alongside the AI-generated one.
-    dataset_match = None
+    if mode == "human":
+        human_system_prompt = build_system_prompt(effective_task, tone)
+        human_text = call_llm(human_system_prompt, query)
+        human_evaluation = grade_response(task, human_text)
+        human_base = float(max(0.0, min(1.0, human_evaluation.get("reward", 0.0))))
+        human_reward = memory.record_eval(
+            task_id=effective_task,
+            query=query,
+            response=human_text,
+            actor="human",
+            breakdown=human_evaluation.get("breakdown", {}),
+            raw_reward=human_base,
+        )
+    else:
+        provided = str(human_response or "").strip()
+        if provided:
+            human_text = provided
+            human_evaluation = grade_response(task, human_text)
+            human_base = float(max(0.0, min(1.0, human_evaluation.get("reward", 0.0))))
+            human_reward = memory.record_eval(
+                task_id=effective_task,
+                query=query,
+                response=human_text,
+                actor="human",
+                breakdown=human_evaluation.get("breakdown", {}),
+                raw_reward=human_base,
+            )
+
+    # ── Dataset reference (human mode only, no RL recording) ─────────────────
+    dataset_match: Optional[dict] = None
     if mode == "human":
         match = _find_best_human_match(effective_task, query)
         if match:
             ideal_text = str(match.get("ideal_response", "")).strip()
             if ideal_text:
                 ideal_eval = grade_response(task, ideal_text)
-                ideal_base  = float(max(0.0, min(1.0, ideal_eval.get("reward", 0.0))))
-                ideal_reward = ideal_base
+                ideal_base = float(max(0.0, min(1.0, ideal_eval.get("reward", 0.0))))
                 dataset_match = {
-                    "query":           match.get("query", ""),
-                    "ideal_response":  ideal_text,
-                    "reward":          ideal_reward,
-                    "evaluation":      ideal_eval,
-                    "keywords":        match.get("keywords", []),
+                    "query":          match.get("query", ""),
+                    "ideal_response": ideal_text,
+                    "reward":         ideal_base,
+                    "evaluation":     ideal_eval,
+                    "keywords":       match.get("keywords", []),
                 }
 
     # ── Verdict ───────────────────────────────────────────────────────────────
     if human_reward is not None:
-        if human_reward > ai_reward:   better = "human"
-        elif ai_reward > human_reward: better = "ai"
-        else:                          better = "tie"
+        if human_reward > ai_reward:
+            better = "human"
+        elif ai_reward > human_reward:
+            better = "ai"
+        else:
+            better = "tie"
     else:
         better = "ai"
 
-    # ── Comparison summary ────────────────────────────────────────────────────
     comparison_summary = _build_comparison_summary(
         better, ai_reward, human_reward, ai_evaluation, human_evaluation
     )
@@ -308,8 +352,8 @@ def _do_evaluate(
             "evaluation": human_evaluation,
         } if human_text else None,
         "better":        better,
-        "policy": memory.policy.to_dict(),
-        "dataset_match": dataset_match,   # None in AI mode or if no match found
+        "policy":        memory.policy.to_dict(),
+        "dataset_match": dataset_match,
     }
 
 
@@ -328,7 +372,6 @@ def _build_comparison_summary(
     ai_fb = (ai_eval   or {}).get("feedback",  {})
     hu_fb = (human_eval or {}).get("feedback",  {})
 
-    # Works with both breakdown schemas (keywords/tone/structure OR semantic/tone/structure)
     def _get(d: dict, *keys: str) -> float:
         for k in keys:
             if k in d:
@@ -345,13 +388,22 @@ def _build_comparison_summary(
     diffs = []
     if abs(ai_sem - hu_sem) >= 0.15:
         w = "AI" if ai_sem > hu_sem else "Human"
-        diffs.append(f"{w} covered more relevant content ({round(max(ai_sem,hu_sem)*100)}% vs {round(min(ai_sem,hu_sem)*100)}%)")
+        diffs.append(
+            f"{w} covered more relevant content "
+            f"({round(max(ai_sem, hu_sem) * 100)}% vs {round(min(ai_sem, hu_sem) * 100)}%)"
+        )
     if abs(ai_tn - hu_tn) >= 0.15:
         w = "AI" if ai_tn > hu_tn else "Human"
-        diffs.append(f"{w} matched tone better ({round(max(ai_tn,hu_tn)*100)}% vs {round(min(ai_tn,hu_tn)*100)}%)")
+        diffs.append(
+            f"{w} matched tone better "
+            f"({round(max(ai_tn, hu_tn) * 100)}% vs {round(min(ai_tn, hu_tn) * 100)}%)"
+        )
     if abs(ai_st - hu_st) >= 0.15:
         w = "AI" if ai_st > hu_st else "Human"
-        diffs.append(f"{w} was better structured ({round(max(ai_st,hu_st)*100)}% vs {round(min(ai_st,hu_st)*100)}%)")
+        diffs.append(
+            f"{w} was better structured "
+            f"({round(max(ai_st, hu_st) * 100)}% vs {round(min(ai_st, hu_st) * 100)}%)"
+        )
 
     delta = round(abs(ai_reward - (human_reward or 0)) * 100)
 
@@ -364,8 +416,8 @@ def _build_comparison_summary(
 
     summary = (
         f"{winner} response was stronger by {delta}pt — {'; '.join(diffs)}."
-        if diffs else
-        f"{winner} response edged ahead by {delta}pt overall."
+        if diffs
+        else f"{winner} response edged ahead by {delta}pt overall."
     )
 
     loser_miss = (
@@ -373,7 +425,11 @@ def _build_comparison_summary(
         else ai_fb.get("missing_keywords", [])
     )
     if loser_miss:
-        summary += f" The {loser} response was missing: {', '.join(f'{chr(34)}{k}{chr(34)}' for k in loser_miss[:3])}."
+        summary += (
+            f" The {loser} response was missing: "
+            + ", ".join(f'"{k}"' for k in loser_miss[:3])
+            + "."
+        )
 
     return summary
 
@@ -395,13 +451,13 @@ def evaluate_batch(req: BatchEvaluateRequest):
     results = []
     for item in req.items:
         try:
-            results.append(_do_evaluate(item.task_id, item.query, item.human_response, item.mode))
+            results.append(
+                _do_evaluate(item.task_id, item.query, item.human_response, item.mode)
+            )
         except Exception as e:
             results.append({"error": str(e), "task_id": item.task_id})
     return {"results": results, "count": len(results)}
 
-
-# ── OpenEnv /reset + /step ────────────────────────────────────────────────────
 
 @app.post("/reset")
 def reset_ep(req: ResetRequest = ResetRequest()):
@@ -433,8 +489,12 @@ def step_ep(action: StepRequest):
             "evaluation":    info.get("evaluation", {}),
             "base_reward":   info.get("base_reward", reward),
             "shaped_reward": info.get("shaped_reward", reward),
-            "ai":   {"response": info.get("response", ""), "reward": reward, "evaluation": info.get("evaluation", {})},
-            "human": None,
+            "ai":   {
+                "response":   info.get("response", ""),
+                "reward":     reward,
+                "evaluation": info.get("evaluation", {}),
+            },
+            "human":  None,
             "better": "ai",
         }
     except Exception as e:
@@ -445,23 +505,28 @@ def step_ep(action: StepRequest):
 def state_ep():
     return _env.state()
 
+
 @app.get("/stats")
 def stats():
     return memory.get_stats()
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
 
-import uvicorn
+@app.post("/reset-policy")
+def reset_policy():
+    try:
+        return reset_rl_system()
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
 
 def main():
     uvicorn.run(
         "server.app:app",
         host="0.0.0.0",
         port=7860,
-        reload=False
+        reload=False,
     )
+
 
 if __name__ == "__main__":
     main()

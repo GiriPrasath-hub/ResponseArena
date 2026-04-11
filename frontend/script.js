@@ -1,9 +1,10 @@
 /* ResponseArena v4 — RL-Powered Evaluation Lab */
 'use strict';
 
-const API = '';
+const API = window.location.origin;
 let currentMode  = 'ai';
 let currentQuery = null;
+let scenarioLoaded = false;
 let evalCount    = 0;
 
 const $ = id => document.getElementById(id);
@@ -42,6 +43,7 @@ const el = {
   aiThinkingHuman:      $('ai-thinking-human'),
   aiTextHuman:          $('ai-text-human'),
   humanEvaluateBtn:     $('human-evaluate-btn'),
+  humanQuery: $('human-query'),
 
   // Stats
   statsBtn:     $('stats-btn'),
@@ -52,6 +54,8 @@ const el = {
   statUpdates:  $('stat-updates'),
   pwBars:       $('pw-bars'),
   trendCanvas:  $('trend-canvas'),
+
+  resetBtn: $('reset-btn'),
 
   resultsArea:  $('results-area'),
 };
@@ -173,25 +177,81 @@ function setMode(mode) {
     el.humanWorkspace.style.display= 'none';
     el.loadBlock.style.display     = '';
     currentQuery = null;
-    resetAiWorkspace();
-  } else {
-    el.modeHint.textContent = 'You ask → AI responds & is evaluated';
-    el.aiWorkspace.style.display   = 'none';
-    el.humanWorkspace.style.display= '';
-    el.loadBlock.style.display     = 'none';
-    updateHqTaskChip();
-    resetHumanAiBox();
+    scenarioLoaded = false;
+
+    // 🔥 Enable random again in AI mode
+  if (el.taskSelect.options[0].value === "") {
+    el.taskSelect.options[0].disabled = false;
   }
+    resetAiWorkspace();
+  }
+  else {
+  el.modeHint.textContent = 'You ask → AI responds & is evaluated';
+  el.aiWorkspace.style.display   = 'none';
+  el.humanWorkspace.style.display= '';
+  el.loadBlock.style.display     = 'none';
+
+  // 🔥 ADD THIS
+  // Disable random option in human mode
+  if (el.taskSelect.options[0].value === "") {
+    el.taskSelect.options[0].disabled = true;
+  }
+
+  // 🔥 Always enforce valid task
+  if (!el.taskSelect.value || el.taskSelect.value === "") {
+    el.taskSelect.value = "emotional_support";
+  }
+
+  updateHqTaskChip();
+  resetHumanAiBox();
+}
 }
 
 el.modeAiBtn.addEventListener('click', () => setMode('ai'));
 el.modeHumanBtn.addEventListener('click', () => setMode('human'));
-el.taskSelect.addEventListener('change', () => { if (currentMode==='human') updateHqTaskChip(); });
+el.taskSelect.addEventListener('change', () => {
+  if (currentMode === 'human') {
 
+    // 🔥 Force prevent selecting random
+    if (!el.taskSelect.value) {
+      el.taskSelect.value = "emotional_support";
+      toast('Random is not allowed in Human mode', 'error');
+    }
+
+    updateHqTaskChip();
+  }
+});
 function updateHqTaskChip() {
   const v = el.taskSelect.value;
-  el.hqTaskChip.textContent = v || 'Random';
+
+  if (!v) {
+    el.hqTaskChip.textContent = 'Select Task';
+  } else {
+    const label = el.taskSelect.options[el.taskSelect.selectedIndex].text;
+    el.hqTaskChip.textContent = label;
+  }
 }
+
+document.addEventListener('keydown', async (e) => {
+  if (e.key !== 'Enter' || e.shiftKey) return;
+
+  const active = document.activeElement;
+  const isTyping = active && (
+    active.tagName === 'TEXTAREA' ||
+    active.tagName === 'INPUT'
+  );
+
+// 🔥 FIX: allow Enter only when NOT typing OR when in AI textarea
+  if (isTyping && active !== el.humanTextarea) return;
+
+  e.preventDefault();
+
+  if (currentMode === 'ai') {
+    await evaluateAiMode();
+  } else {
+    await evaluateHumanMode();
+  }
+});
 
 // ── Reset workspace displays ────────────────────────────────────────────────────
 function resetAiWorkspace() {
@@ -199,7 +259,7 @@ function resetAiWorkspace() {
   el.sName.textContent  = 'Load a scenario to begin';
   el.sQuery.textContent = 'Click "Load Scenario" to get started.';
   el.humanTextarea.value=''; el.charCount.textContent='0 chars';
-  el.evaluateBtn.disabled = true;
+  el.evaluateBtn.disabled = false;
   el.actionHint.textContent = 'Load a scenario first';
   resetAiBox(el.aiBox, el.aiPlaceholder, el.aiThinking, el.aiText);
 }
@@ -223,7 +283,7 @@ async function loadScenario() {
     const tid = el.taskSelect.value;
     if (tid) params.append('task_id', tid);
     currentQuery = await apiFetch(`/query?${params}`);
-
+    scenarioLoaded = true;
     el.sTask.textContent = currentQuery.task_id;
     el.sDiff.textContent = currentQuery.difficulty;
     el.sDiff.className   = 'meta-chip difficulty';
@@ -247,10 +307,35 @@ async function loadScenario() {
 el.loadBtn.addEventListener('click', loadScenario);
 
 // ── Evaluate (AI mode) ─────────────────────────────────────────────────────────
+
 async function evaluateAiMode() {
-  if (!currentQuery) { toast('Load a scenario first', 'error'); return; }
+
+if (!scenarioLoaded) {
+  try {
+    const params = new URLSearchParams({ mode: 'ai' });
+    const tid = el.taskSelect.value;
+    if (tid) params.append('task_id', tid);
+
+    currentQuery = await apiFetch(`/query?${params}`);
+
+    el.sTask.textContent = currentQuery.task_id;
+    el.sDiff.textContent = currentQuery.difficulty;
+    el.sTone.textContent = currentQuery.tone;
+    el.sName.textContent = currentQuery.task_name;
+    el.sQuery.textContent = currentQuery.query;
+
+    scenarioLoaded = true; 
+
+    return;
+
+  } catch (e) {
+    toast('Failed to auto-load scenario', 'error');
+    return;
+  }
+}
 
   const human = el.humanTextarea.value.trim();
+
   setEvalBtnLoading(el.evaluateBtn, true);
 
   // Show thinking animation
@@ -291,10 +376,11 @@ async function evaluateAiMode() {
     toast(`Error: ${err.message}`, 'error');
   } finally {
     setEvalBtnLoading(el.evaluateBtn, false, 'Evaluate');
+    currentQuery = null;
+    scenarioLoaded = false;
   }
 }
 el.evaluateBtn.addEventListener('click', evaluateAiMode);
-el.humanTextarea.addEventListener('keydown', e => { if ((e.metaKey||e.ctrlKey)&&e.key==='Enter') evaluateAiMode(); });
 el.humanTextarea.addEventListener('input', () => {
   el.charCount.textContent = `${el.humanTextarea.value.length} chars`;
 });
@@ -302,10 +388,21 @@ el.humanTextarea.addEventListener('input', () => {
 // ── Evaluate (Human mode) ──────────────────────────────────────────────────────
 async function evaluateHumanMode() {
   const query = el.humanQueryInput.value.trim();
-  if (!query) { toast('Type a question first', 'error'); return; }
-  const taskId = el.taskSelect.value;
-  if (!taskId) { toast('Select a task type first', 'error'); return; }
 
+  // 🔥 NEW FIX
+  if (!query) {
+    toast('Please enter a query', 'error');
+    el.humanQueryInput.focus();
+    return;
+  }
+
+  const taskId = el.taskSelect.value;
+
+// 🔥 HARD BLOCK random in human mode
+  if (!taskId || taskId === "") {
+    toast('Please select a valid task (Random not allowed in Human mode)', 'error');
+    return;
+  }
   setEvalBtnLoading(el.humanEvaluateBtn, true);
 
   el.aiPlaceholderHuman.style.display = 'none';
@@ -342,7 +439,20 @@ async function evaluateHumanMode() {
   }
 }
 el.humanEvaluateBtn.addEventListener('click', evaluateHumanMode);
-el.humanQueryInput.addEventListener('keydown', e => { if ((e.metaKey||e.ctrlKey)&&e.key==='Enter') evaluateHumanMode(); });
+el.humanQueryInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+
+    const value = el.humanQueryInput.value.trim();
+
+    if (!value) {
+      toast('Please enter a query before submitting', 'error');
+      return;
+    }
+
+    evaluateHumanMode();
+  }
+});
 el.humanQueryInput.addEventListener('input', () => {
   el.hqCharCount.textContent = `${el.humanQueryInput.value.length} chars`;
 });
@@ -704,6 +814,31 @@ document.head.appendChild(spinStyle);
 checkHealth();
 setMode('ai');
 toast('Select a task and load a scenario to begin', 'info', 5000);
+scenarioLoaded = false;
+currentQuery = null;
+
+el.resetBtn.addEventListener('click', async () => {
+
+  scenarioLoaded = false;
+  currentQuery = null;
+  // 🔥 ALWAYS RESET UI FIRST (independent of backend)
+  evalCount = 0;
+  el.resultsArea.innerHTML = '';
+  resetAiWorkspace();
+  resetHumanAiBox();
+
+  // 🔥 FIX: correct input field
+  el.humanQueryInput.value = '';
+  el.hqCharCount.textContent = '0 chars';
+
+  try {
+    await apiFetch('/reset-policy', { method: 'POST' });
+    toast('RL system reset successfully', 'success');
+  } catch (e) {
+    toast('Backend reset failed (UI still cleared)', 'error');
+  }
+
+});
 
 // FIX 6: Ensure logo rotation animation runs (no JS override)
 (function initLogoAnimation() {
@@ -728,4 +863,3 @@ function updateLogoByScore(score) {
     logo.style.filter = 'drop-shadow(0 0 12px #f06570)';
   }
 }
-
