@@ -283,7 +283,7 @@ def _do_evaluate(
         human_system_prompt = build_system_prompt(effective_task, tone)
         human_text = call_llm(human_system_prompt, query)
         human_evaluation = grade_response(task, human_text)
-        r = float(ai_evaluation.get("reward", 0.0))
+        r = float(human_evaluation.get("reward", 0.0))
         EPS = 1e-6
         if r <= 0.0:
             human_base = EPS
@@ -329,14 +329,14 @@ def _do_evaluate(
             ideal_text = str(match.get("ideal_response", "")).strip()
             if ideal_text:
                 ideal_eval = grade_response(task, ideal_text)
-                r = float(ai_evaluation.get("reward", 0.0))
+                r = float(ideal_eval.get("reward", 0.0))
                 EPS = 1e-6
                 if r <= 0.0:
-                    ai_base = EPS
+                    ideal_base = EPS
                 elif r >= 1.0:
-                    ai_base = 1.0 - EPS
+                    ideal_base = 1.0 - EPS
                 else:
-                    ai_base = r
+                    ideal_base = r
                 dataset_match = {
                     "query":          match.get("query", ""),
                     "ideal_response": ideal_text,
