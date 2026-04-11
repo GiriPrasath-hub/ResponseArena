@@ -1,150 +1,123 @@
----
-title: "ResponseArena — AI Evaluation Lab"
-emoji: "⚔️"
-colorFrom: "purple"
-colorTo: "indigo"
-sdk: "docker"
----
-
 # ⚔️ ResponseArena — Interactive AI Evaluation Lab
 
-> An OpenEnv-compliant reinforcement learning environment for evaluating AI-generated responses across real-world communication scenarios.
+> **An OpenEnv-compliant hybrid AI evaluation environment** with RL-based reward shaping + LLM-powered response generation.
 
 ---
 
-## 🌐 Live Demo
+## 🧠 Overview
 
-🔗 Hugging Face Space: https://huggingface.co/spaces/giri0304/ResponseArena   
-💻 GitHub Repository: https://github.com/GiriPrasath-hub/ResponseArena
+ResponseArena is a **real-world AI evaluation system** where responses are:
 
----
-
-## 🧠 What is ResponseArena?
-
-ResponseArena is a **single-step reinforcement learning (RL) environment** where an AI agent generates responses to human-like queries and is evaluated using a deterministic scoring system.
-
-It enables:
-
-* AI benchmarking
-* Human vs AI comparison
-* RL-based evaluation
-* Communication intelligence testing
+* Generated using **LLM APIs (Hugging Face / OpenAI-compatible)**
+* Evaluated using a **deterministic multi-dimensional reward system**
+* Improved over time using **Reinforcement Learning (RL memory + policy shaping)**
 
 ---
 
-## 🎯 OpenEnv Hackathon Compliance
+## 🚀 Key Features
 
-This project satisfies all required criteria:
+### 🔥 Hybrid Intelligence System
 
-✅ Real-world environment   
-✅ 4 structured evaluation tasks   
-✅ Deterministic reward system   
-✅ OpenEnv API (`/reset`, `/step`, `/state`)   
-✅ `inference.py` included   
-✅ Docker deployment ready   
-✅ Hugging Face Spaces deployment   
-✅ Structured evaluation logs   
+* ✅ LLM-based generation (Meta LLaMA via HF API)
+* ✅ Rule-based fallback (offline safe)
+* ✅ RL-based adaptive scoring
 
 ---
 
-## 🌍 Tasks
+### 🧮 Multi-Dimensional Evaluation
 
-| Task                | Difficulty | Description                                  |
-| ------------------- | ---------- | -------------------------------------------- |
-| casual_conversation | Easy       | Friendly everyday interaction                |
-| emotional_support   | Medium     | Empathetic responses to emotional situations |
-| professional_reply  | Medium     | Formal business communication                |
-| problem_solving     | Hard       | Step-by-step technical guidance              |
+Each response is scored across:
 
----
-
-## 🧩 RL Environment Design
-
-### Observation Space
-
-```json
-{
-  "task": "emotional_support",
-  "task_name": "Emotional Support",
-  "difficulty": "medium",
-  "query": "I feel overwhelmed with everything going on."
-}
-```
-
----
-
-### Action Space
-
-```json
-{
-  "type": "respond",
-  "content": "Your response text here..."
-}
-```
-
----
-
-## 🧮 Reward System
-
-The environment uses a **multi-dimensional deterministic reward system**:
-
-```text
-reward = (0.4 × keywords) + (0.3 × tone) + (0.3 × structure)
-```
-
-### Evaluation Criteria
-
-* **Keywords (40%)** → Relevance to context
-* **Tone (30%)** → Emotional appropriateness
-* **Structure (30%)** → Clarity and formatting
-
----
-
-## 🔁 RL Flow
-
-1. Environment reset (`/reset`)
-2. Receive query
-3. Generate response
-4. Submit action (`/step`)
-5. Receive reward
-
----
-
-## 🏗️ Project Structure
-
-```bash
-ResponseArena/
-├── openenv/
-├── core/
-├── server/
-├── rl/
-├── data/
-├── frontend/
-├── inference.py
-├── openenv.yaml
-├── Dockerfile
-├── requirements.txt
-├── README.md
-```
-
----
-
-## 🌐 API Endpoints
-
-| Endpoint  | Method | Description           |
+| Metric    | Weight | Description           |
 | --------- | ------ | --------------------- |
-| `/reset`  | POST   | Start new episode     |
-| `/step`   | POST   | Submit response       |
-| `/state`  | GET    | Get environment state |
-| `/health` | GET    | Health check          |
+| Semantic  | 0.45   | Relevance to query    |
+| Tone      | 0.30   | Emotional correctness |
+| Structure | 0.25   | Clarity & formatting  |
 
 ---
 
-## ⚙️ Run Locally
+### 🔁 Reinforcement Learning (Core Innovation)
+
+* Per-task adaptive policies
+* Reward shaping with learning bonus
+* Experience replay buffer
+* Persistent memory (`/tmp/arena_memory.json`)
+* Dynamic weight adjustment
+
+---
+
+## 🌍 Supported Tasks (8 Total)
+
+| Task                | Type       |
+| ------------------- | ---------- |
+| casual_conversation | Chat       |
+| emotional_support   | Empathy    |
+| professional_reply  | Business   |
+| problem_solving     | Technical  |
+| conflict_resolution | Reasoning  |
+| creative_writing    | Creativity |
+| decision_support    | Analysis   |
+| customer_service    | Support    |
+
+---
+
+## 🧩 System Architecture
+
+```
+User / Inference
+      ↓
+LLM API (HF / OpenAI)
+      ↓
+ResponseArena Environment
+      ↓
+Grader (Semantic + Tone + Structure)
+      ↓
+RL Policy (Reward Shaping)
+      ↓
+Final Score
+```
+
+---
+
+## ⚙️ Environment API
+
+| Endpoint    | Description            |
+| ----------- | ---------------------- |
+| `/reset`    | Start new episode      |
+| `/step`     | Submit response        |
+| `/state`    | Current state          |
+| `/evaluate` | AI vs Human comparison |
+| `/stats`    | RL analytics           |
+
+---
+
+## 🧪 Inference (IMPORTANT FOR JUDGES)
 
 ```bash
-pip install -r requirements.txt
-uvicorn server.app:app --host 0.0.0.0 --port 7860
+python inference.py
+```
+
+---
+
+### Sample Output
+
+```
+[START] task=emotional_support
+[STEP] reward=0.76
+[END] success=true
+```
+
+---
+
+## 🔑 Environment Variables
+
+Create `.env` file:
+
+```
+API_BASE_URL=https://router.huggingface.co/v1
+HF_TOKEN=your_token_here
+MODEL_NAME=meta-llama/Llama-3.1-8B-Instruct
+ENV_BASE_URL=http://localhost:7860
 ```
 
 ---
@@ -152,48 +125,58 @@ uvicorn server.app:app --host 0.0.0.0 --port 7860
 ## 🐳 Docker Deployment
 
 ```bash
-docker build -t response-arena .
-docker run -p 7860:7860 response-arena
+docker build -t responsearena .
+docker run -p 7860:7860 responsearena
 ```
 
 ---
 
-## ▶️ Run Inference
+## 🤗 Hugging Face Deployment
 
-```bash
-export ENV_BASE_URL=http://localhost:7860
-python inference.py
-```
+1. Create Space → Docker
+2. Upload project
+3. Add Secrets:
 
----
-
-## 💡 Key Features
-
-* Deterministic AI evaluation
-* Human vs AI comparison system
-* Multi-dimensional scoring engine
-* OpenEnv-compatible RL environment
-* Interactive frontend UI
+* HF_TOKEN
+* API_BASE_URL
+* MODEL_NAME
 
 ---
 
-## 🚀 Future Scope
+## 📊 Evaluation Modes
 
-* Multi-step RL training
-* Voice-based evaluation
-* Emotion-aware scoring system
-* Personalized AI feedback
+### 🤖 AI Mode
+
+* LLM-generated response
+* RL-evaluated
+
+### 🧑 Human Mode
+
+* User or simulated human response
+* Compared against AI
 
 ---
 
-## 📜 License
+## 🧠 Why This Project Stands Out
 
-MIT License
+* ❌ Not just chatbot
+* ✅ Full **evaluation system**
+* ✅ RL + LLM hybrid architecture
+* ✅ Deterministic + agentic evaluation
+* ✅ Real-world communication tasks
+
+---
+
+## ⚠️ Notes
+
+* `.env` file is NOT included for security
+* Falls back to rule-based system if API not available
+* RL memory resets via `/reset-policy`
 
 ---
 
 ## 👨‍💻 Author
 
-Giri Prasath
+Built as part of **Meta x PyTorch x Scaler Hackathon**
 
 **ResponseArena — Where AI earns its intelligence.**

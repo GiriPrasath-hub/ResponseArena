@@ -20,6 +20,9 @@ COPY rl/ ./rl/
 COPY data/ ./data/
 COPY frontend/ ./frontend/
 
+COPY inference.py .
+COPY openenv.yaml .
+
 EXPOSE 7860
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:7860/health || exit 1

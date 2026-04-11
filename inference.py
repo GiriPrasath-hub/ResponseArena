@@ -22,6 +22,9 @@ import requests
 from typing import Optional
  
 from openai import OpenAI
+
+from dotenv import load_dotenv
+load_dotenv()
  
 # ── Configuration ─────────────────────────────────────────────────────────────
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
@@ -77,12 +80,10 @@ def env_reset(task_id: Optional[str] = None) -> dict:
         payload["task_id"] = task_id
     return safe_post(f"{ENV_BASE_URL}/reset", payload)
  
- 
 def env_step(response_text: str) -> dict:
-    """Call POST /step with the agent's response. Returns step result dict."""
     return safe_post(
         f"{ENV_BASE_URL}/step",
-        {"action": response_text, "actor": "ai"},
+        {"type": "respond", "human_content": response_text},
     )
  
  
@@ -282,7 +283,7 @@ def run_episode(task_config: dict) -> dict:
  
 def main() -> float:
     print("=" * 60)
-    print("LOVE vH Inference Runner")
+    print("ResponseArena Inference Runner")
     print(f"  ENV URL : {ENV_BASE_URL}")
     print(f"  LLM URL : {LLM_URL}")
     print(f"  Model   : {MODEL_NAME}")
