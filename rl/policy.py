@@ -28,12 +28,24 @@ _DIM_CAP     = 0.60
 
 _DEFAULT_WEIGHTS = {"semantic": 0.40, "tone": 0.30, "structure": 0.30}
 
+EPS = 1e-6  # module-level constant: open-interval guard
+
 # All recognised task IDs — pre-populated so per-task policies exist from start
 _ALL_TASKS = [
     "emotional_support", "professional_reply", "problem_solving",
     "casual_conversation", "conflict_resolution", "creative_writing",
     "decision_support", "customer_service",
 ]
+
+
+def _safe_round(v: float, digits: int) -> float:
+    """Round to `digits` decimal places, then re-apply EPS guard."""
+    r = round(v, digits)
+    if r <= 0.0:
+        return EPS
+    if r >= 1.0:
+        return 1.0 - EPS
+    return r
 
 
 class ReplayBuffer:
@@ -88,10 +100,16 @@ class TaskPolicy:
         """
         Weighted reward + bounded learning bonus.
         reward = Σ(weight_i × score_i) + clamp(learning_bonus, −0.05, 0.10)
+        Returns a value in the open interval (EPS, 1.0 − EPS).
         """
-        base = sum(self.weights.get(d, 0.0) * v for d, v in breakdown.items())
+        base  = sum(self.weights.get(d, 0.0) * v for d, v in breakdown.items())
         bonus = max(-0.05, min(0.10, learning_bonus))
-        return max(0.0, min(1.0, base + bonus))
+        result = base + bonus
+        if result <= 0.0:
+            return EPS
+        if result >= 1.0:
+            return 1.0 - EPS
+        return result
 
     # ── Learning ──────────────────────────────────────────────────────────────
 
@@ -189,7 +207,7 @@ class RLMemory:
     ) -> float:
         """
         Store experience, compute shaped reward, update task policy.
-        Returns policy-adjusted reward.
+        Returns policy-adjusted reward in the open interval (EPS, 1.0 − EPS).
         """
         # Ensure policy exists (for any new task_id)
         if task_id not in self.task_policies:
@@ -198,9 +216,6 @@ class RLMemory:
         pol = self.task_policies[task_id]
 
         # Learning bonus: improvement over previous score on this task
-        # 🔥 NEW: track per (task + query)
-        key = (task_id, query.strip().lower())
-
         prev_reward = raw_reward
         for exp in reversed(self.buffer.all()):
             if exp.get("task_id") == task_id and exp.get("query") == query[:120]:
@@ -209,14 +224,14 @@ class RLMemory:
 
         learning_bonus = raw_reward - prev_reward
 
-        # 🔥 STABILITY: prevent over-learning on same query
+        # Stability: prevent over-learning on same query
         if abs(learning_bonus) < 0.05:
             learning_bonus = 0.0
 
         adj_reward = pol.compute_reward(breakdown, learning_bonus)
         pol.record(breakdown, raw_reward)
 
-        # Store full experience
+        # Store full experience — use _safe_round so rounding never collapses to 0.0 or 1.0
         exp = {
             "task_id":        task_id,
             "query":          query[:120],
@@ -224,17 +239,17 @@ class RLMemory:
             "actor":          actor,
             "breakdown":      breakdown,
             "raw_reward":     raw_reward,
-            "adj_reward":     round(adj_reward, 4),
-            "learning_bonus": round(learning_bonus, 4),
+            "adj_reward":     _safe_round(adj_reward, 4),
+            "learning_bonus": _safe_round(learning_bonus, 4),
         }
         self.buffer.push(exp)
 
         self._task_history[task_id].append({
             "actor":          actor,
-            "reward":         round(adj_reward, 4),
+            "reward":         _safe_round(adj_reward, 4),
             "raw_reward":     raw_reward,
             "breakdown":      breakdown,
-            "learning_bonus": round(learning_bonus, 4),
+            "learning_bonus": _safe_round(learning_bonus, 4),
         })
         # Cap history at 50 entries per task
         if len(self._task_history[task_id]) > 50:

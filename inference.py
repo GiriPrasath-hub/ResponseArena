@@ -25,6 +25,7 @@ from typing import Optional
 from openai import OpenAI
 
 from dotenv import load_dotenv
+from openenv.grader import EPS
 load_dotenv()
  
 # ── Configuration ─────────────────────────────────────────────────────────────
@@ -62,21 +63,32 @@ INFERENCE_TASKS = [
     {"task_id": "problem_solving"},
 ]
  
- 
 # ── Network helper ─────────────────────────────────────────────────────────────
- 
+EPS = 1e-6
+
 def safe_post(url: str, payload: dict) -> dict:
-    """POST with full error handling. Always returns a dict."""
+    """POST with full error handling. Always returns a dict with safe reward."""
     try:
         r = requests.post(url, json=payload, timeout=30)
         r.raise_for_status()
-        return r.json()
+        data = r.json()
+
+        # 🔒 Ensure reward is always in (0,1)
+        reward = float(data.get("reward", EPS))
+        if reward <= 0.0:
+            reward = EPS
+        elif reward >= 1.0:
+            reward = 1.0 - EPS
+
+        data["reward"] = reward
+        return data
+
     except Exception as e:
         print(f"[ERROR] POST {url} failed: {e}", file=sys.stderr)
         return {
             "observation": {},
             "state": {},
-            "reward": 0.0,
+            "reward": EPS,  # 🔥 CRITICAL FIX (was 0.0 before)
             "done": True,
             "info": {"error": str(e)},
         }
@@ -318,6 +330,7 @@ def main() -> float:
         print("ERROR: Environment not reachable.", file=sys.stderr)
         sys.exit(1)
  
+    EPS = 1e-6
     results = []
     for task_config in INFERENCE_TASKS:
         print(f"\n{'─' * 60}")
@@ -325,16 +338,17 @@ def main() -> float:
             result = run_episode(task_config)
             results.append(result)
         except Exception as e:
-            print(f"[ERROR] Episode failed for {task_config}: {e}", file=sys.stderr)
-            results.append({"task_id": task_config.get("task_id", "unknown"), "reward": 0.0})
- 
+            print(f"[ERROR] Episode failed: {e}", file=sys.stderr)
+            results.append({"task_id": task_config.get("task_id", "unknown"), "reward": EPS})
+
     # Summary
     print(f"\n{'=' * 60}")
     print("INFERENCE SUMMARY")
     print(f"{'=' * 60}")
     total = 0.0
     for r in results:
-        score = float(r.get("reward", 0.0))
+        score = float(r.get("reward", EPS))
+        score = max(EPS, min(1.0 - EPS, score))
         total += score
         bd     = r.get("breakdown", {})
         bd_str = " | ".join(f"{k}={v:.2f}" for k, v in bd.items()) if bd else ""
@@ -351,4 +365,3 @@ def main() -> float:
  
 if __name__ == "__main__":
     main()
- 
