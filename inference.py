@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 load_dotenv()
  
 # ── Configuration ─────────────────────────────────────────────────────────────
-API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
+API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
 ENV_BASE_URL = os.getenv("ENV_BASE_URL", "http://localhost:7860")
 MODEL_NAME   = os.environ.get("MODEL_NAME", "meta-llama/Llama-3.1-8B-Instruct")
 HF_TOKEN     = os.environ.get("HF_TOKEN", "")
@@ -37,11 +37,21 @@ LLM_URL = (
     if not API_BASE_URL.rstrip("/").endswith("/v1")
     else API_BASE_URL
 )
- 
-client = OpenAI(
-    api_key=HF_TOKEN if HF_TOKEN else "dummy-key",
-    base_url=LLM_URL,
-)
+client = None
+
+def get_client():
+    global client
+    if client is None:
+        try:
+            client = OpenAI(
+                api_key=HF_TOKEN if HF_TOKEN else "dummy-key",
+                base_url=LLM_URL,
+            )
+        except Exception as e:
+            print("[WARN] Client init failed:", e)
+            return None
+    return client
+
  
 # Tasks to run during inference (one episode per task)
 INFERENCE_TASKS = [
@@ -90,16 +100,17 @@ def env_step(response_text: str) -> dict:
 # ── LLM agent ─────────────────────────────────────────────────────────────────
  
 def call_llm(system_prompt: str, user_prompt: str) -> str:
-    """
-    Call LLM via OpenAI-compatible client.
-    Falls back to rule-based response if the call fails.
-    """
+    c = get_client()
+
+    if c is None:
+        return _fallback(user_prompt)
+
     try:
-        completion = client.chat.completions.create(
+        completion = c.chat.completions.create(
             model=MODEL_NAME,
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user",   "content": user_prompt},
+                {"role": "user", "content": user_prompt},
             ],
             max_tokens=400,
             temperature=0.4,
