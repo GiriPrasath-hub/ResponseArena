@@ -11,6 +11,8 @@ from urllib import response
 
 _LAST_QUERY_BY_TASK: Dict[str, str] = {}
 
+EPS = 1e-6  # module-level constant: open-interval guard
+
 # ── Ideal response fragments per task (used for semantic similarity) ──────────
 _IDEAL_FRAGMENTS: Dict[str, List[str]] = {
     "emotional_support": [
@@ -100,7 +102,6 @@ def set_query_context(task_name: str, query: str) -> None:
         _LAST_QUERY_BY_TASK[key] = str(query or "")
 
 def _clamp(v: float) -> float:
-    EPS = 1e-6
     v = float(v)
     if v <= 0.0:
         return EPS
@@ -123,13 +124,13 @@ def _semantic_score(response: str, task_id: str, query: str) -> float:
 
     base_score = 0.65 * frag_score + 0.35 * seq_score
 
-    # 🔥 fallback: reward informative answers
+    # fallback: reward informative answers
     word_count = len(response.split())
 
     if base_score < 0.3 and word_count > 20:
         base_score = 0.4  # minimum reasonable score
 
-    # 🔥 bonus for detailed answers
+    # bonus for detailed answers
     length_bonus = min(word_count / 100, 1.0) * 0.1
 
     return _clamp(base_score + length_bonus)
@@ -155,7 +156,7 @@ def _structure_score(response: str, task_id: str) -> tuple[float, str]:
 
     # Penalize too short
     if word_count < 10:
-        return 0.15, "too_short"
+        return _clamp(0.15), "too_short"
 
     # Check structure signals
     has_steps = bool(re.search(r"\b(first|step|then|next|finally|1\.|2\.)\b", response.lower()))
@@ -184,24 +185,26 @@ def _missing_keywords(response: str, task_id: str) -> List[str]:
 
 
 def grade_response(task: Any, response: str) -> Dict[str, Any]:
-    """
-    Grade a response against a task. Returns reward + breakdown + feedback.
-    """
     if not response or not response.strip():
         return {
-            "reward": 0.0,
-            "breakdown": {"semantic": 0.0, "tone": 0.0, "structure": 0.0},
-            "feedback": {"tone_feedback": "no_response", "structure_feedback": "no_response", "missing_keywords": []},
+            "reward": EPS,
+            "breakdown": {"semantic": EPS, "tone": EPS, "structure": EPS},
+            "feedback": {
+                "tone_feedback": "no_response",
+                "structure_feedback": "no_response",
+                "missing_keywords": [],
+            },
         }
 
     task_id = str(getattr(task, "id", "")).strip().lower()
     query   = _LAST_QUERY_BY_TASK.get(task_id, "")
 
-    sem   = _semantic_score(response, task_id, query)
-    tone, tone_fb   = _tone_score(response, task_id)
-    struct, str_fb  = _structure_score(response, task_id)
-    missing         = _missing_keywords(response, task_id)
-        # ❌ Negative / harmful response penalty
+    sem                     = _semantic_score(response, task_id, query)
+    tone, tone_fb           = _tone_score(response, task_id)
+    struct, str_fb          = _structure_score(response, task_id)
+    missing                 = _missing_keywords(response, task_id)
+
+    # Negative / harmful response penalty
     bad_words = ["idiot", "stupid", "useless", "shut up", "nonsense"]
     response_lower = response.lower()
 
@@ -209,7 +212,7 @@ def grade_response(task: Any, response: str) -> Dict[str, Any]:
     if any(word in response_lower for word in bad_words):
         penalty = 0.3
 
-        # ✅ Actionable / helpful response bonus
+    # Actionable / helpful response bonus
     action_words = ["try", "check", "restart", "consider", "you can", "step"]
     bonus = 0.0
     if any(word in response_lower for word in action_words):
@@ -221,15 +224,15 @@ def grade_response(task: Any, response: str) -> Dict[str, Any]:
     return {
         "reward": float(reward),
         "breakdown": {
-            "semantic":   float(sem),
-            "tone":       float(tone),
-            "structure":  float(struct),
+            "semantic":  float(sem),
+            "tone":      float(tone),
+            "structure": float(struct),
         },
         "feedback": {
-        "tone_feedback": tone_fb,
-        "structure_feedback": str_fb,
-        "missing_keywords": missing,
-        "penalty_applied": penalty > 0,
-        "action_bonus": bonus > 0
+            "tone_feedback":      tone_fb,
+            "structure_feedback": str_fb,
+            "missing_keywords":   missing,
+            "penalty_applied":    penalty > 0,
+            "action_bonus":       bonus > 0,
         },
     }
