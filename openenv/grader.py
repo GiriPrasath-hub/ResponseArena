@@ -7,6 +7,7 @@ from __future__ import annotations
 import re
 from difflib import SequenceMatcher
 from typing import Any, Dict, List, Optional
+from urllib import response
 
 _LAST_QUERY_BY_TASK: Dict[str, str] = {}
 
@@ -116,7 +117,18 @@ def _semantic_score(response: str, task_id: str, query: str) -> float:
     seq_ratio = SequenceMatcher(None, text[:300], query.lower()[:300]).ratio()
     seq_score = min(1.0, seq_ratio * 2.5)
 
-    return _clamp(0.65 * frag_score + 0.35 * seq_score)
+    base_score = 0.65 * frag_score + 0.35 * seq_score
+
+    # 🔥 fallback: reward informative answers
+    word_count = len(response.split())
+
+    if base_score < 0.3 and word_count > 20:
+        base_score = 0.4  # minimum reasonable score
+
+    # 🔥 bonus for detailed answers
+    length_bonus = min(word_count / 100, 1.0) * 0.1
+
+    return _clamp(base_score + length_bonus)
 
 
 def _tone_score(response: str, task_id: str) -> tuple[float, str]:
@@ -143,6 +155,7 @@ def _structure_score(response: str, task_id: str) -> tuple[float, str]:
 
     # Check structure signals
     has_steps = bool(re.search(r"\b(first|step|then|next|finally|1\.|2\.)\b", response.lower()))
+    has_clarity = "?" not in response  # penalize vague questions
     has_explanation = sent_count >= 2
     adequate_length = 20 <= word_count <= 250
     not_repetitive = len(set(words)) / max(word_count, 1) > 0.45
@@ -150,6 +163,7 @@ def _structure_score(response: str, task_id: str) -> tuple[float, str]:
     score = 0.0
     if has_explanation:  score += 0.35
     if has_steps:        score += 0.25
+    if has_clarity:      score += 0.1
     if adequate_length:  score += 0.25
     if not_repetitive:   score += 0.15
 
@@ -176,16 +190,29 @@ def grade_response(task: Any, response: str) -> Dict[str, Any]:
             "feedback": {"tone_feedback": "no_response", "structure_feedback": "no_response", "missing_keywords": []},
         }
 
-    task_id = str(getattr(task, "id", ""))
+    task_id = str(getattr(task, "id", "")).strip().lower()
     query   = _LAST_QUERY_BY_TASK.get(task_id, "")
 
     sem   = _semantic_score(response, task_id, query)
     tone, tone_fb   = _tone_score(response, task_id)
     struct, str_fb  = _structure_score(response, task_id)
     missing         = _missing_keywords(response, task_id)
+        # ❌ Negative / harmful response penalty
+    bad_words = ["idiot", "stupid", "useless", "shut up", "nonsense"]
+    response_lower = response.lower()
+
+    penalty = 0.0
+    if any(word in response_lower for word in bad_words):
+        penalty = 0.3
+
+        # ✅ Actionable / helpful response bonus
+    action_words = ["try", "check", "restart", "consider", "you can", "step"]
+    bonus = 0.0
+    if any(word in response_lower for word in action_words):
+        bonus = 0.1
 
     # Weighted composite
-    reward = _clamp(0.45 * sem + 0.30 * tone + 0.25 * struct)
+    reward = _clamp(0.45 * sem + 0.30 * tone + 0.25 * struct + bonus - penalty)
 
     return {
         "reward": round(reward, 4),
@@ -195,8 +222,10 @@ def grade_response(task: Any, response: str) -> Dict[str, Any]:
             "structure":  round(struct, 4),
         },
         "feedback": {
-            "tone_feedback":      tone_fb,
-            "structure_feedback": str_fb,
-            "missing_keywords":   missing,
+        "tone_feedback": tone_fb,
+        "structure_feedback": str_fb,
+        "missing_keywords": missing,
+        "penalty_applied": penalty > 0,
+        "action_bonus": bonus > 0
         },
     }

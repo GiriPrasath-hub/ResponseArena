@@ -10,6 +10,7 @@ Features:
   - Full persistence to /tmp/arena_memory.json
 """
 from __future__ import annotations
+from cmath import exp
 import json
 import random
 import time
@@ -197,9 +198,20 @@ class RLMemory:
         pol = self.task_policies[task_id]
 
         # Learning bonus: improvement over previous score on this task
-        prev_exp = self.buffer.last_for_task(task_id)
-        prev_reward = prev_exp.get("adj_reward", raw_reward) if prev_exp else raw_reward
+        # 🔥 NEW: track per (task + query)
+        key = (task_id, query.strip().lower())
+
+        prev_reward = raw_reward
+        for exp in reversed(self.buffer.all()):
+            if exp.get("task_id") == task_id and exp.get("query") == query[:120]:
+                prev_reward = exp.get("adj_reward", raw_reward)
+                break
+
         learning_bonus = raw_reward - prev_reward
+
+        # 🔥 STABILITY: prevent over-learning on same query
+        if abs(learning_bonus) < 0.05:
+            learning_bonus = 0.0
 
         adj_reward = pol.compute_reward(breakdown, learning_bonus)
         pol.record(breakdown, raw_reward)

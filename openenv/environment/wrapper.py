@@ -4,7 +4,6 @@ OpenEnvWrapper — environment lifecycle for ResponseArena.
 from __future__ import annotations
 
 import random
-from tracemalloc import Traceback
 from typing import Any, Dict, Optional, Tuple
 
 from openenv.environment.task_manager import TaskManager, Task, _normalize_task_id, _MAP
@@ -12,11 +11,6 @@ from openenv.agent.response_generator import generate_response
 from openenv.grader import grade_response, set_query_context
 from openenv.reward.reward_system import RewardSystem
 from rl.policy import get_memory
-#from rl.policy import policy
-
-#memory = get_memory()
-#policy = memory.policy
-
 
 class OpenEnvWrapper:
     """
@@ -98,8 +92,7 @@ class OpenEnvWrapper:
         evaluation  = grade_response(task, generated)
         base_reward = float(max(0.0, min(1.0, evaluation.get("reward", 0.0))))
 
-
-# Apply RL policy shaping
+        # Apply RL policy shaping
         try:
             memory = get_memory()
             shaped_reward = memory.record_eval(
