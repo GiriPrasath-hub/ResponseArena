@@ -1,12 +1,66 @@
+# Python cache
 __pycache__/
-*.py[cod]
+*.pyc
 *.pyo
-.env
-.venv
+*.pyd
+
+# Virtual environments
+.venv/
 venv/
+env/
+ENV/
+
+# System files
 .DS_Store
-*.egg-info/
-dist/
-build/
-.pytest_cache/
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
 *.log
+
+# Environment files (VERY IMPORTANT)
+.env
+.env.*
+*.env
+
+# Build / temp
+build/
+dist/
+*.egg-info/
+
+# Testing / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node (if any frontend tooling used)
+node_modules/
+
+# Lock files (optional but safe to ignore)
+uv.lock
+
+# Misc
+*.bak
+*.tmp
+*.cache
+
+# Docker related
+Dockerfile*
+docker-compose.yml
+
+# Large unused files (optional safety)
+*.zip
+*.tar
+*.gz
