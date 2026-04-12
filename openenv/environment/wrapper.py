@@ -3,6 +3,7 @@ OpenEnvWrapper — environment lifecycle for ResponseArena.
 """
 from __future__ import annotations
 
+from multiprocessing.util import info
 import random
 from typing import Any, Dict, Optional, Tuple
 
@@ -10,7 +11,7 @@ from openenv.environment.task_manager import TaskManager, Task, _normalize_task_
 from openenv.agent.response_generator import generate_response
 from openenv.grader import grade_response, set_query_context
 from openenv.reward.reward_system import RewardSystem
-from rl.policy import get_memory
+from rl.policy import EPS, get_memory
 
 class OpenEnvWrapper:
     """
@@ -113,7 +114,6 @@ class OpenEnvWrapper:
         except Exception:
             shaped_reward = base_reward  # fallback
 
-        self.last_reward = shaped_reward
 
         info = {
             "response":       generated,
@@ -121,6 +121,15 @@ class OpenEnvWrapper:
             "base_reward":    base_reward,
             "shaped_reward":  shaped_reward,
         }
+
+        EPS = 1e-6
+
+        if shaped_reward <= 0.0:
+            shaped_reward = EPS
+        elif shaped_reward >= 1.0:
+            shaped_reward = 1.0 - EPS
+
+        self.last_reward = shaped_reward
 
         return self._observation(), shaped_reward, True, info
 
