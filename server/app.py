@@ -1,5 +1,6 @@
 """
 ResponseArena v3.4 — Production-ready, OpenEnv Phase 2.
+All numeric scores are guaranteed in the strict open interval (EPS, 1.0 − EPS).
 """
 import json
 import os
@@ -21,7 +22,7 @@ from openenv.environment.task_manager import (
     _normalize_task_id,
     get_all_tasks,
 )
-from openenv.environment.wrapper import OpenEnvWrapper
+from openenv.environment.wrapper import OpenEnvWrapper, _safe_float, _safe_evaluation
 from openenv.grader import grade_response, set_query_context
 from rl.policy import _MEMORY_PATH, get_memory
 
@@ -30,6 +31,9 @@ if not os.getenv("HF_TOKEN"):
 
 if not os.getenv("API_BASE_URL"):
     print("WARNING: API_BASE_URL not set — LLM disabled, using fallback")
+
+# ── Global open-interval constant (mirrors wrapper.py) ────────────────────────
+EPS = 1e-6
 
 memory = get_memory()
 policy = memory.policy
@@ -44,6 +48,7 @@ _TONE_MAP = {
     "decision_support":   "analytical",
     "customer_service":   "professional",
 }
+
 
 def reset_rl_system() -> dict:
     global memory, policy, _env
@@ -67,10 +72,10 @@ def reset_rl_system() -> dict:
 
     memory = _memory
     policy = memory.policy
-    _env = OpenEnvWrapper()
+    _env   = OpenEnvWrapper()
 
     return {
-        "status": "reset",
+        "status":  "reset",
         "message": "RL system fully reset (memory + weights + env)",
     }
 
@@ -122,23 +127,25 @@ def _find_best_human_match(task_id: str, query: str) -> Optional[dict]:
     entries = _HUMAN_DATASET.get(task_id, [])
     if not entries:
         return None
-    q_words = set(query.lower().split())
+    q_words    = set(query.lower().split())
     best_score = -1
     best_entry = None
     for entry in entries:
         entry_words = set(str(entry.get("query", "")).lower().split())
-        overlap = len(q_words & entry_words) / max(len(q_words | entry_words), 1)
+        overlap     = len(q_words & entry_words) / max(len(q_words | entry_words), 1)
         if overlap > best_score:
             best_score = overlap
             best_entry = entry
     return best_entry
 
 
+# ── Pydantic models ────────────────────────────────────────────────────────────
+
 class EvaluateRequest(BaseModel):
-    task_id: str
-    query: str
+    task_id:        str
+    query:          str
     human_response: Optional[str] = None
-    mode: str = "ai"
+    mode:           str = "ai"
 
 
 class BatchEvaluateRequest(BaseModel):
@@ -150,9 +157,11 @@ class ResetRequest(BaseModel):
 
 
 class StepRequest(BaseModel):
-    type: str = "respond"
+    type:          str = "respond"
     human_content: Optional[str] = None
 
+
+# ── Static routes ──────────────────────────────────────────────────────────────
 
 @app.get("/", include_in_schema=False)
 def home():
@@ -175,7 +184,7 @@ def list_tasks():
 @app.get("/tasks/{task_id}")
 def get_task_detail(task_id: str):
     norm = _normalize_task_id(task_id)
-    t = _MAP.get(norm) if norm else None
+    t    = _MAP.get(norm) if norm else None
     if not t:
         raise HTTPException(404, f"Task '{task_id}' not found")
     return t.to_dict()
@@ -222,11 +231,13 @@ def policy_stats():
     return memory.get_stats()
 
 
+# ── Core evaluation logic ──────────────────────────────────────────────────────
+
 def _do_evaluate(
-    task_id: str,
-    query: str,
+    task_id:        str,
+    query:          str,
     human_response: Optional[str],
-    mode: str = "ai",
+    mode:           str = "ai",
 ) -> dict:
     norm = _normalize_task_id(str(task_id or ""))
     if not norm:
@@ -244,103 +255,72 @@ def _do_evaluate(
     effective_task = norm
     set_query_context(effective_task, query)
 
-    tone = _TONE_MAP.get(effective_task, "helpful")
+    tone          = _TONE_MAP.get(effective_task, "helpful")
     system_prompt = build_system_prompt(effective_task, tone)
 
-    # ── AI response: always LLM ───────────────────────────────────────────────
-    ai_response = call_llm(system_prompt, query)
-    ai_evaluation = grade_response(task, ai_response)
+    # ── AI branch ─────────────────────────────────────────────────────────────
+    ai_response    = call_llm(system_prompt, query)
+    ai_evaluation  = _safe_evaluation(grade_response(task, ai_response))
+    ai_base_reward = ai_evaluation["reward"]   # already safe
+
     ai_evaluation["explanation"] = (
-        f"Semantic: {ai_evaluation['breakdown'].get('semantic', 0)} | "
-        f"Tone: {ai_evaluation['breakdown'].get('tone', 0)} | "
-        f"Structure: {ai_evaluation['breakdown'].get('structure', 0)}"
-    )
-    r = float(ai_evaluation.get("reward", 0.0))
-    EPS = 1e-6
-    if r <= 0.0:
-        ai_base = EPS
-    elif r >= 1.0:
-        ai_base = 1.0 - EPS
-    else:
-        ai_base = r
-    ai_reward = memory.record_eval(
-        task_id=effective_task,
-        query=query,
-        response=ai_response,
-        actor="ai",
-        breakdown=ai_evaluation.get("breakdown", {}),
-        raw_reward=ai_base,
+        f"Semantic: {ai_evaluation['breakdown'].get('semantic', EPS):.4f} | "
+        f"Tone: {ai_evaluation['breakdown'].get('tone', EPS):.4f} | "
+        f"Structure: {ai_evaluation['breakdown'].get('structure', EPS):.4f}"
     )
 
-    # ── Human response ────────────────────────────────────────────────────────
-    # AI mode: human_response is optional user-provided text.
-    # Human mode: LLM generates the "human" response; user text is ignored.
-    human_text: str = ""
-    human_evaluation: Optional[dict] = None
-    human_reward: Optional[float] = None
-
-    if mode == "human":
-        human_system_prompt = build_system_prompt(effective_task, tone)
-        human_text = call_llm(human_system_prompt, query)
-        human_evaluation = grade_response(task, human_text)
-        r = float(human_evaluation.get("reward", 0.0))
-        EPS = 1e-6
-        if r <= 0.0:
-            human_base = EPS
-        elif r >= 1.0:
-            human_base = 1.0 - EPS
-        else:
-            human_base = r
-        human_reward = memory.record_eval(
+    ai_reward = _safe_float(
+        memory.record_eval(
             task_id=effective_task,
             query=query,
-            response=human_text,
-            actor="human",
-            breakdown=human_evaluation.get("breakdown", {}),
-            raw_reward=human_base,
+            response=ai_response,
+            actor="ai",
+            breakdown=ai_evaluation["breakdown"],
+            raw_reward=ai_base_reward,
         )
-    else:
-        provided = str(human_response or "").strip()
-        if provided:
-            human_text = provided
-            human_evaluation = grade_response(task, human_text)
-            r = float(human_evaluation.get("reward", 0.0))
-            EPS = 1e-6
-            if r <= 0.0:
-                human_base = EPS
-            elif r >= 1.0:
-                human_base = 1.0 - EPS
-            else:
-                human_base = r
-            human_reward = memory.record_eval(
+    )
+
+    # ── Human branch ──────────────────────────────────────────────────────────
+    human_text:       str           = ""
+    human_evaluation: Optional[dict] = None
+    human_reward:     Optional[float] = None
+
+    if mode == "human":
+        # Try dataset match first
+        match      = _find_best_human_match(effective_task, query)
+        human_text = str((match or {}).get("ideal_response", "")).strip() if match else ""
+
+    provided = str(human_response or "").strip()
+    if provided:
+        human_text = provided
+
+    if human_text:
+        human_evaluation  = _safe_evaluation(grade_response(task, human_text))
+        human_base_reward = human_evaluation["reward"]   # already safe
+        human_reward      = _safe_float(
+            memory.record_eval(
                 task_id=effective_task,
                 query=query,
                 response=human_text,
                 actor="human",
-                breakdown=human_evaluation.get("breakdown", {}),
-                raw_reward=human_base,
+                breakdown=human_evaluation["breakdown"],
+                raw_reward=human_base_reward,
             )
+        )
 
-    # ── Dataset reference (human mode only, no RL recording) ─────────────────
+    # ── Dataset reference block (human mode, no additional RL recording) ──────
     dataset_match: Optional[dict] = None
     if mode == "human":
         match = _find_best_human_match(effective_task, query)
         if match:
             ideal_text = str(match.get("ideal_response", "")).strip()
             if ideal_text:
-                ideal_eval = grade_response(task, ideal_text)
-                r = float(ideal_eval.get("reward", 0.0))
-                EPS = 1e-6
-                if r <= 0.0:
-                    ideal_base = EPS
-                elif r >= 1.0:
-                    ideal_base = 1.0 - EPS
-                else:
-                    ideal_base = r
+                ideal_eval   = _safe_evaluation(grade_response(task, ideal_text))
+                ideal_reward = ideal_eval["reward"]   # already safe
                 dataset_match = {
                     "query":          match.get("query", ""),
                     "ideal_response": ideal_text,
-                    "reward":         ideal_base,
+                    "reward":         ideal_reward,
                     "evaluation":     ideal_eval,
                     "keywords":       match.get("keywords", []),
                 }
@@ -369,7 +349,7 @@ def _do_evaluate(
         "ai": {
             "response":    ai_response,
             "reward":      ai_reward,
-            "base_reward": ai_base,
+            "base_reward": ai_base_reward,
             "evaluation":  ai_evaluation,
         },
         "human": {
@@ -384,32 +364,32 @@ def _do_evaluate(
 
 
 def _build_comparison_summary(
-    better: str,
-    ai_reward: float,
+    better:       str,
+    ai_reward:    float,
     human_reward: Optional[float],
-    ai_eval: Optional[dict],
-    human_eval: Optional[dict],
+    ai_eval:      Optional[dict],
+    human_eval:   Optional[dict],
 ) -> str:
     if human_reward is None:
         return ""
 
-    ai_bd = (ai_eval   or {}).get("breakdown", {})
+    ai_bd = (ai_eval    or {}).get("breakdown", {})
     hu_bd = (human_eval or {}).get("breakdown", {})
-    ai_fb = (ai_eval   or {}).get("feedback",  {})
+    ai_fb = (ai_eval    or {}).get("feedback",  {})
     hu_fb = (human_eval or {}).get("feedback",  {})
 
     def _get(d: dict, *keys: str) -> float:
         for k in keys:
             if k in d:
-                return d[k]
-        return 0.0
+                return float(d[k])
+        return EPS
 
     ai_sem = _get(ai_bd, "semantic", "keywords")
     hu_sem = _get(hu_bd, "semantic", "keywords")
-    ai_tn  = ai_bd.get("tone", 0)
-    hu_tn  = hu_bd.get("tone", 0)
-    ai_st  = ai_bd.get("structure", 0)
-    hu_st  = hu_bd.get("structure", 0)
+    ai_tn  = _get(ai_bd, "tone")
+    hu_tn  = _get(hu_bd, "tone")
+    ai_st  = _get(ai_bd, "structure")
+    hu_st  = _get(hu_bd, "structure")
 
     diffs = []
     if abs(ai_sem - hu_sem) >= 0.15:
@@ -460,6 +440,8 @@ def _build_comparison_summary(
     return summary
 
 
+# ── API endpoints ──────────────────────────────────────────────────────────────
+
 @app.post("/evaluate")
 def evaluate(req: EvaluateRequest):
     try:
@@ -491,8 +473,8 @@ def reset_ep(req: ResetRequest = ResetRequest()):
         obs = _env.reset(task_id=req.task_id)
         return {
             "observation": obs,
-            "task_id":     obs["task"],
-            "task_name":   obs["task_name"],
+            "task_id":     obs.get("task", ""),
+            "task_name":   obs.get("task_name", ""),
         }
     except Exception as e:
         raise HTTPException(500, str(e))
@@ -509,25 +491,28 @@ def step_ep(action: StepRequest):
             "content": action.human_content or "",
         })
 
-        # 🔒 FINAL SAFETY CLAMP (CRITICAL)
-        EPS = 1e-6
-        if reward <= 0.0:
-            reward = EPS
-        elif reward >= 1.0:
-            reward = 1.0 - EPS
+        # Defensive final clamp at API boundary — wrapper already guarantees
+        # safety, but this ensures nothing slips through serialisation.
+        reward        = _safe_float(reward)
+        base_reward   = _safe_float(info.get("base_reward",   reward))
+        shaped_reward = _safe_float(info.get("shaped_reward", reward))
+
+        # Sanitise nested evaluation dicts before serialising
+        evaluation    = _safe_evaluation(info.get("evaluation", {}))
+        ai_evaluation = _safe_evaluation(info.get("evaluation", {}))
 
         return {
             "observation":   obs,
             "reward":        reward,
             "done":          done,
             "response":      info.get("response", ""),
-            "evaluation":    info.get("evaluation", {}),
-            "base_reward":   info.get("base_reward", reward),
-            "shaped_reward": info.get("shaped_reward", reward),
-            "ai":   {
+            "evaluation":    evaluation,
+            "base_reward":   base_reward,
+            "shaped_reward": shaped_reward,
+            "ai": {
                 "response":   info.get("response", ""),
                 "reward":     reward,
-                "evaluation": info.get("evaluation", {}),
+                "evaluation": ai_evaluation,
             },
             "human":  None,
             "better": "ai",

@@ -1,9 +1,9 @@
 """
 OpenEnvWrapper — environment lifecycle for ResponseArena.
+Phase 2 compliant: every numeric score is guaranteed in (EPS, 1.0 − EPS).
 """
 from __future__ import annotations
 
-from multiprocessing.util import info
 import random
 from typing import Any, Dict, Optional, Tuple
 
@@ -11,7 +11,73 @@ from openenv.environment.task_manager import TaskManager, Task, _normalize_task_
 from openenv.agent.response_generator import generate_response
 from openenv.grader import grade_response, set_query_context
 from openenv.reward.reward_system import RewardSystem
-from rl.policy import EPS, get_memory
+from rl.policy import get_memory
+
+# ── Global open-interval constant ─────────────────────────────────────────────
+EPS = 1e-6
+
+
+# ── Safety helpers (module-level, reusable) ────────────────────────────────────
+
+def _safe_float(value: Any) -> float:
+    """
+    Convert any value to a float in the strict open interval (EPS, 1.0 − EPS).
+    Handles None, strings, NaN, inf, and exact boundary values.
+    """
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return EPS
+    if v != v:          # NaN
+        return EPS
+    if v <= 0.0:
+        return EPS
+    if v >= 1.0:
+        return 1.0 - EPS
+    return v
+
+
+def _safe_evaluation(evaluation: Any) -> Dict[str, Any]:
+    """
+    Recursively sanitise an evaluation dict so that every numeric leaf
+    value is in the strict open interval (EPS, 1.0 − EPS).
+    Non-numeric fields (feedback, strings, booleans) are left untouched.
+    Missing top-level keys are populated with safe defaults.
+    """
+    if not isinstance(evaluation, dict):
+        return {
+            "reward":    EPS,
+            "breakdown": {"semantic": EPS, "tone": EPS, "structure": EPS},
+            "feedback":  {"tone_feedback": "error", "structure_feedback": "error",
+                          "missing_keywords": []},
+        }
+
+    # Sanitise breakdown
+    raw_bd = evaluation.get("breakdown", {})
+    if not isinstance(raw_bd, dict):
+        raw_bd = {}
+    safe_bd = {k: _safe_float(v) for k, v in raw_bd.items()}
+    # Guarantee the three canonical keys always exist
+    for key in ("semantic", "tone", "structure"):
+        if key not in safe_bd:
+            safe_bd[key] = EPS
+
+    # Sanitise top-level reward
+    safe_reward = _safe_float(evaluation.get("reward", EPS))
+
+    # Preserve non-numeric feedback block verbatim
+    feedback = evaluation.get("feedback", {})
+    if not isinstance(feedback, dict):
+        feedback = {}
+
+    result = dict(evaluation)   # shallow copy — preserve extra fields
+    result["reward"]    = safe_reward
+    result["breakdown"] = safe_bd
+    result["feedback"]  = feedback
+    return result
+
+
+# ── Wrapper ────────────────────────────────────────────────────────────────────
 
 class OpenEnvWrapper:
     """
@@ -29,7 +95,7 @@ class OpenEnvWrapper:
         self.current_query: str   = ""
         self.step_count:    int   = 0
         self.last_response: str   = ""
-        self.last_reward:   float = 0.0
+        self.last_reward:   float = EPS
 
     # ── reset ─────────────────────────────────────────────────────────────────
 
@@ -37,19 +103,16 @@ class OpenEnvWrapper:
         """
         Start a new episode.
         Normalises task_id (handles display names, empty, 'random').
-        Picks a TRUE random query from the AI scenario pool.
+        Picks a true random query from the AI scenario pool.
         """
-        # Normalise incoming task_id — handles "Casual Conversation", "", "random", etc.
         norm = _normalize_task_id(str(task_id or ""))
         if norm and norm in _MAP:
             self.current_task = _MAP[norm]
         else:
-            # Genuine random — weighted by difficulty
             self.current_task = self.task_manager.new_episode(None)
 
         task = self.current_task
 
-        # True random query from AI scenario pool
         pool = [q for q in task.queries if q and q.strip()]
         if not pool:
             pool = [q for q in task.human_queries if q and q.strip()]
@@ -59,9 +122,8 @@ class OpenEnvWrapper:
         self.current_query = random.choice(pool)
         self.step_count    = 0
         self.last_response = ""
-        self.last_reward   = 0.0
+        self.last_reward   = EPS
 
-        # Register context so grader knows the current query
         set_query_context(task.id, self.current_query)
 
         return self._observation()
@@ -72,7 +134,7 @@ class OpenEnvWrapper:
         """
         Process one action.
         action: {"type": "respond", "content": "<optional override>"}
-        Always uses self.current_task.id — no detection override.
+        All returned numeric scores are guaranteed in (EPS, 1.0 − EPS).
         """
         if self.current_task is None:
             self.reset()
@@ -81,57 +143,50 @@ class OpenEnvWrapper:
         task  = self.current_task
         query = self.current_query
 
-        # Refresh grader context with the definitive task id
         set_query_context(task.id, query)
 
         content   = str(action.get("content", "")).strip() if action else ""
         generated = content if content else generate_response(task.id, query)
+        if not generated or not generated.strip():
+            generated = f"[empty response for {task.id}]"
 
         self.last_response = generated
 
-        # Grade using the task's own id — no override needed
-        evaluation  = grade_response(task, generated)
-        r = float(evaluation.get("reward", 0.0))
-        EPS = 1e-6
-        if r <= 0.0:
-            base_reward = EPS
-        elif r >= 1.0:
-            base_reward = 1.0 - EPS
-        else:
-            base_reward = r
+        # ── Grade & sanitise immediately ──────────────────────────────────────
+        raw_evaluation = grade_response(task, generated)
+        evaluation     = _safe_evaluation(raw_evaluation)
 
-        # Apply RL policy shaping
+        # base_reward is the sanitised scalar reward from the grader
+        base_reward: float = evaluation["reward"]   # already in (EPS, 1−EPS)
+
+        # ── RL policy shaping ─────────────────────────────────────────────────
         try:
-            memory = get_memory()
-            shaped_reward = memory.record_eval(
-                task_id=task.id,
-                query=query,
-                response=generated,
-                actor="ai",
-                breakdown=evaluation.get("breakdown", {}),
-                raw_reward=base_reward
+            memory        = get_memory()
+            shaped_reward = _safe_float(
+                memory.record_eval(
+                    task_id=task.id,
+                    query=query,
+                    response=generated,
+                    actor="ai",
+                    breakdown=evaluation["breakdown"],
+                    raw_reward=base_reward,
+                )
             )
         except Exception:
-            shaped_reward = base_reward  # fallback
-
-
-        info = {
-            "response":       generated,
-            "evaluation":     evaluation,
-            "base_reward":    base_reward,
-            "shaped_reward":  shaped_reward,
-        }
-
-        EPS = 1e-6
-
-        if shaped_reward <= 0.0:
-            shaped_reward = EPS
-        elif shaped_reward >= 1.0:
-            shaped_reward = 1.0 - EPS
+            shaped_reward = base_reward     # fallback — already safe
 
         self.last_reward = shaped_reward
 
+        info: Dict[str, Any] = {
+            "response":      generated,
+            "evaluation":    evaluation,        # fully sanitised
+            "base_reward":   base_reward,       # safe float
+            "shaped_reward": shaped_reward,     # safe float
+        }
+
         return self._observation(), shaped_reward, True, info
+
+    # ── state / observation ───────────────────────────────────────────────────
 
     def state(self) -> Dict[str, Any]:
         return {
