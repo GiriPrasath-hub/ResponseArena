@@ -502,11 +502,20 @@ def reset_ep(req: ResetRequest = ResetRequest()):
 def step_ep(action: StepRequest):
     if _env.current_task is None:
         raise HTTPException(400, "No active episode — call /reset first")
+
     try:
         obs, reward, done, info = _env.step({
             "type":    action.type,
             "content": action.human_content or "",
         })
+
+        # 🔒 FINAL SAFETY CLAMP (CRITICAL)
+        EPS = 1e-6
+        if reward <= 0.0:
+            reward = EPS
+        elif reward >= 1.0:
+            reward = 1.0 - EPS
+
         return {
             "observation":   obs,
             "reward":        reward,
@@ -523,6 +532,7 @@ def step_ep(action: StepRequest):
             "human":  None,
             "better": "ai",
         }
+
     except Exception as e:
         raise HTTPException(500, str(e))
 
