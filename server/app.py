@@ -23,7 +23,7 @@ from openenv.environment.task_manager import (
     get_all_tasks,
 )
 from openenv.environment.wrapper import OpenEnvWrapper, _safe_float, _safe_evaluation
-from openenv.grader import grade_response, set_query_context
+from openenv.response_grader import grade_response, set_query_context
 from rl.policy import _MEMORY_PATH, get_memory
 
 if not os.getenv("HF_TOKEN"):

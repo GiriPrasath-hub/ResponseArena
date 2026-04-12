@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from openenv.environment.task_manager import TaskManager, Task, _normalize_task_id, _MAP
 from openenv.agent.response_generator import generate_response
-from openenv.grader import grade_response, set_query_context
+from openenv.response_grader import grade_response, set_query_context
 from openenv.reward.reward_system import RewardSystem
 from rl.policy import get_memory
 
