@@ -7,7 +7,6 @@ from __future__ import annotations
 import re
 from difflib import SequenceMatcher
 from typing import Any, Dict, List, Optional
-from urllib import response
 
 _LAST_QUERY_BY_TASK: Dict[str, str] = {}
 
@@ -132,6 +131,12 @@ def _semantic_score(response: str, task_id: str, query: str) -> float:
 
     # bonus for detailed answers
     length_bonus = min(word_count / 100, 1.0) * 0.1
+
+    # Penalize generic template responses
+    generic_patterns = ["restart", "check settings", "reconnect", "contact support"]
+
+    if sum(1 for p in generic_patterns if p in text) >= 3:
+        base_score *= 0.7
 
     return _clamp(base_score + length_bonus)
 

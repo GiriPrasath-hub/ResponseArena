@@ -14,19 +14,19 @@ Required env vars:
   HF_TOKEN      — Hugging Face token (used as Bearer key)
 """
 from __future__ import annotations
- 
+
 import os
 import sys
 import time
-from unittest import result
 import requests
 from typing import Optional
- 
-from openai import OpenAI
 
+from openai import OpenAI
 from dotenv import load_dotenv
-from openenv.grader import EPS
+
 load_dotenv()
+
+EPS = 1e-6  # open-interval guard: rewards are always in (EPS, 1-EPS)
  
 # ── Configuration ─────────────────────────────────────────────────────────────
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
@@ -64,7 +64,6 @@ INFERENCE_TASKS = [
 ]
  
 # ── Network helper ─────────────────────────────────────────────────────────────
-EPS = 1e-6
 
 def safe_post(url: str, payload: dict) -> dict:
     """POST with full error handling. Always returns a dict with safe reward."""
@@ -269,7 +268,6 @@ def run_episode(task_config: dict) -> dict:
  
     # ── Step environment ──────────────────────────────────────────────────────
     result     = env_step(response)
-    EPS = 1e-6
     reward = float(result.get("reward", 0.0))
     reward = max(EPS, min(1.0 - EPS, reward))
     info       = result.get("info", {})
@@ -330,7 +328,6 @@ def main() -> float:
         print("ERROR: Environment not reachable.", file=sys.stderr)
         sys.exit(1)
  
-    EPS = 1e-6
     results = []
     for task_config in INFERENCE_TASKS:
         print(f"\n{'─' * 60}")

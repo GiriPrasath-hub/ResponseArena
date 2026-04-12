@@ -504,7 +504,7 @@ def step_ep(action: StepRequest):
         return {
             "observation":   obs,
             "reward":        reward,
-            "done":          done,
+            "done":          True if done else False,
             "response":      info.get("response", ""),
             "evaluation":    evaluation,
             "base_reward":   base_reward,

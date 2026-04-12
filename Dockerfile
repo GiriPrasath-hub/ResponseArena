@@ -12,6 +12,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+COPY pyproject.toml .
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY server ./server
@@ -19,6 +20,8 @@ COPY openenv/ ./openenv/
 COPY rl/ ./rl/
 COPY data/ ./data/
 COPY frontend/ ./frontend/
+
+COPY test_grader.py .
 
 COPY inference.py .
 COPY openenv.yaml .

@@ -69,22 +69,26 @@ tasks:
     difficulty: easy
     tone: friendly
     description: Warm, natural engagement in everyday conversation
+    grader: openenv.graders:CasualConversationGrader
 
   - id: emotional_support
     difficulty: medium
     tone: empathetic
     description: Empathetic, validating responses to emotional distress
+    grader: openenv.graders:EmotionalSupportGrader
 
   - id: professional_reply
     difficulty: medium
     tone: professional
     description: Formal business communication with resolution commitment
+    grader: openenv.graders:ProfessionalReplyGrader
 
   - id: problem_solving
     difficulty: hard
     tone: helpful
     structure_required: true
     description: Step-by-step technical troubleshooting guidance
+    grader: openenv.graders:ProblemSolvingGrader
 
 endpoints:
   reset:
@@ -119,6 +123,6 @@ inference:
     - HF_TOKEN
 
 docker:
-  base_image: python:3.10-slim
+  base_image: python:3.11-slim
   port: 7860
   entrypoint: uvicorn server.app:app --host 0.0.0.0 --port 7860

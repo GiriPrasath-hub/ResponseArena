@@ -70,6 +70,18 @@ def _safe_evaluation(evaluation: Any) -> Dict[str, Any]:
     if not isinstance(feedback, dict):
         feedback = {}
 
+# 🔥 CRITICAL FIX: sanitize boolean → safe float
+    safe_feedback = {}
+    for k, v in feedback.items():
+        if isinstance(v, bool):
+            safe_feedback[k] = 0.5  # neutral safe value
+        elif isinstance(v, (int, float)):
+            safe_feedback[k] = _safe_float(v)
+        else:
+            safe_feedback[k] = v
+
+    feedback = safe_feedback
+
     result = dict(evaluation)   # shallow copy — preserve extra fields
     result["reward"]    = safe_reward
     result["breakdown"] = safe_bd
